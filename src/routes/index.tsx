@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type CSSProperties } from "react";
 import { Wordmark } from "@/components/Wordmark";
 import globeArt from "@/assets/globe-asia.webp";
+import kosaLogoWhite from "@/assets/logos/kosa-white.png";
 import { JUDGES } from "@/data/speakers";
 import { companies } from "@/data/companies";
 import { STARTUP_IMAGES, STARTUP_LOGOS } from "@/data/companyImages";
@@ -405,11 +406,10 @@ function Landing() {
           <div className="mt-12 border-t border-white/15 pt-10">
             <p className="text-sm font-medium text-lichen">Hosted by</p>
             <div className="mt-4 max-w-xl">
-              <a href={KOSA_SITE} target="_blank" rel="noopener noreferrer" className="font-display text-3xl font-bold tracking-tight hover:text-yellow">
-                KOSA
+              <a href={KOSA_SITE} target="_blank" rel="noopener noreferrer" className="inline-flex">
+                <img src={kosaLogoWhite} alt="KOSA — Korea AI·Software Industry Association" className="h-14 w-auto" />
               </a>
-              <p className="mt-3 font-display text-lg font-semibold leading-snug">Korea AI·Software Industry Association</p>
-              <p className="mt-2 text-sm leading-relaxed text-white/75">
+              <p className="mt-4 text-sm leading-relaxed text-white/75">
                 Korea's industry association for AI and software companies. It represents its members on policy and
                 runs programmes that help them grow at home and abroad, including this one.
               </p>
