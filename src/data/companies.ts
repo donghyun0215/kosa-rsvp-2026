@@ -1,8 +1,9 @@
 // KOSA GovTech Singapore 2026 — six Korean GovTech startups.
 // Source: each startup's programme one-pager (12 Oct, via the KOSA master
 // sheet links). Copy follows the companies' own wording (light edits for
-// grammar). Clotho has no one-pager yet (Korean IR only) — its card keeps
-// the one-line description from 참여기업 정보 until it arrives. IR decks are
+// grammar). Clotho has no one-pager yet: its profile is translated from its
+// Korean IR deck (OK'd for site copy, not for download, 12 Oct) — re-check
+// against the one-pager when it arrives. IR decks are
 // NOT published (CMK lesson, 7 Oct). Sector labels are ours.
 // ponytail: one-pager PDFs aren't linked yet — several still carry another
 // programme's footer (CMK / AroundX).
@@ -88,24 +89,57 @@ export const companies: Company[] = [
   {
     slug: "clotho",
     name: "Clotho",
-    displayName: "Clotho Inc.",
+    displayName: "Clotho Co., Ltd.",
     tagline: "AI-driven administrative automation (AX) platform “Hello Unicorn” that manages government-grant execution, compliance and risk prediction for SMEs and public agencies.",
     sector: "Administrative AI · Grant compliance",
-    stage: "Founded 2023",
+    stage: "Founded 2023 · no outside funding",
     track: "track1",
     website: "https://hellounicorn.site",
-    email: "",
-    phone: "",
-    problem: [],
-    solution: [
-      "Hello Unicorn: grant execution, compliance and risk prediction in one platform.",
+    email: "marketer.hellounicorn@gmail.com",
+    phone: "+82 10-9326-9904",
+    problem: [
+      "A government grant isn't over at selection: agreements, execution, evidence, settlement, reporting and follow-up run for 24–36 months.",
+      "Founders must judge every risk themselves — execution rate, remaining budget, labour costs, missing evidence, settlement risk — with data scattered across Excel, email, messengers, RCMS and IRIS.",
+      "Agencies each hold part of a company's history but no shared data structure connects it, and financial statements show trouble late.",
     ],
-    keyFeatures: [],
-    targetAudience: [],
-    businessModel: [],
-    businessSnapshot: [],
-    team: [],
-    seekingOpportunities: [],
+    solution: [
+      "Research administration service: Clotho runs grant agreements, execution, evidence, settlement and reporting for client companies, building a structured operations dataset.",
+      "Hello Unicorn: a CEO dashboard showing execution rate, balances, labour costs, missing evidence and settlement risk on one screen, with paid AX features.",
+      "SGMS and the G2B Stability API: an institution-side portfolio system and a stability-evaluation model that public platforms can plug in.",
+    ],
+    keyFeatures: [
+      "Settlement risk check: flags missing evidence, ineligible spend and execution errors before they are found.",
+      "Automated labour-cost and allocation calculation, plus a stability report on execution, labour burden, cash flow and settlement risk.",
+      "Evidence auto-review that cross-checks tax invoices, quotes, statements and payment records; CEO risk alerts and a grant calendar.",
+      "Collaboration tracking that turns PoC, investment and partner outcomes into performance data.",
+    ],
+    targetAudience: [
+      "Grant-funded startups and SMEs: CEOs, CFOs, COOs and project managers.",
+      "Public agencies and programme operators managing portfolio companies.",
+      "Accelerators, VCs, universities and public institutions running support programmes.",
+    ],
+    businessModel: [
+      "Monthly management fees for research administration (36-month average engagement).",
+      "Hello Unicorn B2B subscription and paid AX features.",
+      "Institutional SaaS (SGMS, collaboration tracking) and the G2B Stability API for public platforms and procurement.",
+    ],
+    businessSnapshot: [
+      "Cumulative revenue KRW 1.627B and contracts KRW 1.885B, with no outside investment.",
+      "Revenue KRW 295M (2023) → 601M (2024) → 730M (2025); about KRW 900M expected in 2026.",
+      "Customer churn under 8%, 36-month average engagement, LTV of about KRW 28.8M.",
+      "3M+ operational records across agreements, execution, evidence, settlement and labour costs.",
+      "Registered AI patent (No. 10-2831092); public PoCs with KOSME, SEMAS and Gwangju Metropolitan City.",
+    ],
+    team: [
+      {"name": "Hyunseok Lee", "role": "CEO & Chief Domain Architect", "bio": ["Turned the company-operations and research-admin problems he faced first-hand into a product.", "Leads domain definition, product direction, data standards and business expansion."]},
+      {"name": "Domain Operations", "role": "2 teams + quality layer", "bio": ["Research administration operations & QA, and data structuring & product intelligence.", "Turns real client work into data and decision rules — 11 people in total."]},
+      {"name": "Product & AI", "role": "Full-stack developers", "bio": ["Build Hello Unicorn, the stability evaluation and institutional SaaS.", "Adding an AI/data engineer and a backend/API engineer in 2026."]},
+    ],
+    seekingOpportunities: [
+      "Singapore partners for a paid pilot, leading to an annual contract and API integration.",
+      "Agencies and programme operators that manage grant-funded companies.",
+      "Investors for the Pre-A round.",
+    ],
   },
   {
     slug: "hellofriends",
