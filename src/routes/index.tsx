@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type CSSProperties } from "react";
 import { Wordmark } from "@/components/Wordmark";
+import globeArt from "@/assets/globe-asia.webp";
 import { JUDGES } from "@/data/speakers";
 import { companies } from "@/data/companies";
 import { STARTUP_IMAGES, STARTUP_LOGOS } from "@/data/companyImages";
@@ -27,8 +28,8 @@ export const Route = createFileRoute("/")({
 const ORGANIZER_EMAIL = "support@lodestart.ai";
 const KOSA_SITE = "https://www.sw.or.kr";
 
-// The page's one idea: who each startup serves, and what it gives them.
-// Wording condensed from each company's own one-line description.
+// Who each startup serves → what it gives them; shown on cards that have
+// no product photo yet. Condensed from each company's own description.
 const LEDGER: Record<string, [from: string, to: string]> = {
   stellarvision: ["Defence & disaster agencies", "SAR satellite intelligence"],
   clotho: ["SMEs & public agencies", "automated grant compliance"],
@@ -55,9 +56,9 @@ function ContactOrganizer() {
         type="button"
         onClick={handleCopy}
         title={ORGANIZER_EMAIL}
-        className="rounded-full border border-white/30 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/10 sm:px-4 sm:py-2 sm:text-sm"
+        className="rounded-md bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition hover:bg-primary/90 sm:px-4 sm:text-sm"
       >
-        {copied ? "Email copied" : "Contact"}
+        {copied ? "Email copied" : <><span className="sm:hidden">Contact</span><span className="hidden sm:inline">Contact Organizer</span></>}
       </button>
       {copied && (
         <span className="absolute right-0 top-full z-40 mt-2 whitespace-nowrap rounded-lg bg-white px-3 py-2 text-xs font-medium text-navy shadow-elegant">
@@ -98,27 +99,6 @@ function useReveal() {
   }, []);
 }
 
-// Pointer parallax for the hero art and scroll parallax for the dome:
-// writes --mx/--my (−1..1) and --sy (px) on #top; CSS does the moving.
-function useHeroParallax() {
-  useEffect(() => {
-    const hero = document.getElementById("top");
-    if (!hero || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let raf = 0, mx = 0, my = 0;
-    const paint = () => {
-      hero.style.setProperty("--mx", mx.toFixed(3));
-      hero.style.setProperty("--my", my.toFixed(3));
-      hero.style.setProperty("--sy", `${Math.min(scrollY, 900) * 0.25}px`);
-      raf = 0;
-    };
-    const queue = () => { if (!raf) raf = requestAnimationFrame(paint); };
-    const onMove = (e: PointerEvent) => { mx = (e.clientX / innerWidth) * 2 - 1; my = (e.clientY / innerHeight) * 2 - 1; queue(); };
-    addEventListener("pointermove", onMove, { passive: true });
-    addEventListener("scroll", queue, { passive: true });
-    return () => { removeEventListener("pointermove", onMove); removeEventListener("scroll", queue); cancelAnimationFrame(raf); };
-  }, []);
-}
-
 // 3D tilt + light sheen for [data-tilt] cards, magnetic pull for [data-magnet].
 function useTiltAndMagnet() {
   useEffect(() => {
@@ -145,101 +125,111 @@ function useTiltAndMagnet() {
   }, []);
 }
 
-const HEADLINE = ["Six", "Korean", "GovTech", "startups,", "one", "week", "in", "Singapore"];
+const HEADLINE = ["Korea", "GovTech", "Demo", "Day"];
 
-// Hero art: survey-plate grid plus a radar scope sweeping on the right.
-function Radar() {
+// Hero art (Tammy's mock-up: night earth with routes). Asia at night is
+// NASA Black Marble rendered as a globe on #08142E (three.js, 2880×1300);
+// city points are that render's projected coordinates, so routes land on
+// the real city lights. Every route ends in Singapore; Seoul's is orange.
+const CITY: Record<string, [number, number]> = {
+  seoul: [2148, 131], tokyo: [2404, 165], hongkong: [1875, 553], manila: [2067, 773],
+  bangkok: [1497, 788], hcmc: [1664, 883], singapore: [1587, 1131],
+};
+const ROUTES = ["seoul", "tokyo", "hongkong", "manila", "hcmc", "bangkok"];
+function arc(from: string, to: string) {
+  const [x1, y1] = CITY[from], [x2, y2] = CITY[to];
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1;
+  const bow = 0.22; // bulge to the right of the direction of travel
+  return `M${x1} ${y1} Q${mx - dy * bow} ${my + dx * bow} ${x2} ${y2}`;
+}
+function Globe({ align }: { align: "xMaxYMid" | "xMidYMid" }) {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      <div className="blueprint absolute inset-0" />
-      <div className="radar parallax-dome absolute -right-[260px] -top-[120px] h-[620px] w-[620px] opacity-80 lg:-right-[200px] lg:-top-[160px] lg:h-[900px] lg:w-[900px]">
-        <span className="blip left-[30%] top-[38%] [animation-delay:1.1s]" />
-        <span className="blip left-[62%] top-[24%] [animation-delay:2.3s]" />
-        <span className="blip left-[44%] top-[70%] [animation-delay:6.2s]" />
-      </div>
-    </div>
+    <svg viewBox="0 0 2880 1300" preserveAspectRatio={`${align} slice`} className="absolute inset-0 h-full w-full">
+      <g className="globe-drift">
+        <image href={globeArt} width="2880" height="1300" />
+        {ROUTES.map((c, i) => (
+          <path key={c} d={arc(c, "singapore")} pathLength={1} className={`route ${c === "seoul" ? "route-main" : ""}`} style={{ "--i": i } as CSSProperties} />
+        ))}
+        {ROUTES.map((c, i) => (
+          <path key={`p-${c}`} d={arc(c, "singapore")} pathLength={1} className="route-pulse" style={{ "--i": i } as CSSProperties} />
+        ))}
+        {ROUTES.map((c, i) => (
+          <circle key={`c-${c}`} cx={CITY[c][0]} cy={CITY[c][1]} r={c === "seoul" ? 11 : 8} className={`city ${c === "seoul" ? "city-hub" : ""}`} style={{ "--i": i } as CSSProperties} />
+        ))}
+        <circle cx={CITY.singapore[0]} cy={CITY.singapore[1]} r="12" className="city-ring" />
+        <circle cx={CITY.singapore[0]} cy={CITY.singapore[1]} r="13" className="city city-hub" style={{ "--i": 6 } as CSSProperties} />
+      </g>
+    </svg>
   );
 }
 
 function Landing() {
   useReveal();
-  useHeroParallax();
   useTiltAndMagnet();
   return (
     <div className="min-h-screen">
-      {/* HERO — the ledger */}
-      <section id="top" className="relative isolate overflow-hidden bg-hero-gradient text-white">
-        <Radar />
-        {/* Phones: wordmark row, then the menu row (four items never fit
-            beside the wordmark at 390px); from md they share one line. */}
-        <header className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between">
+      {/* HEADER — white bar above the hero, as in the mock-up */}
+      <header className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:px-6 md:flex-row md:items-center md:justify-between">
           <a href="#top" className="min-w-0">
-            <Wordmark light />
+            <Wordmark />
           </a>
-          <nav className="-mx-2 flex items-center gap-1 text-sm font-semibold md:mx-0 md:gap-2">
-            <a href="#startups" className="rounded-full px-2 py-1.5 text-white/85 hover:text-white md:px-3 md:py-2">Startups</a>
-            {JUDGES.length > 0 && <a href="#judges" className="rounded-full px-2 py-1.5 text-white/85 hover:text-white md:px-3 md:py-2">Judges</a>}
-            <a href="#about" className="rounded-full px-2 py-1.5 text-white/85 hover:text-white md:px-3 md:py-2">About</a>
-            <a href="/lounge" className="rounded-full px-2 py-1.5 text-white/85 hover:text-white md:px-3 md:py-2">Lounge</a>
-            <span className="ml-auto md:ml-1"><ContactOrganizer /></span>
+          <nav className="-mx-1 flex items-center gap-1.5 text-xs font-semibold text-navy sm:text-sm md:mx-0 md:gap-2">
+            <a href="#rsvp" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">RSVP</a>
+            <a href="#startups" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">Companies</a>
+            {JUDGES.length > 0 && <a href="#judges" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">Judges</a>}
+            <a href="#about" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">About</a>
+            <a href="/lounge" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">Lounge</a>
+            <span className="ml-auto md:ml-2"><ContactOrganizer /></span>
           </nav>
-        </header>
+        </div>
+      </header>
 
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-32 pt-8 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16 lg:pb-44 lg:pt-14">
-          <div className="lg:pt-4">
-            <p className="hero-in text-sm font-medium text-lichen">GovTech IR / Demo Day · {EVENT_DAY_SHORT} 2026</p>
-            <h1 className="hero-title mt-4 text-[clamp(2.6rem,9vw,5.2rem)] font-bold leading-[0.92] text-white" aria-label={HEADLINE.join(" ")}>
-              {HEADLINE.map((w, i) => (
-                <span key={w} aria-hidden>
-                  <span className="hero-word-clip">
-                    <span className="hero-word" style={{ "--i": i } as CSSProperties}>{w}</span>
-                  </span>{" "}
-                </span>
-              ))}
-            </h1>
-            <p className="hero-in [--i:5] mt-6 max-w-md text-[1.0625rem] leading-relaxed text-white/80">
-              Selected by KOSA, Korea's AI and software industry association, they come to Singapore to meet public
-              agencies, investors and partners. Sit down with the ones that fit, then watch them pitch.
-            </p>
-            <div className="hero-in [--i:6] mt-8 flex flex-wrap gap-3">
-              <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet rounded-full px-6 py-3.5 text-sm font-semibold">
-                RSVP for the Demo Day
-              </Link>
-              {ONE_ON_ONE_OPEN && (
-                <Link to="/book" search={{ day: "5" }} data-magnet className="btn-outline-hero magnet rounded-full px-6 py-3.5 text-sm font-semibold">
-                  Book a 1:1 meeting
-                </Link>
-              )}
-            </div>
-          </div>
-
-          <ol className="ledger border-t border-white/15" aria-label="Who each startup serves">
-            {companies.map((c, i) => {
-              const [from, to] = LEDGER[c.slug] ?? ["", c.sector];
-              return (
-                <li key={c.slug} style={{ "--d": `${120 + i * 70}ms` } as CSSProperties} className="ledger-row border-b border-white/15">
-                  <Link
-                    to="/companies/$slug"
-                    params={{ slug: c.slug }}
-                    className="group grid grid-cols-[1fr_auto] items-baseline gap-x-4 py-3 sm:grid-cols-[minmax(0,1fr)_3.5rem_minmax(0,1fr)_7rem] sm:py-3.5"
-                  >
-                    <span className="text-[15px] text-white/60 sm:text-base">{from}</span>
-                    <span className="ledger-arrow hidden h-px self-center bg-yellow sm:block" aria-hidden />
-                    <span className="col-start-1 font-display text-lg font-semibold leading-snug text-white sm:col-start-auto sm:text-xl">
-                      <span className="sm:hidden" aria-hidden>→ </span>
-                      {to}
-                    </span>
-                    <span className="col-start-2 row-span-2 row-start-1 self-center text-right text-xs font-semibold text-lichen transition group-hover:text-yellow sm:col-start-auto sm:row-auto sm:text-sm">
-                      {c.name}
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ol>
+      {/* HERO — night earth, routes into Singapore */}
+      <section id="top" className="relative isolate overflow-hidden bg-[#08142e] text-white">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="hidden h-full md:block"><Globe align="xMaxYMid" /></div>
+          <div className="h-full md:hidden"><Globe align="xMidYMid" /></div>
+          {/* keeps the copy readable where it crosses the globe */}
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,#08142e_0%,rgb(8_20_46/0.85)_30%,rgb(8_20_46/0.1)_62%,transparent_100%)] max-md:bg-[linear-gradient(180deg,rgb(8_20_46/0.9)_0%,rgb(8_20_46/0.7)_55%,transparent_80%)]" />
         </div>
 
-        {/* Cohort marquee: the names (logos once supplied) glide across the foot of the hero */}
+        <div className="mx-auto flex min-h-[560px] max-w-7xl flex-col justify-center px-4 pb-56 pt-14 sm:px-6 md:pb-20 md:pt-20 md:min-h-[620px] lg:py-28">
+          <p className="hero-in text-xs font-bold uppercase tracking-[0.16em] text-yellow">KOSA · Singapore 2026</p>
+          <h1 className="hero-title mt-4 max-w-2xl text-[clamp(2.5rem,7vw,4.4rem)] font-extrabold leading-[1.02] text-white" aria-label={HEADLINE.join(" ")}>
+            {HEADLINE.map((w, i) => (
+              <span key={w} aria-hidden>
+                <span className="hero-word-clip">
+                  <span className="hero-word" style={{ "--i": i } as CSSProperties}>{w}</span>
+                </span>{" "}
+                {i === 1 && <br />}
+              </span>
+            ))}
+          </h1>
+          <p className="hero-in [--i:5] mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-[1.0625rem]">
+            Six Korean GovTech companies take the stage in Singapore to pitch breakthrough solutions and demonstrate
+            technology built for better public services. Meet the founders, experience live demos, and explore
+            opportunities for pilots and cross-border partnerships.
+          </p>
+          <div className="hero-in [--i:6] mt-8 flex flex-wrap gap-3">
+            <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet rounded-full px-6 py-3.5 text-sm font-semibold">
+              Join Demo Day →
+            </Link>
+            {ONE_ON_ONE_OPEN && (
+              <Link to="/book" search={{ day: "5" }} data-magnet className="btn-outline-hero magnet rounded-full px-6 py-3.5 text-sm font-semibold">
+                Schedule a 1:1 Meeting
+              </Link>
+            )}
+          </div>
+          <p className="hero-in [--i:7] mt-8 text-sm font-medium text-white/70">
+            1:1 meetings {MEETUP_DAY_SHORT} · Demo Day {EVENT_DAY_SHORT}
+          </p>
+        </div>
+
+      </section>
+
+      {/* Cohort marquee: logos (names until supplied) glide under the hero */}
+      <section className="bg-[#08142e]">
         <div className="marquee relative border-t border-white/10 py-5" aria-hidden>
           <div className="marquee-track">
             {[...companies, ...companies].map((c, i) => (
@@ -333,7 +323,7 @@ function Landing() {
                   ) : (
                     // No product photo yet: the "serves" line from the hero, set large.
                     <>
-                      <span aria-hidden className="blueprint absolute inset-0" />
+                      <span aria-hidden className="dotgrid absolute inset-0" />
                       <span className="absolute inset-0 flex items-end p-3 font-display text-lg font-semibold leading-tight text-white sm:p-4 sm:text-xl">
                         {LEDGER[c.slug]?.[1] ?? c.sector}
                       </span>
@@ -403,7 +393,7 @@ function Landing() {
 
       {/* HOST — KOSA only for now (same rule as KISED: hosts first) */}
       <section id="about" className="relative isolate overflow-hidden bg-hero-gradient text-white">
-        <div aria-hidden className="blueprint pointer-events-none absolute inset-0 -z-10" />
+        <div aria-hidden className="dotgrid pointer-events-none absolute inset-0 -z-10" />
         <div data-reveal className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20">
           <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">About KOSA GovTech Singapore</h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-white/80">
@@ -418,7 +408,7 @@ function Landing() {
               <a href={KOSA_SITE} target="_blank" rel="noopener noreferrer" className="font-display text-3xl font-bold tracking-tight hover:text-yellow">
                 KOSA
               </a>
-              <p className="mt-3 font-display text-lg font-semibold leading-snug">Korea Artificial Intelligence &amp; Software Industry Association</p>
+              <p className="mt-3 font-display text-lg font-semibold leading-snug">Korea AI·Software Industry Association</p>
               <p className="mt-2 text-sm leading-relaxed text-white/75">
                 Korea's industry association for AI and software companies. It represents its members on policy and
                 runs programmes that help them grow at home and abroad, including this one.

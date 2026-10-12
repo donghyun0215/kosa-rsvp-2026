@@ -380,7 +380,7 @@ function RsvpPage() {
 
       {/* HERO */}
       <section className="relative isolate overflow-hidden bg-hero-gradient text-primary-foreground">
-        <div aria-hidden className="blueprint pointer-events-none absolute inset-0 -z-10" />
+        <div aria-hidden className="dotgrid pointer-events-none absolute inset-0 -z-10" />
         <div className="mx-auto max-w-5xl px-5 py-10 sm:px-6 sm:py-12">
           <div className="text-sm font-semibold text-primary-foreground/70">
             {day === "5" ? "RSVP · 1:1 business meetings" : "RSVP · Demo Day"}

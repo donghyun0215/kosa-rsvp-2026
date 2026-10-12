@@ -11,7 +11,7 @@ export interface Timeslot {
 // meetings (Tue 3 Nov) and the Demo Day (Wed 4 Nov).
 export const SITE_URL = "https://kosa-rsvp-2026.vercel.app";
 // ponytail: host only for now (KISED lesson); add MYSC / LodestarT if KOSA wants.
-export const CREDITS = "Hosted by the Korea Artificial Intelligence & Software Industry Association (KOSA)";
+export const CREDITS = "Hosted by the Korea AI·Software Industry Association (KOSA)";
 
 // ponytail: the master sheet still says "KOSA GovTech (TBC)" — swap in the
 // official English programme name once KOSA confirms it.
