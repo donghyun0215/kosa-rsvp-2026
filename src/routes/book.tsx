@@ -866,7 +866,8 @@ function RsvpPage() {
           </div>
         </form>
 
-        {/* CHECK / MANAGE — #manage is linked from the confirmation email */}
+        {/* CHECK / MANAGE — 1:1 day only; linked from the confirmation email (/book?day=5#manage) */}
+        {day === "5" && (
         <div id="manage" className="mt-12 scroll-mt-24 rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
           <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
             Already registered?
@@ -944,6 +945,7 @@ function RsvpPage() {
             </div>
           )}
         </div>
+        )}
 
         <p className="mt-8 text-center text-xs leading-relaxed text-muted-foreground">
           By submitting, you agree that the organizers may use your details to manage event

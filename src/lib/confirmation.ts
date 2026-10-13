@@ -113,7 +113,7 @@ export function buildConfirmation(input: ConfirmationInput): ConfirmationEmail {
     "K-GovTech Open Innovation Day · 1:1 Business Meetings",
     "20261103T143000/20261103T165000",
     `${MEETUP_VENUE}, ${MEETUP_ADDRESS}`,
-    ["Your 1:1 meetings:", ...meetings.map((m) => `• ${m.round} ${m.time} — ${m.company}`), "", `Manage: ${SITE}/book#manage`].join("\n"),
+    ["Your 1:1 meetings:", ...meetings.map((m) => `• ${m.round} ${m.time} — ${m.company}`), "", `Manage: ${SITE}/book?day=5#manage`].join("\n"),
   );
   const demoCal = gcal(
     "K-GovTech Open Innovation Day · Singapore Demo Day",
@@ -146,7 +146,7 @@ export function buildConfirmation(input: ConfirmationInput): ConfirmationEmail {
     t.push("• Check-in: scan the QR code at the entrance and enter this email address to collect your name badge.");
     t.push(`• Networking Lounge: a private, attendee-only directory of everyone in the room — ${SITE}/lounge`, "");
   }
-  t.push(`View or cancel your 1:1 meetings: ${SITE}/book#manage`);
+  t.push(`View or cancel your 1:1 meetings: ${SITE}/book?day=5#manage`);
   t.push(`Startup one-pagers: ${SITE}/#startups`, "");
   t.push("Need to change something? Re-submit the RSVP form with the same email, or simply reply to this email.", "");
   if (!personal) t.push("Warm regards,", "LodestarT team, for K-GovTech Open Innovation Day 2026");
@@ -201,7 +201,7 @@ ${personalHtml}
     <div style="background:#fdf6e3;border:1px solid #f2c14e;padding:12px 14px;">A few <b>1:1 meeting slots on Tue 3 Nov</b> are still open — ${link(`${SITE}/book?day=5`, "book a meeting")}.</div>
   </td></tr>` : ""}
   <tr><td style="padding:4px 32px 22px;${F}font-size:14px;line-height:21px;color:#0f2a2c;">
-    ${link(`${SITE}/book#manage`, "View or cancel your 1:1 meetings")}<br>
+    ${link(`${SITE}/book?day=5#manage`, "View or cancel your 1:1 meetings")}<br>
     ${link(`${SITE}/#startups`, "Browse the startup one-pagers")}<br><br>
     Need to change something? Re-submit the RSVP form with the same email, or simply reply to this email.
   </td></tr>

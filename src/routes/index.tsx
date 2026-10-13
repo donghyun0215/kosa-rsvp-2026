@@ -126,7 +126,7 @@ function useTiltAndMagnet() {
   }, []);
 }
 
-const HEADLINE = ["Korea", "GovTech", "Demo", "Day"];
+const HEADLINE = ["K-GovTech", "Open", "Innovation", "Day"];
 
 // Hero art (Tammy's mock-up: night earth with routes). Asia at night is
 // NASA Black Marble rendered as a globe on #08142E (three.js, 2880×1300);
@@ -176,11 +176,11 @@ function Landing() {
             <Wordmark />
           </a>
           <nav className="-mx-1 flex items-center gap-1.5 text-xs font-semibold text-navy sm:text-sm md:mx-0 md:gap-2">
-            <a href="#rsvp" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">RSVP</a>
-            <a href="#startups" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">Companies</a>
-            {JUDGES.length > 0 && <a href="#judges" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">Judges</a>}
-            <a href="#about" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">About</a>
-            <a href="/lounge" className="rounded-md bg-secondary px-2.5 py-2 hover:bg-accent md:px-4">Lounge</a>
+            <a href="#rsvp" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">RSVP</a>
+            <a href="#startups" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">Companies</a>
+            {JUDGES.length > 0 && <a href="#judges" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">Judges</a>}
+            <a href="#about" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">About</a>
+            <a href="/lounge" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">Lounge</a>
             <span className="ml-auto md:ml-2"><ContactOrganizer /></span>
           </nav>
         </div>
@@ -208,9 +208,8 @@ function Landing() {
             ))}
           </h1>
           <p className="hero-in [--i:5] mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-[1.0625rem]">
-            Six Korean GovTech companies take the stage in Singapore to pitch breakthrough solutions and demonstrate
-            technology built for better public services. Meet the founders, experience live demos, and explore
-            opportunities for pilots and cross-border partnerships.
+            Six Korean startups bring AI built for public services to Singapore. Meet the founders, see the live
+            demos and find your next pilot or cross-border partner.
           </p>
           <div className="hero-in [--i:6] mt-8 flex flex-wrap gap-3">
             <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet rounded-full px-6 py-3.5 text-sm font-semibold">
@@ -319,7 +318,7 @@ function Landing() {
                       src={STARTUP_IMAGES[c.slug]}
                       alt={`${c.name}: ${c.sector}`}
                       loading="lazy"
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                      className={`h-full w-full object-cover ${c.slug === "llumos" ? "object-left-top" : ""} transition duration-500 group-hover:scale-[1.03]`}
                     />
                   ) : (
                     // No product photo yet: the "serves" line from the hero, set large.
@@ -332,9 +331,9 @@ function Landing() {
                   )}
                 </Link>
                 <div className="flex flex-1 flex-col gap-2 p-3 sm:p-4">
-                  <Link to="/companies/$slug" params={{ slug: c.slug }} className="flex h-8 items-center" title={c.name}>
+                  <Link to="/companies/$slug" params={{ slug: c.slug }} className="flex h-10 items-center" title={c.name}>
                     {STARTUP_LOGOS[c.slug] ? (
-                      <img src={STARTUP_LOGOS[c.slug]} alt={c.name} className="max-h-7 max-w-[120px] object-contain object-left sm:max-h-8 sm:max-w-[150px]" />
+                      <img src={STARTUP_LOGOS[c.slug]} alt={c.name} className={`${c.slug === "mediaiplus" ? "max-h-10" : "max-h-7 sm:max-h-8"} max-w-[120px] object-contain object-left sm:max-w-[150px]`} />
                     ) : (
                       <span className="font-display text-lg font-bold text-navy">{c.name}</span>
                     )}
@@ -342,13 +341,6 @@ function Landing() {
                   <div className="text-xs font-semibold text-primary">{c.sector}</div>
                   <p className="line-clamp-3 text-xs leading-relaxed text-muted-foreground sm:text-[13px]">{c.tagline}</p>
                   <div className="mt-auto flex flex-col gap-2 pt-2">
-                    <Link
-                      to="/companies/$slug"
-                      params={{ slug: c.slug }}
-                      className="rounded-full border border-primary px-3 py-2 text-center text-xs font-semibold text-primary hover:bg-primary/10"
-                    >
-                      View profile
-                    </Link>
                     {ONE_ON_ONE_OPEN && (
                       <Link
                         to="/book"
@@ -358,6 +350,13 @@ function Landing() {
                         Book a 1:1 meeting
                       </Link>
                     )}
+                    <Link
+                      to="/companies/$slug"
+                      params={{ slug: c.slug }}
+                      className="py-1 text-center text-xs font-semibold text-navy/70 transition hover:text-primary"
+                    >
+                      View profile →
+                    </Link>
                   </div>
                 </div>
               </article>
@@ -395,7 +394,8 @@ function Landing() {
       {/* HOST — KOSA only for now (same rule as KISED: hosts first) */}
       <section id="about" className="relative isolate overflow-hidden bg-hero-gradient text-white">
         <div aria-hidden className="dotgrid pointer-events-none absolute inset-0 -z-10" />
-        <div data-reveal className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20">
+        <div data-reveal className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+          <div>
           <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">About the K-GovTech Open Innovation Day</h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-white/80">
             A KOSA programme that takes Korean GovTech startups to Singapore to meet public agencies, investors and
@@ -403,7 +403,8 @@ function Landing() {
             1:1 business meetings, the IR / Demo Day and visits to ecosystem partners.
           </p>
 
-          <div className="mt-12 border-t border-white/15 pt-10">
+          </div>
+          <div className="border-t border-white/15 pt-10 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-1">
             <p className="text-sm font-medium text-lichen">Hosted by</p>
             <div className="mt-4 max-w-xl">
               <a href={KOSA_SITE} target="_blank" rel="noopener noreferrer" className="inline-flex">

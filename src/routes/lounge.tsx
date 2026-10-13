@@ -405,7 +405,7 @@ function LoungePage() {
                   <LockGlyph className="h-5 w-5 text-primary" />
                 </div>
                 <div className="relative min-w-0">
-                  <h2 className="text-sm font-bold text-navy">{"<Networking Lounge Notice>"}</h2>
+                  <h2 className="text-sm font-bold text-navy">Networking lounge notice</h2>
                   <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                     To facilitate professional networking during the {EVENT_NAME},
                     this directory displays the name, organisation, designation and primary business
