@@ -89,7 +89,7 @@ export const companies: Company[] = [
   {
     slug: "clotho",
     name: "Clotho",
-    displayName: "Clotho Co., Ltd.",
+    displayName: "Clotho Inc.",
     tagline: "AI-driven administrative automation (AX) platform “Hello Unicorn” that manages government-grant execution, compliance and risk prediction for SMEs and public agencies.",
     sector: "Administrative AI · Grant compliance",
     stage: "Founded 2023 · no outside funding",
