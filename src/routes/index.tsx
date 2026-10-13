@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type CSSProperties } from "react";
 import { Wordmark } from "@/components/Wordmark";
 import globeArt from "@/assets/globe-asia.webp";
-import kosaLogoWhite from "@/assets/logos/kosa-white.png";
+import kosaLogo from "@/assets/logos/kosa-en.png";
 import { JUDGES } from "@/data/speakers";
 import { companies } from "@/data/companies";
 import { STARTUP_IMAGES, STARTUP_LOGOS } from "@/data/companyImages";
@@ -196,7 +196,7 @@ function Landing() {
         </div>
 
         <div className="mx-auto flex min-h-[560px] max-w-7xl flex-col justify-center px-4 pb-56 pt-14 sm:px-6 md:pb-20 md:pt-20 md:min-h-[620px] lg:py-28">
-          <p className="hero-in text-xs font-bold uppercase tracking-[0.16em] text-yellow">KOSA · Singapore 2026</p>
+          <p className="hero-in text-xs font-bold uppercase tracking-[0.16em] text-yellow">Hosted by KOSA · Korea AI·Software Industry Association</p>
           <h1 className="hero-title mt-4 max-w-2xl text-[clamp(2.5rem,7vw,4.4rem)] font-extrabold leading-[1.02] text-white" aria-label={HEADLINE.join(" ")}>
             {HEADLINE.map((w, i) => (
               <span key={w} aria-hidden>
@@ -408,7 +408,7 @@ function Landing() {
             <p className="text-sm font-medium text-lichen">Hosted by</p>
             <div className="mt-4 max-w-xl">
               <a href={KOSA_SITE} target="_blank" rel="noopener noreferrer" className="inline-flex">
-                <img src={kosaLogoWhite} alt="KOSA — Korea AI·Software Industry Association" className="h-14 w-auto" />
+                <span className="inline-flex rounded-xl bg-white px-4 py-2.5 shadow-sm"><img src={kosaLogo} alt="KOSA — Korea AI·Software Industry Association" className="h-20 w-auto" /></span>
               </a>
               <p className="mt-4 text-sm leading-relaxed text-white/75">
                 Korea's industry association for AI and software companies. It represents its members on policy and
