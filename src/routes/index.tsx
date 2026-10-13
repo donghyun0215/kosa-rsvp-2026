@@ -396,7 +396,7 @@ function Landing() {
       <section id="about" className="relative isolate overflow-hidden bg-hero-gradient text-white">
         <div aria-hidden className="dotgrid pointer-events-none absolute inset-0 -z-10" />
         <div data-reveal className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20">
-          <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">About KOSA GovTech Singapore</h2>
+          <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">About the K-GovTech Open Innovation Day</h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-white/80">
             A KOSA programme that takes Korean GovTech startups to Singapore to meet public agencies, investors and
             partners. The six startups selected in Korea spend 2–6 November in Singapore for a market-entry workshop,

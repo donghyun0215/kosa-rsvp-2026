@@ -1,4 +1,4 @@
-// KOSA GovTech Singapore 2026 — six Korean GovTech startups.
+// K-GovTech Open Innovation Day 2026 — six Korean GovTech startups.
 // Source: each startup's programme one-pager (12 Oct, via the KOSA master
 // sheet links). Copy follows the companies' own wording (light edits for
 // grammar). Clotho has no one-pager yet: its profile is translated from its
@@ -36,7 +36,7 @@ export interface Company {
 // One cohort on this event; track2 kept empty so shared components compile.
 export const TRACKS = {
   track1: {
-    title: "KOSA GovTech Singapore 2026",
+    title: "K-GovTech Open Innovation Day 2026",
     theme: "Six Korean GovTech startups selected by KOSA",
     dates: "3 – 4 November 2026",
   },
