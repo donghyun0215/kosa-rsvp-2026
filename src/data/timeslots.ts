@@ -17,7 +17,7 @@ export const CREDITS = "Hosted by the Korea AI·Software Industry Association (K
 export const EVENT_NAME = "K-GovTech Open Innovation Day 2026";
 export const EVENT_NAME_SHORT = "K-GovTech";
 export const EVENT_NAME_LINE1 = "K-GovTech Open Innovation Day 2026";
-export const EVENT_NAME_LINE2 = "GovTech IR / Demo Day";
+export const EVENT_NAME_LINE2 = "1:1 Meetings & Demo Day";
 
 export const EVENT_DATE = "Wednesday, 4 November 2026";
 export const EVENT_DAY_SHORT = "Wed 4 Nov";
