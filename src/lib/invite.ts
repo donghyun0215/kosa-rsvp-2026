@@ -28,6 +28,15 @@ const DATES = "3–4 November 2026 · Singapore";
 const SUBJECT = `Invitation to the ${EVENT_NAME} (3–4 Nov, Singapore)`;
 const PITCH =
   "Six Korean startups building AI for public services, selected by the Korea AI·Software Industry Association (KOSA), are coming to Singapore to meet public agencies, investors and partners.";
+// One line per startup for the "Featuring" list (falls back to the site tagline).
+const LINES: Record<string, string> = {
+  stellarvision: "SAR satellite data and AI analytics for defence, public-sector and disaster response",
+  clotho: "AI platform that manages government-grant execution, compliance and risk",
+  hellofriends: "Multilingual AI kiosks giving migrant workers trusted public-service answers",
+  shareplat: "Physical AI robots for safer, faster utility infrastructure work",
+  mediaiplus: "AI matching between biotechs and global CROs for faster clinical trials",
+  llumos: "Vertical AI agent that handles grant expense administration end to end",
+};
 const ORDER: ("demo" | "meetup")[] = ["meetup", "demo"]; // chronological
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -69,13 +78,10 @@ export function buildInvite(team = false): { subject: string; html: string; text
       : "",
   };
 
-  const names = companies.map((c) => c.name);
-  const half = Math.ceil(names.length / 2);
-  const cell = (i: number) =>
-    i < names.length
-      ? `<td width="50%" style="padding:3px 0;${F}font-size:13px;line-height:18px;color:${C.ink};"><span style="color:${C.brand};font-weight:bold;">${String(i + 1).padStart(2, "0")}</span>&nbsp; ${esc(names[i])}</td>`
-      : `<td width="50%"></td>`;
-  const featuring = Array.from({ length: half }, (_, r) => `<tr>${cell(r * 2)}${cell(r * 2 + 1)}</tr>`).join("");
+  const lineOf = (c: (typeof companies)[number]) => LINES[c.slug] ?? c.tagline;
+  const featuring = companies
+    .map((c, i) => `<tr><td style="padding:5px 10px 5px 0;${F}font-size:13px;line-height:18px;color:${C.brand};font-weight:bold;vertical-align:top;white-space:nowrap;">${String(i + 1).padStart(2, "0")}</td><td style="padding:5px 0;${F}font-size:13px;line-height:18px;color:${C.ink};"><b>${esc(c.name)}</b> <span style="color:${C.muted};">— ${esc(lineOf(c))}</span></td></tr>`)
+    .join("");
 
   const intro = [
     "I hope this email finds you well.",
@@ -123,7 +129,8 @@ ${ORDER.map((k) => blocks[k]).join("")}
     "",
     "----",
     ...ORDER.flatMap((k) => [...(k === "demo" ? demoText : meetText), ""]),
-    `Featuring: ${names.join(", ")}`,
+    "Featuring:",
+    ...companies.map((c, i) => `${String(i + 1).padStart(2, "0")} ${c.name} — ${lineOf(c)}`),
     `Startup profiles: ${SITE}/#startups`,
     "",
     `If you would rather not receive invitations like this, just let ${team ? "us" : "me"} know.`,
