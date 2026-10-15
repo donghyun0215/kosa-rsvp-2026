@@ -13,7 +13,7 @@ export const Route = createFileRoute("/admin")({
   component: AdminPage,
   head: () => ({
     meta: [
-      { title: "Admin — K-GovTech Open Innovation Day 2026" },
+      { title: "Admin — K-GovTech Open Innovation Day in Singapore" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

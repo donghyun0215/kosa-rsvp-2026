@@ -84,10 +84,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#0E1F3F" },
       // Invite-only event site: keep it out of search engines (6 Oct)
       { name: "robots", content: "noindex, nofollow" },
-      { title: "K-GovTech Open Innovation Day 2026 · Demo Day & 1:1 meetings" },
+      { title: "K-GovTech Open Innovation Day in Singapore · Demo Day & 1:1 meetings" },
       { name: "description", content: "Six Korean GovTech startups selected by KOSA meet agencies, investors and partners in Singapore: 1:1 meetings on 3 November and the Demo Day on 4 November 2026." },
       { name: "author", content: "LodestarT" },
-      { property: "og:title", content: "K-GovTech Open Innovation Day 2026" },
+      { property: "og:title", content: "K-GovTech Open Innovation Day in Singapore" },
       { property: "og:description", content: "Six Korean GovTech startups meet agencies, investors and partners in Singapore, 3–4 November 2026." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

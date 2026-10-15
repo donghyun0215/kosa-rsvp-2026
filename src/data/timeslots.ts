@@ -4,19 +4,19 @@ export interface Timeslot {
   time: string;
 }
 
-// ── K-GovTech Open Innovation Day 2026 (KOSA) ──
+// ── K-GovTech Open Innovation Day in Singapore (KOSA) ──
 // Everything event-specific lives in this file, so a confirmed venue or time
 // is a one-line change. Source: "[마스터파일] KOSA" (주요 안내 + 일정표_TBC),
 // read 12 Oct. Programme 2–6 Nov; public days are the 1:1 business
 // meetings (Tue 3 Nov) and the Demo Day (Wed 4 Nov).
 export const SITE_URL = "https://kosa-rsvp-2026.vercel.app";
-// ponytail: host only for now (KISED lesson); add MYSC / LodestarT if KOSA wants.
-export const CREDITS = "Hosted by the Korea AI·Software Industry Association (KOSA)";
+// Organisers as KOSA asked (15 Oct): 주무부처 MSIT · 전담기관 NIPA · 지원기관 KOSA.
+export const CREDITS = "Ministry of Science and ICT (MSIT) · National IT Industry Promotion Agency (NIPA) · Korea AI·Software Industry Association (KOSA)";
 
-// Name from the MYSC one-pager template footer (12 Oct); master sheet still says "KOSA GovTech (TBC)".
-export const EVENT_NAME = "K-GovTech Open Innovation Day 2026";
+// Official name from KOSA (15 Oct).
+export const EVENT_NAME = "K-GovTech Open Innovation Day in Singapore";
 export const EVENT_NAME_SHORT = "K-GovTech";
-export const EVENT_NAME_LINE1 = "K-GovTech Open Innovation Day 2026";
+export const EVENT_NAME_LINE1 = "K-GovTech Open Innovation Day in Singapore";
 export const EVENT_NAME_LINE2 = "1:1 Meetings & Demo Day";
 
 export const EVENT_DATE = "Wednesday, 4 November 2026";

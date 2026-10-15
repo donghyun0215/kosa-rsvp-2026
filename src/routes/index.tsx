@@ -2,7 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type CSSProperties } from "react";
 import { Wordmark } from "@/components/Wordmark";
 import globeArt from "@/assets/globe-asia.webp";
-import kosaLogo from "@/assets/logos/kosa-en.png";
+import kosaLogo from "@/assets/logos/kosa-en-wide.png";
+import nipaLogo from "@/assets/logos/nipa-en.png";
+import msitLogo from "@/assets/logos/msit.png";
 import { JUDGES } from "@/data/speakers";
 import { companies } from "@/data/companies";
 import { STARTUP_IMAGES, STARTUP_LOGOS } from "@/data/companyImages";
@@ -28,6 +30,15 @@ export const Route = createFileRoute("/")({
 
 const ORGANIZER_EMAIL = "support@lodestart.ai";
 const KOSA_SITE = "https://www.sw.or.kr";
+// Organisers in the order KOSA gave (15 Oct): 주무부처 · 전담기관 · 지원기관.
+const ORGANISERS = [
+  { role: "Supervising ministry", name: "Ministry of Science and ICT (MSIT)", logo: msitLogo, href: "https://www.msit.go.kr/eng/", h: "h-11",
+    blurb: "Korea's ministry for science, ICT and digital policy." },
+  { role: "Implementing agency", name: "National IT Industry Promotion Agency (NIPA)", logo: nipaLogo, href: "https://www.nipa.kr/eng/", h: "h-8",
+    blurb: "The MSIT agency that runs Korea's IT and software industry programmes, including this one." },
+  { role: "Supporting organisation", name: "Korea AI·Software Industry Association (KOSA)", logo: kosaLogo, href: KOSA_SITE, h: "h-8",
+    blurb: "Korea's industry association for AI and software companies, which selected the startups." },
+];
 
 // Who each startup serves → what it gives them; shown on cards that have
 // no product photo yet. Condensed from each company's own description.
@@ -126,7 +137,7 @@ function useTiltAndMagnet() {
   }, []);
 }
 
-const HEADLINE = ["K-GovTech", "Open", "Innovation", "Day"];
+const HEADLINE = ["K-GovTech", "Open", "Innovation", "Day", "in Singapore"];
 
 // Hero art (Tammy's mock-up: night earth with routes). Asia at night is
 // NASA Black Marble rendered as a globe on #08142E (three.js, 2880×1300);
@@ -196,14 +207,14 @@ function Landing() {
         </div>
 
         <div className="mx-auto flex min-h-[560px] max-w-7xl flex-col justify-center px-4 pb-56 pt-14 sm:px-6 md:pb-20 md:pt-20 md:min-h-[620px] lg:py-28">
-          <p className="hero-in text-xs font-bold uppercase tracking-[0.16em] text-yellow">Hosted by KOSA · Korea AI·Software Industry Association</p>
+          <p className="hero-in text-xs font-bold uppercase tracking-[0.16em] text-yellow">Ministry of Science and ICT · NIPA · KOSA</p>
           <h1 className="hero-title mt-4 max-w-2xl text-[clamp(2.5rem,7vw,4.4rem)] font-extrabold leading-[1.02] text-white" aria-label={HEADLINE.join(" ")}>
             {HEADLINE.map((w, i) => (
               <span key={w} aria-hidden>
                 <span className="hero-word-clip">
-                  <span className="hero-word" style={{ "--i": i } as CSSProperties}>{w}</span>
+                  <span className={`hero-word ${i === 4 ? "text-yellow" : ""}`} style={{ "--i": i } as CSSProperties}>{w}</span>
                 </span>{" "}
-                {i === 1 && <br />}
+                {(i === 1 || i === 3) && <br />}
               </span>
             ))}
           </h1>
@@ -391,30 +402,27 @@ function Landing() {
         </section>
       )}
 
-      {/* HOST — KOSA only for now (same rule as KISED: hosts first) */}
+      {/* ORGANISERS — MSIT · NIPA · KOSA, as KOSA asked (15 Oct) */}
       <section id="about" className="relative isolate overflow-hidden bg-hero-gradient text-white">
         <div aria-hidden className="dotgrid pointer-events-none absolute inset-0 -z-10" />
-        <div data-reveal className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
-          <div>
-          <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">About the K-GovTech Open Innovation Day</h2>
+        <div data-reveal className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20">
+          <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">About the K-GovTech Open Innovation Day in Singapore</h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-white/80">
-            A KOSA programme that takes Korean GovTech startups to Singapore to meet public agencies, investors and
-            partners. The six startups selected in Korea spend 2–6 November in Singapore for a market-entry workshop,
-            1:1 business meetings, the IR / Demo Day and visits to ecosystem partners.
+            A Korean government programme that takes Korean GovTech startups to Singapore to meet public agencies,
+            investors and partners. The six startups selected in Korea spend 2–6 November in Singapore for a
+            market-entry workshop, 1:1 business meetings, the IR / Demo Day and visits to ecosystem partners.
           </p>
 
-          </div>
-          <div className="border-t border-white/15 pt-10 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-1">
-            <p className="text-sm font-medium text-lichen">Hosted by</p>
-            <div className="mt-4 max-w-xl">
-              <a href={KOSA_SITE} target="_blank" rel="noopener noreferrer" className="inline-flex">
-                <span className="inline-flex rounded-xl bg-white px-4 py-2.5 shadow-sm"><img src={kosaLogo} alt="KOSA — Korea AI·Software Industry Association" className="h-20 w-auto" /></span>
-              </a>
-              <p className="mt-4 text-sm leading-relaxed text-white/75">
-                Korea's industry association for AI and software companies. It represents its members on policy and
-                runs programmes that help them grow at home and abroad, including this one.
-              </p>
-            </div>
+          <div className="mt-12 grid gap-10 border-t border-white/15 pt-10 md:grid-cols-3 md:gap-8">
+            {ORGANISERS.map((o) => (
+              <div key={o.role}>
+                <p className="text-sm font-medium text-lichen">{o.role}</p>
+                <a href={o.href} target="_blank" rel="noopener noreferrer" className="mt-4 flex h-20 items-center rounded-xl bg-white px-5 shadow-sm">
+                  <img src={o.logo} alt={o.name} className={`${o.h} w-auto max-w-full object-contain`} />
+                </a>
+                <p className="mt-4 text-sm leading-relaxed text-white/75">{o.blurb}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -422,6 +430,9 @@ function Landing() {
       <footer className="bg-background">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-6 px-4 py-10 text-sm text-muted-foreground sm:px-6">
           <Wordmark />
+          <div className="flex flex-wrap items-center gap-6">
+            {ORGANISERS.map((o) => <img key={o.role} src={o.logo} alt={o.name} className={`${o.h === "h-11" ? "h-9" : "h-6"} w-auto`} />)}
+          </div>
           <div>
             <a href={`mailto:${ORGANIZER_EMAIL}`} className="font-semibold text-primary hover:underline">{ORGANIZER_EMAIL}</a>
           </div>

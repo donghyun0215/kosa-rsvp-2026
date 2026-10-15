@@ -23,7 +23,7 @@ import {
 
 // ── per-event copy and colours ──
 const C = { brand: "#0b7468", accent: "#f2c14e", ink: "#10233a", muted: "#4a5b59", line: "#d6e2e0" };
-const HOST_LINE = "KOSA · Korea AI·Software Industry Association";
+const HOST_LINE = "MSIT · NIPA · KOSA";
 const DATES = "3–4 November 2026 · Singapore";
 const SUBJECT = `Invitation to the ${EVENT_NAME} (3–4 Nov, Singapore)`;
 const PITCH =
@@ -85,7 +85,7 @@ export function buildInvite(team = false): { subject: string; html: string; text
 
   const intro = [
     "I hope this email finds you well.",
-    `${I} delighted to invite you to the <b>${esc(EVENT_NAME)}</b> in Singapore. ${esc(PITCH)}`,
+    `${I} delighted to invite you to the <b>${esc(EVENT_NAME)}</b>. ${esc(PITCH)}`,
     ONE_ON_ONE_OPEN
       ? `They will pitch at the Demo Day on <b>${esc(EVENT_DATE)}</b>, and you are welcome to book private 1:1 meetings with the ones that interest you ${(EVENT_DATE as string) === MEETUP_DATE ? "that afternoon" : `on <b>${esc(MEETUP_DATE)}</b>`}.`
       : `They will pitch at the Demo Day on <b>${esc(EVENT_DATE)}</b>.`,
