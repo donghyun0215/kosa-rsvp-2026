@@ -50,6 +50,7 @@ export const TRACKS = {
 export const companies: Company[] = [
   {
     slug: "stellarvision",
+    onepager: "/onepagers/stellarvision.pdf",
     name: "Stellarvision",
     displayName: "Stellarvision Inc.",
     tagline: "Intelligence solutions built on SAR (Synthetic Aperture Radar) satellite data and AI analytics.",
@@ -143,6 +144,7 @@ export const companies: Company[] = [
   },
   {
     slug: "hellofriends",
+    onepager: "/onepagers/hellofriends.pdf",
     name: "HelloFriends",
     displayName: "HelloFriends Co., Ltd.",
     tagline: "Multilingual AI kiosks providing Singapore's migrant community trusted admin answers and safe referrals.",
@@ -197,6 +199,7 @@ export const companies: Company[] = [
   },
   {
     slug: "shareplat",
+    onepager: "/onepagers/shareplat.pdf",
     name: "SharePlat",
     displayName: "SharePlat Inc.",
     tagline: "Physical AI robots for safer, faster utility infrastructure work.",
@@ -247,6 +250,7 @@ export const companies: Company[] = [
   },
   {
     slug: "mediaiplus",
+    onepager: "/onepagers/mediaiplus.pdf",
     name: "MEDIAIPLUS",
     displayName: "MEDIAIPLUS, Inc.",
     tagline: "AI-powered business intelligence for clinical trial efficiency.",
@@ -294,6 +298,7 @@ export const companies: Company[] = [
   },
   {
     slug: "llumos",
+    onepager: "/onepagers/llumos.pdf",
     name: "LUMOS",
     displayName: "LLUMOS Co., Ltd.",
     tagline: "Vertical AI agent for grant administration: it understands the company and handles each grant expense end to end, from rule judgment to evidence, filing and approval.",
