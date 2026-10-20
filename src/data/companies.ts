@@ -184,7 +184,7 @@ export const companies: Company[] = [
       "KRW 205M (~USD 145K) revenue in 2025, up 2.1× from 2024, with zero outside funding.",
       "Campus kiosk PoCs at Chonnam National and Sahmyook; paid advisory with 5 universities.",
       "Gwangju Metropolitan City agreement signed; kiosk delivery across Gwangju and Jeonnam scheduled for 2027.",
-      "100,000+ admin consultation records · 7 patents · 100% visa Q&A accuracy certified (Jan 2026).",
+      "100,000+ foreigner consultation records across HelloFriends' businesses · 7 patents · 100% visa Q&A accuracy certified (Jan 2026).",
     ],
     team: [
       {"name": "Tom Kang", "role": "Founder & CEO", "bio": ["Founded HelloFriends in 2023.", "7 years supporting international students in a university finance department.", "Leads B2G partnerships, including Ansan City."]},

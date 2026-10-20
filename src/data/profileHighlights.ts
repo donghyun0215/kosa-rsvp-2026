@@ -46,11 +46,11 @@ export const HIGHLIGHTS: Record<string, Highlight> = {
   hellofriends: {
     does: "24/7 kiosks that answer migrant workers' labour questions in 28 languages and refer cases safely.",
     serves: "Migrant workers in Singapore, starting with domestic and construction workers.",
-    references: ["Ansan City", "Chonnam National University (campus PoC)", "Gwangju (agreement, delivery 2027)"],
+    references: ["Ansan City", "Chonnam National University (campus PoC)", "Gwangju (agreement signed, delivery in 2027)"],
     ask: "2 to 3 pilot kiosk sites in Singapore.",
     figures: [
       ["28", "languages, including Bengali, Tamil and Burmese"],
-      ["100,000+", "admin consultation records"],
+      ["100,000+", "foreigner consultation records (across businesses by HelloFriends Co., Ltd.)"],
       ["100%", "visa Q&A accuracy, certified January 2026"],
     ],
     problem: "Many of Singapore's 1.22M Work Permit holders avoid official help, so small doubts turn into disputes.",
