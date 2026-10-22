@@ -54,22 +54,21 @@ const DAYS: ScheduleDay[] = [
     ],
   },
   {
-    date: "11/3", dow: "Tue", theme: "Workshop & 1:1 Meetings",
+    // Tammy, 23 Oct: Demo Day moved to Tue 3 Nov at Lorong AI; 1:1s to Wed 4 Nov at NULDAM.
+    date: "11/3", dow: "Tue", theme: "Workshop & Demo Day",
+    joint: true,
     items: [
       { time: "10:00 – 11:00", title: "Workshop · Singapore market-entry strategy & orientation", note: "Taehyon Ahn, CEO, LodestarT", highlight: true },
       { time: "11:00 – 12:00", title: "Setting up a Singapore company", note: "Accountant Minjin Jang" },
       { time: "12:00 – 13:30", title: "Lunch" },
-      ...TIMESLOTS.map((t) => ({ time: t.time, title: `1:1 meetings · ${t.label}`, venue: MEETUP_VENUE, highlight: true })),
-      { time: "17:30 – 19:00", title: "Dinner" },
+      ...DEMO_AGENDA.map(([time, title]) => ({ time, title, venue: /Registration/.test(title) ? EVENT_VENUE : undefined, highlight: /pitching|Registration/.test(title) })),
     ],
   },
   {
-    date: "11/4", dow: "Wed", theme: "GovTech IR / Demo Day",
-    joint: true,
+    date: "11/4", dow: "Wed", theme: "1:1 Meetings",
     items: [
-      { time: "10:00 – 12:00", title: "Pitch rehearsal" },
-      { time: "12:30 – 14:00", title: "Lunch" },
-      ...DEMO_AGENDA.map(([time, title]) => ({ time, title, venue: /Registration/.test(title) ? EVENT_VENUE : undefined, highlight: /pitching|Registration/.test(title) })),
+      ...TIMESLOTS.map((t) => ({ time: t.time, title: `1:1 meetings · ${t.label}`, venue: MEETUP_VENUE, highlight: true })),
+      { time: "17:30 – 19:00", title: "Dinner" },
     ],
   },
   {

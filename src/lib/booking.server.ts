@@ -670,7 +670,7 @@ export const markLoungeCheckIn = createServerFn({ method: "POST" })
     // attendance. ponytail: hardcoded window; make it an admin setting next event.
     const keyOk = Boolean(LOUNGE_ACCESS_KEY && data.key === LOUNGE_ACCESS_KEY);
     const now = Date.now();
-    const eventLive = now >= Date.parse("2026-11-04T12:00:00+08:00") && now <= Date.parse("2026-11-04T22:00:00+08:00");
+    const eventLive = now >= Date.parse("2026-11-03T12:00:00+08:00") && now <= Date.parse("2026-11-03T22:00:00+08:00");
     if (!keyOk && !eventLive) return { ok: false };
     const email = data.email?.toLowerCase().trim();
     if (!email) return { ok: false };

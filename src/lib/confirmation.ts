@@ -5,6 +5,10 @@
 // HTML + plain text.
 import { getCompanyBySlug } from "@/data/companies";
 import {
+  EVENT_DATE,
+  EVENT_DAY_SHORT,
+  MEETUP_DATE,
+  MEETUP_DAY_SHORT,
   EVENT_ADDRESS,
   EVENT_MAP_URL,
   EVENT_VENUE,
@@ -38,14 +42,14 @@ const COPY: Record<MailKind, { subject: string; headline: string; intro: string 
     intro: `Only three days until the <b>${EVENT_TITLE}</b>. Here is a quick recap of your schedule:`,
   },
   "meetup-eve": {
-    subject: "Your 1:1 meetings tomorrow (Tue 3 Nov)",
+    subject: `Your 1:1 meetings tomorrow (${MEETUP_DAY_SHORT})`,
     headline: "Your 1:1 meetings are tomorrow",
-    intro: "A quick reminder that your 1:1 meetings with the startups are <b>tomorrow, Tuesday 3 November</b>. Here are the details:",
+    intro: `A quick reminder that your 1:1 meetings with the startups are <b>tomorrow, ${MEETUP_DATE.replace(" 2026", "")}</b>. Here are the details:`,
   },
   "demo-eve": {
-    subject: "See you tomorrow at the GovTech Demo Day (Wed 4 Nov)",
+    subject: `See you tomorrow at the GovTech Demo Day (${EVENT_DAY_SHORT})`,
     headline: "See you tomorrow",
-    intro: `The <b>${EVENT_TITLE}</b> is <b>tomorrow, Wednesday 4 November</b>. Here is your schedule:`,
+    intro: `The <b>${EVENT_TITLE}</b> is <b>tomorrow, ${EVENT_DATE.replace(" 2026", "")}</b>. Here is your schedule:`,
   },
 };
 
@@ -62,7 +66,7 @@ const PERSONAL: Partial<Record<MailKind, string[]>> = {
     "See you soon!",
   ],
   "meetup-eve": [
-    `Your 1:1 meetings with the startups are tomorrow (Tue 3 Nov) at ${MEETUP_VENUE}. The details are below. Please arrive 5–10 minutes before your first meeting.`,
+    `Your 1:1 meetings with the startups are tomorrow (${MEETUP_DAY_SHORT}) at ${MEETUP_VENUE}. The details are below. Please arrive 5–10 minutes before your first meeting.`,
     "See you tomorrow!",
   ],
   "demo-eve": [
@@ -111,13 +115,13 @@ export function buildConfirmation(input: ConfirmationInput): ConfirmationEmail {
 
   const meetupsCal = gcal(
     "K-GovTech Open Innovation Day in Singapore · 1:1 Business Meetings",
-    "20261103T143000/20261103T174000",
+    "20261104T143000/20261104T165000",
     `${MEETUP_VENUE}, ${MEETUP_ADDRESS}`,
     ["Your 1:1 meetings:", ...meetings.map((m) => `• ${m.round} ${m.time} — ${m.company}`), "", `Manage: ${SITE}/book?day=5#manage`].join("\n"),
   );
   const demoCal = gcal(
     "K-GovTech Open Innovation Day in Singapore · Demo Day",
-    "20261104T143000/20261104T200000",
+    "20261103T143000/20261103T200000",
     `${EVENT_VENUE}, ${EVENT_ADDRESS}`,
     [...demoDay.map((d) => `• ${d}`), "", SITE].join("\n"),
   );
@@ -127,19 +131,19 @@ export function buildConfirmation(input: ConfirmationInput): ConfirmationEmail {
   const t: string[] = personal
     ? [`Hi ${input.fullName},`, "", ...personal.flatMap((l) => [l, ""]), "Best,", "The LodestarT team", "", "----", ""]
     : [`Dear ${input.fullName},`, "", introText, ""];
-  if (meetings.length) {
-    t.push("TUE 3 NOV · 1:1 BUSINESS MEETINGS");
-    for (const m of meetings) t.push(`• ${m.round} · ${m.time} — ${m.company}`);
-    t.push(`${MEETUP_VENUE}, ${MEETUP_ADDRESS}`, ...(MEETUP_MAP_URL ? [`Map: ${MEETUP_MAP_URL}`] : []), "Please arrive 5–10 minutes before your first meeting.", "");
-  }
   if (demoDay.length) {
-    t.push("WED 4 NOV · DEMO DAY");
+    t.push(`${EVENT_DAY_SHORT.toUpperCase()} · DEMO DAY`);
     for (const d of demoDay) t.push(`• ${d}`);
     t.push(`${EVENT_VENUE}, ${EVENT_ADDRESS}`, ...(EVENT_MAP_URL ? [`Map: ${EVENT_MAP_URL}`] : []), "");
   }
+  if (meetings.length) {
+    t.push(`${MEETUP_DAY_SHORT.toUpperCase()} · 1:1 BUSINESS MEETINGS`);
+    for (const m of meetings) t.push(`• ${m.round} · ${m.time} — ${m.company}`);
+    t.push(`${MEETUP_VENUE}, ${MEETUP_ADDRESS}`, ...(MEETUP_MAP_URL ? [`Map: ${MEETUP_MAP_URL}`] : []), "Please arrive 5–10 minutes before your first meeting.", "");
+  }
   // "slots still open" only while booking is still useful (not on the eves)
   const nudge = (kind === "week" || kind === "3day") && meetings.length === 0;
-  if (nudge) t.push(`A few 1:1 meeting slots on Tue 3 Nov are still open: ${SITE}/book?day=5`, "");
+  if (nudge) t.push(`A few 1:1 meeting slots on ${MEETUP_DAY_SHORT} are still open: ${SITE}/book?day=5`, "");
   const onTheDay = kind === "demo-eve";
   if (onTheDay) {
     t.push("ON THE DAY");
@@ -184,21 +188,21 @@ ${personalHtml}
   <tr><td style="background:#0b7468;padding:22px 32px;">
     <div style="${F}font-size:10px;letter-spacing:1px;font-weight:bold;color:#ffffff;text-transform:uppercase;">MSIT · NIPA · KOSA | K-GovTech Open Innovation Day in Singapore</div>
     <div style="${F}padding-top:8px;font-size:24px;line-height:28px;font-weight:800;color:#ffffff;">${esc(copy.headline)}</div>
-    <div style="${F}padding-top:4px;font-size:13px;font-weight:bold;color:#f2c14e;">1:1 Meetings &amp; Demo Day · 3–4 November 2026</div>
+    <div style="${F}padding-top:4px;font-size:13px;font-weight:bold;color:#f2c14e;">Demo Day &amp; 1:1 Meetings · 3–4 November 2026</div>
   </td></tr>
   ${personal ? `<tr><td style="padding:20px 32px 0;"></td></tr>` : `<tr><td style="padding:24px 32px 16px;${F}font-size:15px;line-height:22px;color:#0f2a2c;">
     Dear <strong>${esc(input.fullName)}</strong>,<br><br>
     ${copy.intro}
   </td></tr>`}
-  ${meetings.length ? block("Tue 3 Nov · 1:1 Business Meetings", meetings.map((m) => `${esc(m.round)} · ${esc(m.time)} — ${esc(m.company)}`), MEETUP_VENUE, MEETUP_ADDRESS, MEETUP_MAP_URL, meetupsCal, "Please arrive 5–10 minutes before your first meeting.") : ""}
-  ${demoDay.length ? block("Wed 4 Nov · Demo Day", demoDay.map(esc), EVENT_VENUE, EVENT_ADDRESS, EVENT_MAP_URL, demoCal) : ""}
+  ${demoDay.length ? block(`${EVENT_DAY_SHORT} · Demo Day`, demoDay.map(esc), EVENT_VENUE, EVENT_ADDRESS, EVENT_MAP_URL, demoCal) : ""}
+  ${meetings.length ? block(`${MEETUP_DAY_SHORT} · 1:1 Business Meetings`, meetings.map((m) => `${esc(m.round)} · ${esc(m.time)} — ${esc(m.company)}`), MEETUP_VENUE, MEETUP_ADDRESS, MEETUP_MAP_URL, meetupsCal, "Please arrive 5–10 minutes before your first meeting.") : ""}
   ${onTheDay ? `<tr><td style="padding:0 32px 16px;${F}font-size:14px;line-height:21px;color:#0f2a2c;">
     <div style="${F}font-size:11px;letter-spacing:1.2px;font-weight:bold;color:#0b7468;text-transform:uppercase;padding-bottom:6px;">On the day</div>
     <b>Check-in:</b> scan the QR code at the entrance and enter this email address to collect your name badge — please keep this email handy.<br>
     <b>Networking Lounge:</b> a private, attendee-only directory of everyone in the room, so conversations can continue after the event. ${link(`${SITE}/lounge`, "Open the lounge")}
   </td></tr>` : ""}
   ${nudge ? `<tr><td style="padding:0 32px 16px;${F}font-size:14px;line-height:21px;color:#0f2a2c;">
-    <div style="background:#fdf6e3;border:1px solid #f2c14e;padding:12px 14px;">A few <b>1:1 meeting slots on Tue 3 Nov</b> are still open — ${link(`${SITE}/book?day=5`, "book a meeting")}.</div>
+    <div style="background:#fdf6e3;border:1px solid #f2c14e;padding:12px 14px;">A few <b>1:1 meeting slots on ${MEETUP_DAY_SHORT}</b> are still open — ${link(`${SITE}/book?day=5`, "book a meeting")}.</div>
   </td></tr>` : ""}
   <tr><td style="padding:4px 32px 22px;${F}font-size:14px;line-height:21px;color:#0f2a2c;">
     ${link(`${SITE}/book?day=5#manage`, "View or cancel your 1:1 meetings")}<br>

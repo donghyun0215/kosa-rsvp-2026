@@ -7,8 +7,9 @@ export interface Timeslot {
 // ── K-GovTech Open Innovation Day in Singapore (KOSA) ──
 // Everything event-specific lives in this file, so a confirmed venue or time
 // is a one-line change. Source: "[마스터파일] KOSA" (주요 안내 + 일정표_TBC),
-// read 12 Oct. Programme 2–6 Nov; public days are the 1:1 business
-// meetings (Tue 3 Nov) and the Demo Day (Wed 4 Nov).
+// read 12 Oct. Programme 2–6 Nov; public days are the Demo Day (Tue 3 Nov,
+// Lorong AI) and the 1:1 business meetings (Wed 4 Nov, NULDAM) — order
+// swapped by Tammy on 23 Oct.
 export const SITE_URL = "https://kosa-rsvp-2026.vercel.app";
 // Organisers as KOSA asked (15 Oct): 주무부처 MSIT · 전담기관 NIPA · 지원기관 KOSA.
 export const CREDITS = "Ministry of Science and ICT (MSIT) · National IT Industry Promotion Agency (NIPA) · Korea AI·Software Industry Association (KOSA)";
@@ -17,37 +18,35 @@ export const CREDITS = "Ministry of Science and ICT (MSIT) · National IT Indust
 export const EVENT_NAME = "K-GovTech Open Innovation Day in Singapore";
 export const EVENT_NAME_SHORT = "K-GovTech";
 export const EVENT_NAME_LINE1 = "K-GovTech Open Innovation Day in Singapore";
-export const EVENT_NAME_LINE2 = "1:1 Meetings & Demo Day";
+export const EVENT_NAME_LINE2 = "Demo Day & 1:1 Meetings";
 
-export const EVENT_DATE = "Wednesday, 4 November 2026";
-export const EVENT_DAY_SHORT = "Wed 4 Nov";
+export const EVENT_DATE = "Tuesday, 3 November 2026";
+export const EVENT_DAY_SHORT = "Tue 3 Nov";
 export const EVENT_TIME = "14:30 – 20:00";
-// Main tab lists Suntec Room 302; the timetable still says "suntec or another place".
-export const EVENT_VENUE = "Suntec Singapore Convention & Exhibition Centre, Level 3, Room 302";
-export const EVENT_ADDRESS = "1 Raffles Boulevard, Singapore 039593";
+// Tammy, 23 Oct: Demo Day moves from Suntec to Lorong AI (Vidacity, one-north).
+export const EVENT_VENUE = "Lorong AI";
+export const EVENT_ADDRESS = "Vidacity, Level 3, 69 Ayer Rajah Crescent, Singapore 139961";
 export const EVENT_MAP_URL =
-  "https://www.google.com/maps/search/?api=1&query=Suntec+Singapore+Convention+%26+Exhibition+Centre+1+Raffles+Boulevard";
+  "https://www.google.com/maps/search/?api=1&query=Lorong+AI+69+Ayer+Rajah+Crescent+Singapore+139961";
 
 // Public 1:1 self-booking, same model as KIMST/CMK.
 export const ONE_ON_ONE_OPEN = true;
 
-// 1:1 meetings Tue 3 Nov: four 40-minute rounds at Lorong AI (Tammy, 22 Oct:
-// venue moved from NULDAM, four meetings per company; round 4 follows the
-// same 40 + 10 rhythm). IDs are stable references
+// 1:1 meetings Wed 4 Nov at NULDAM: three 40-minute rounds (ops sheet
+// "1:1 밋업", Tammy 23 Oct). IDs are stable references
 // stored in bookings — change labels/times freely, never the ids.
 export const TIMESLOTS: Timeslot[] = [
   { id: "slot1", label: "Round 1", time: "14:30 – 15:10" },
   { id: "slot2", label: "Round 2", time: "15:20 – 16:00" },
   { id: "slot3", label: "Round 3", time: "16:10 – 16:50" },
-  { id: "slot4", label: "Round 4", time: "17:00 – 17:40" },
 ];
-export const MEETUP_TIME = "14:30 – 17:40";
-export const MEETUP_DATE = "Tuesday, 3 November 2026";
-export const MEETUP_DAY_SHORT = "Tue 3 Nov";
-export const MEETUP_VENUE = "Lorong AI";
-export const MEETUP_ADDRESS = "Vidacity, Level 3, 69 Ayer Rajah Crescent, Singapore 139961";
+export const MEETUP_TIME = "14:30 – 16:50";
+export const MEETUP_DATE = "Wednesday, 4 November 2026";
+export const MEETUP_DAY_SHORT = "Wed 4 Nov";
+export const MEETUP_VENUE = "NULDAM Space";
+export const MEETUP_ADDRESS = "2 Orchard Link, #02-14/15, *SCAPE, Singapore 237978";
 export const MEETUP_MAP_URL =
-  "https://www.google.com/maps/search/?api=1&query=Lorong+AI+69+Ayer+Rajah+Crescent+Singapore+139961";
+  "https://www.google.com/maps/search/?api=1&query=*SCAPE+2+Orchard+Link+Singapore+237978";
 
 // Kept for API compatibility with the booking engine; every company offers
 // every round.
@@ -82,7 +81,7 @@ export const PROGRAM: ProgramBlock[] = [
     id: "meetups",
     title: "1:1 Business Meetings",
     time: `${MEETUP_DAY_SHORT} · ${MEETUP_TIME}`,
-    description: "Private meetings with the startups of your choice, the afternoon before the Demo Day.",
+    description: "Private meetings with the startups of your choice, the afternoon after the Demo Day.",
   },
 ];
 

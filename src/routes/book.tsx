@@ -417,8 +417,8 @@ function RsvpPage() {
           {/* Day toggle */}
           <div className="mt-6 inline-flex rounded-full border border-primary-foreground/25 bg-primary-foreground/10 p-1 backdrop-blur-sm">
             {([
-              ["5", `${MEETUP_DAY_SHORT} · 1:1 Meetings`],
               ["7", `${EVENT_DAY_SHORT} · Demo Day`],
+              ["5", `${MEETUP_DAY_SHORT} · 1:1 Meetings`],
             ] as const).map(([d, label]) => (
               <button
                 key={d}

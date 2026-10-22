@@ -233,7 +233,7 @@ function Landing() {
             )}
           </div>
           <p className="hero-in [--i:7] mt-8 text-sm font-medium text-white/70">
-            1:1 meetings {MEETUP_DAY_SHORT} · Demo Day {EVENT_DAY_SHORT}
+            Demo Day {EVENT_DAY_SHORT} · 1:1 meetings {MEETUP_DAY_SHORT}
           </p>
         </div>
 
@@ -269,28 +269,6 @@ function Landing() {
 
         <div data-reveal className="mt-10 grid gap-px rounded-2xl border border-border bg-border shadow-[var(--shadow-card)] [perspective:1200px] md:grid-cols-2">
           <article data-tilt className="tilt flex flex-col bg-card p-6 sm:p-8">
-            <h3 className="text-xl font-semibold text-muted-foreground">1:1 business meetings</h3>
-            <p className="mt-2 font-display text-[clamp(2rem,4.5vw,3rem)] font-bold leading-none tracking-tight text-navy">
-              {MEETUP_DAY_SHORT}
-            </p>
-            <p className="mt-2 font-display text-2xl font-semibold text-primary">{MEETUP_TIME}</p>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Four 40-minute rounds with the startups you pick, the afternoon before the pitches.
-            </p>
-            <div className="mt-4">
-              <Place venue={MEETUP_VENUE} address={MEETUP_ADDRESS} map={MEETUP_MAP_URL} />
-            </div>
-            <div className="mt-auto pt-7">
-              {ONE_ON_ONE_OPEN ? (
-                <Link to="/book" search={{ day: "5" }} className="inline-flex rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
-                  Book a 1:1 meeting
-                </Link>
-              ) : (
-                <span className="text-sm text-muted-foreground">Booking opens soon.</span>
-              )}
-            </div>
-          </article>
-          <article data-tilt className="tilt flex flex-col bg-card p-6 sm:p-8">
             <h3 className="text-xl font-semibold text-muted-foreground">Demo Day</h3>
             <p className="mt-2 font-display text-[clamp(2rem,4.5vw,3rem)] font-bold leading-none tracking-tight text-navy">
               {EVENT_DAY_SHORT}
@@ -306,6 +284,28 @@ function Landing() {
               <Link to="/book" search={{ day: "7" }} className="inline-flex rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
                 RSVP for the Demo Day
               </Link>
+            </div>
+          </article>
+          <article data-tilt className="tilt flex flex-col bg-card p-6 sm:p-8">
+            <h3 className="text-xl font-semibold text-muted-foreground">1:1 business meetings</h3>
+            <p className="mt-2 font-display text-[clamp(2rem,4.5vw,3rem)] font-bold leading-none tracking-tight text-navy">
+              {MEETUP_DAY_SHORT}
+            </p>
+            <p className="mt-2 font-display text-2xl font-semibold text-primary">{MEETUP_TIME}</p>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Three 40-minute rounds with the startups you pick, the afternoon after the pitches.
+            </p>
+            <div className="mt-4">
+              <Place venue={MEETUP_VENUE} address={MEETUP_ADDRESS} map={MEETUP_MAP_URL} />
+            </div>
+            <div className="mt-auto pt-7">
+              {ONE_ON_ONE_OPEN ? (
+                <Link to="/book" search={{ day: "5" }} className="inline-flex rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
+                  Book a 1:1 meeting
+                </Link>
+              ) : (
+                <span className="text-sm text-muted-foreground">Booking opens soon.</span>
+              )}
             </div>
           </article>
 

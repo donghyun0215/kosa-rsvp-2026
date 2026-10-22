@@ -254,12 +254,12 @@ function AdminPage() {
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           <Stat label="RSVPs" value={`${day2.length}${day2Guests ? ` (+${day2Guests} guests)` : ""}`} />
           
-          <Stat label="Checked in (4 Nov)" value={`${day2CheckedIn} / ${day2.length}`} />
+          <Stat label="Checked in (3 Nov)" value={`${day2CheckedIn} / ${day2.length}`} />
           <Stat label="Pre-registered / Walk-in" value={`${day2.length - day2WalkIns.length} / ${day2WalkIns.length}`} />
           <Stat label="Showcase" value={`${rsvps.filter((r) => r.attend_showcase).length}`} />
           <Stat label="Networking" value={`${rsvps.filter((r) => r.attend_lunch).length}`} />
           <Stat
-            label="1:1 bookers (3 Nov)"
+            label="1:1 bookers (4 Nov)"
             value={`${new Set(bookings.filter((b) => b.timeslot_id.startsWith("slot")).map((b) => b.email.toLowerCase())).size}`}
           />
           <Stat label="Event 1:1 filled" value={`${bookings.filter((b) => b.timeslot_id.startsWith("slot")).length} / ${totalSlots}`} />
@@ -595,7 +595,7 @@ function eventStyle(type: BookingEvent["event_type"]) {
 // staff override). Clicking flips it — 'manual' via, so QR-vs-desk stays
 // distinguishable in the DB.
 // Walk-in = RSVP created on event day from 14:00 SGT (registration opens 14:30)
-const WALK_IN_FROM = new Date("2026-11-04T14:00:00+08:00").getTime();
+const WALK_IN_FROM = new Date("2026-11-03T14:00:00+08:00").getTime();
 const isWalkIn = (r: { created_at: string }) => new Date(r.created_at).getTime() >= WALK_IN_FROM;
 
 function CheckInCell({ rsvp, password, onSaved }: { rsvp: AdminRsvp; password: string; onSaved: () => void | Promise<unknown> }) {
@@ -667,7 +667,7 @@ function downloadOutreachCsv(rsvps: AdminRsvp[]) {
   const header = "email,org,person,title,country,type,notes,sendable";
   const lines = rsvps.map((r) => {
     const notes = [
-      "K-GovTech Open Innovation Day 2026-11-04",
+      "K-GovTech Open Innovation Day 2026-11-03",
       r.primary_interest || null,
       r.contact_url || null,
       r.checked_in_at ? "attended" : "no-show",

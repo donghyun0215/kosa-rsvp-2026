@@ -37,7 +37,7 @@ const LINES: Record<string, string> = {
   mediaiplus: "AI matching between biotechs and global CROs for faster clinical trials",
   llumos: "Vertical AI agent that handles grant expense administration end to end",
 };
-const ORDER: ("demo" | "meetup")[] = ["meetup", "demo"]; // chronological
+const ORDER: ("demo" | "meetup")[] = ["demo", "meetup"]; // chronological
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const F = "font-family:Arial,Helvetica,sans-serif;";
