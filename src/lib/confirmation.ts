@@ -111,7 +111,7 @@ export function buildConfirmation(input: ConfirmationInput): ConfirmationEmail {
 
   const meetupsCal = gcal(
     "K-GovTech Open Innovation Day in Singapore · 1:1 Business Meetings",
-    "20261103T143000/20261103T165000",
+    "20261103T143000/20261103T174000",
     `${MEETUP_VENUE}, ${MEETUP_ADDRESS}`,
     ["Your 1:1 meetings:", ...meetings.map((m) => `• ${m.round} ${m.time} — ${m.company}`), "", `Manage: ${SITE}/book?day=5#manage`].join("\n"),
   );

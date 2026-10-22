@@ -275,7 +275,7 @@ function Landing() {
             </p>
             <p className="mt-2 font-display text-2xl font-semibold text-primary">{MEETUP_TIME}</p>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Three 40-minute rounds with the startups you pick, the afternoon before the pitches.
+              Four 40-minute rounds with the startups you pick, the afternoon before the pitches.
             </p>
             <div className="mt-4">
               <Place venue={MEETUP_VENUE} address={MEETUP_ADDRESS} map={MEETUP_MAP_URL} />

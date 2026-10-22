@@ -31,21 +31,23 @@ export const EVENT_MAP_URL =
 // Public 1:1 self-booking, same model as KIMST/CMK.
 export const ONE_ON_ONE_OPEN = true;
 
-// 1:1 meetings Tue 3 Nov at NULDAM: three 40-minute rounds (timetable;
-// interns already booked against these times). IDs are stable references
+// 1:1 meetings Tue 3 Nov: four 40-minute rounds at Lorong AI (Tammy, 22 Oct:
+// venue moved from NULDAM, four meetings per company; round 4 follows the
+// same 40 + 10 rhythm). IDs are stable references
 // stored in bookings — change labels/times freely, never the ids.
 export const TIMESLOTS: Timeslot[] = [
   { id: "slot1", label: "Round 1", time: "14:30 – 15:10" },
   { id: "slot2", label: "Round 2", time: "15:20 – 16:00" },
   { id: "slot3", label: "Round 3", time: "16:10 – 16:50" },
+  { id: "slot4", label: "Round 4", time: "17:00 – 17:40" },
 ];
-export const MEETUP_TIME = "14:30 – 16:50";
+export const MEETUP_TIME = "14:30 – 17:40";
 export const MEETUP_DATE = "Tuesday, 3 November 2026";
 export const MEETUP_DAY_SHORT = "Tue 3 Nov";
-export const MEETUP_VENUE = "NULDAM Space";
-export const MEETUP_ADDRESS = "2 Orchard Link, #02-14/15, *SCAPE, Singapore 237978";
+export const MEETUP_VENUE = "Lorong AI";
+export const MEETUP_ADDRESS = "Vidacity, Level 3, 69 Ayer Rajah Crescent, Singapore 139961";
 export const MEETUP_MAP_URL =
-  "https://www.google.com/maps/search/?api=1&query=*SCAPE+2+Orchard+Link+Singapore+237978";
+  "https://www.google.com/maps/search/?api=1&query=Lorong+AI+69+Ayer+Rajah+Crescent+Singapore+139961";
 
 // Kept for API compatibility with the booking engine; every company offers
 // every round.
