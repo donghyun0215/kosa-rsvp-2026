@@ -342,3 +342,26 @@
 .show-on .glance.is-shown .glance-row:nth-child(5) { transition-delay: 320ms; }
 
 @media (prefers-reduced-motion: reduce) { .window { transition: none; transform: none; } }
+
+/* ── Networking lounge: arrivals ──
+   Passes: a perforated stub on the right, with notches cut into the card
+   edge (radial masks, so the page colour shows through). */
+.lounge-arrivals .pass { position: relative; }
+.lounge-arrivals .pass-stub {
+  position: relative;
+  border-left: 1.5px dashed rgb(14 31 63 / 0.14);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--hue) 7%, transparent), transparent);
+  border-radius: 0 1rem 1rem 0;
+}
+.lounge-arrivals .pass-stub::before, .lounge-arrivals .pass-stub::after {
+  content: ""; position: absolute; left: -10px; width: 19px; height: 19px; border-radius: 50%;
+  background: var(--background); box-shadow: inset 0 0 0 1px rgb(14 31 63 / 0.06);
+}
+.lounge-arrivals .pass-stub::before { top: -10px; clip-path: inset(50% 0 0 0); }
+.lounge-arrivals .pass-stub::after { bottom: -10px; clip-path: inset(0 0 50% 0); }
+.lounge-arrivals .pass-tear { position: relative; border-top: 1.5px dashed rgb(14 31 63 / 0.14); }
+.board-row { animation: board-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both; }
+@keyframes board-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes sheet-rise { from { opacity: 0; transform: translateY(18px) scale(0.985); } to { opacity: 1; transform: none; } }
+.sheet-rise { animation: sheet-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@media (prefers-reduced-motion: reduce) { .board-row, .sheet-rise { animation: none; } }
