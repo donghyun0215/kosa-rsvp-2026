@@ -7,6 +7,7 @@ import {
   EVENT_DATE,
   EVENT_DAY_SHORT,
   DEMO_AGENDA,
+  DINNER_ADDRESS,
   EVENT_TIME,
   EVENT_VENUE,
   EVENT_ADDRESS,
@@ -544,15 +545,18 @@ function RsvpPage() {
               <h2 className="text-lg font-bold text-navy">{day === "5" ? "Pick Your Startups" : "Agenda"}</h2>
             </div>
             <p className="mt-1.5 text-sm text-muted-foreground">
-              {day === "5" ? "One startup per round. Leave a round empty if you don't need it. Greyed-out slots are already taken." : "Doors open 14:30 with coffee. Stay for the networking dinner after the pitches."}
+              {day === "5" ? "One startup per round. Leave a round empty if you don't need it. Greyed-out slots are already taken." : "Pitching at Lorong AI from 14:30, then the networking dinner at The Meeting Point."}
             </p>
 
             {day === "7" && (
               <div className="mt-5 divide-y divide-border rounded-xl border border-border bg-background">
-                {DEMO_AGENDA.map(([time, label]) => (
+                {DEMO_AGENDA.map(([time, label, venue]) => (
                   <div key={time} className="flex items-center gap-4 px-4 py-3.5">
                     <span className="w-28 shrink-0 text-sm font-bold text-primary">{time}</span>
-                    <span className="text-sm font-semibold text-navy">{label}</span>
+                    <span className="text-sm font-semibold text-navy">
+                      {label}
+                      {venue && <span className="block text-xs font-normal text-muted-foreground">{venue}, {DINNER_ADDRESS}</span>}
+                    </span>
                   </div>
                 ))}
               </div>

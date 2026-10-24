@@ -6,6 +6,8 @@
 import { getCompanyBySlug } from "@/data/companies";
 import {
   EVENT_DATE,
+  DINNER_ADDRESS,
+  DINNER_VENUE,
   EVENT_DAY_SHORT,
   MEETUP_DATE,
   MEETUP_DAY_SHORT,
@@ -32,12 +34,12 @@ const COPY: Record<MailKind, { subject: string; headline: string; intro: string 
     intro: `Thank you for registering for the <b>${EVENT_TITLE}</b>. Here is your schedule:`,
   },
   week: {
-    subject: "Your schedule for the K-GovTech Open Innovation Day in Singapore (3–4 Nov)",
+    subject: `Your schedule for the ${EVENT_TITLE} (3–4 Nov)`,
     headline: "One week to go",
     intro: `The <b>${EVENT_TITLE}</b> is just one week away, and we're looking forward to seeing you. Here is your schedule:`,
   },
   "3day": {
-    subject: "Your schedule for the K-GovTech Open Innovation Day in Singapore this week (3–4 Nov)",
+    subject: `Your schedule for the ${EVENT_TITLE} this week (3–4 Nov)`,
     headline: "3 days to go",
     intro: `Only three days until the <b>${EVENT_TITLE}</b>. Here is a quick recap of your schedule:`,
   },
@@ -47,7 +49,7 @@ const COPY: Record<MailKind, { subject: string; headline: string; intro: string 
     intro: `A quick reminder that your 1:1 meetings with the startups are <b>tomorrow, ${MEETUP_DATE.replace(" 2026", "")}</b>. Here are the details:`,
   },
   "demo-eve": {
-    subject: `See you tomorrow at the GovTech Demo Day (${EVENT_DAY_SHORT})`,
+    subject: `See you tomorrow at KR-SG AI Connect (${EVENT_DAY_SHORT})`,
     headline: "See you tomorrow",
     intro: `The <b>${EVENT_TITLE}</b> is <b>tomorrow, ${EVENT_DATE.replace(" 2026", "")}</b>. Here is your schedule:`,
   },
@@ -58,11 +60,11 @@ const COPY: Record<MailKind, { subject: string; headline: string; intro: string 
 // confirmation keeps its original single-card layout.
 const PERSONAL: Partial<Record<MailKind, string[]>> = {
   week: [
-    "A quick note ahead of the K-GovTech Open Innovation Day in Singapore next week. I've put your schedule below so it's easy to find.",
+    `A quick note ahead of the ${EVENT_TITLE} next week. I've put your schedule below so it's easy to find.`,
     "Looking forward to seeing you!",
   ],
   "3day": [
-    "Just a friendly reminder that the K-GovTech Open Innovation Day in Singapore is this week. Your schedule is below. If anything has changed on your side, simply reply to this email.",
+    `Just a friendly reminder that the ${EVENT_TITLE} is this week. Your schedule is below. If anything has changed on your side, simply reply to this email.`,
     "See you soon!",
   ],
   "meetup-eve": [
@@ -111,16 +113,16 @@ export function buildConfirmation(input: ConfirmationInput): ConfirmationEmail {
     });
   const demoDay: string[] = [];
   if (input.attendShowcase) demoDay.push(`Registration from 14:30 · Talks & pitches ${programTime("showcase")}`);
-  if (input.attendLunch) demoDay.push(`Networking dinner ${programTime("lunch")}`);
+  if (input.attendLunch) demoDay.push(`Networking dinner ${programTime("lunch")} at ${DINNER_VENUE}, ${DINNER_ADDRESS}`);
 
   const meetupsCal = gcal(
-    "K-GovTech Open Innovation Day in Singapore · 1:1 Business Meetings",
+    `${EVENT_TITLE} · 1:1 Business Meetings`,
     "20261104T143000/20261104T165000",
     `${MEETUP_VENUE}, ${MEETUP_ADDRESS}`,
     ["Your 1:1 meetings:", ...meetings.map((m) => `• ${m.round} ${m.time} — ${m.company}`), "", `Manage: ${SITE}/book?day=5#manage`].join("\n"),
   );
   const demoCal = gcal(
-    "K-GovTech Open Innovation Day in Singapore · Demo Day",
+    `${EVENT_TITLE} · Pitching & Networking`,
     "20261103T143000/20261103T200000",
     `${EVENT_VENUE}, ${EVENT_ADDRESS}`,
     [...demoDay.map((d) => `• ${d}`), "", SITE].join("\n"),
@@ -153,7 +155,7 @@ export function buildConfirmation(input: ConfirmationInput): ConfirmationEmail {
   t.push(`View or cancel your 1:1 meetings: ${SITE}/book?day=5#manage`);
   t.push(`Startup one-pagers: ${SITE}/#startups`, "");
   t.push("Need to change something? Re-submit the RSVP form with the same email, or simply reply to this email.", "");
-  if (!personal) t.push("Warm regards,", "LodestarT team, for the K-GovTech Open Innovation Day in Singapore");
+  if (!personal) t.push("Warm regards,", `LodestarT team, for the ${EVENT_TITLE}`);
 
   // ── HTML
   const F = "font-family:Arial,Helvetica,sans-serif;";
@@ -186,9 +188,9 @@ ${personal.map((l) => `<p style="${P}">${esc(l)}</p>`).join("\n")}
 ${personalHtml}
 <table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff;${personal ? "border:1px solid #d3dfdb;" : ""}">
   <tr><td style="background:#0b7468;padding:22px 32px;">
-    <div style="${F}font-size:10px;letter-spacing:1px;font-weight:bold;color:#ffffff;text-transform:uppercase;">MSIT · NIPA · KOSA | K-GovTech Open Innovation Day in Singapore</div>
+    <div style="${F}font-size:10px;letter-spacing:1px;font-weight:bold;color:#ffffff;text-transform:uppercase;">MSIT · NIPA · KOSA | ${esc(EVENT_TITLE)}</div>
     <div style="${F}padding-top:8px;font-size:24px;line-height:28px;font-weight:800;color:#ffffff;">${esc(copy.headline)}</div>
-    <div style="${F}padding-top:4px;font-size:13px;font-weight:bold;color:#f2c14e;">Demo Day &amp; 1:1 Meetings · 3–4 November 2026</div>
+    <div style="${F}padding-top:4px;font-size:13px;font-weight:bold;color:#f2c14e;">Pitching &amp; Networking · 1:1 Meetings · 3–4 November 2026</div>
   </td></tr>
   ${personal ? `<tr><td style="padding:20px 32px 0;"></td></tr>` : `<tr><td style="padding:24px 32px 16px;${F}font-size:15px;line-height:22px;color:#0f2a2c;">
     Dear <strong>${esc(input.fullName)}</strong>,<br><br>
@@ -210,7 +212,7 @@ ${personalHtml}
     Need to change something? Re-submit the RSVP form with the same email, or simply reply to this email.
   </td></tr>
   ${personal ? "" : `<tr><td style="background:#f2f5f3;border-top:1px solid #d3dfdb;padding:18px 32px;${F}font-size:14px;line-height:20px;color:#0f2a2c;">
-    Warm regards,<br><strong style="color:#0b7468;">LodestarT team</strong><br><span style="font-size:12px;color:#4a5b59;">for the K-GovTech Open Innovation Day in Singapore</span>
+    Warm regards,<br><strong style="color:#0b7468;">LodestarT team</strong><br><span style="font-size:12px;color:#4a5b59;">for the ${esc(EVENT_TITLE)}</span>
   </td></tr>`}
 </table></td></tr></table></body></html>`;
 

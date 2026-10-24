@@ -4,7 +4,9 @@ export interface Timeslot {
   time: string;
 }
 
-// ── K-GovTech Open Innovation Day in Singapore (KOSA) ──
+// ── KR-SG AI Connect Pitching & Networking (KOSA × Lorong AI) ──
+// Renamed from "K-GovTech Open Innovation Day in Singapore" per the KOSA ×
+// Lorong AI plan (24 Oct; name still marked TBD there).
 // Everything event-specific lives in this file, so a confirmed venue or time
 // is a one-line change. Source: "[마스터파일] KOSA" (주요 안내 + 일정표_TBC),
 // read 12 Oct. Programme 2–6 Nov; public days are the Demo Day (Tue 3 Nov,
@@ -14,11 +16,10 @@ export const SITE_URL = "https://kosa-rsvp-2026.vercel.app";
 // Organisers as KOSA asked (15 Oct): 주무부처 MSIT · 전담기관 NIPA · 지원기관 KOSA.
 export const CREDITS = "Ministry of Science and ICT (MSIT) · National IT Industry Promotion Agency (NIPA) · Korea AI·Software Industry Association (KOSA)";
 
-// Official name from KOSA (15 Oct).
-export const EVENT_NAME = "K-GovTech Open Innovation Day in Singapore";
-export const EVENT_NAME_SHORT = "K-GovTech";
-export const EVENT_NAME_LINE1 = "K-GovTech Open Innovation Day in Singapore";
-export const EVENT_NAME_LINE2 = "Demo Day & 1:1 Meetings";
+export const EVENT_NAME = "KR-SG AI Connect Pitching & Networking";
+export const EVENT_NAME_SHORT = "KR-SG AI Connect";
+export const EVENT_NAME_LINE1 = "KR-SG AI Connect";
+export const EVENT_NAME_LINE2 = "Pitching & Networking · 1:1 Meetings";
 
 export const EVENT_DATE = "Tuesday, 3 November 2026";
 export const EVENT_DAY_SHORT = "Tue 3 Nov";
@@ -28,6 +29,11 @@ export const EVENT_VENUE = "Lorong AI";
 export const EVENT_ADDRESS = "Vidacity, Level 3, 69 Ayer Rajah Crescent, Singapore 139961";
 export const EVENT_MAP_URL =
   "https://www.google.com/maps/search/?api=1&query=Lorong+AI+69+Ayer+Rajah+Crescent+Singapore+139961";
+// Pitching runs at Lorong AI; the networking dinner moves to The Meeting Point.
+export const DINNER_VENUE = "The Meeting Point";
+export const DINNER_ADDRESS = "73B Ayer Rajah Crescent, Singapore 139966";
+export const DINNER_MAP_URL =
+  "https://www.google.com/maps/search/?api=1&query=The+Meeting+Point+73B+Ayer+Rajah+Crescent+Singapore+139966";
 
 // Public 1:1 self-booking, same model as KIMST/CMK.
 export const ONE_ON_ONE_OPEN = true;
@@ -67,15 +73,15 @@ export interface ProgramBlock {
 export const PROGRAM: ProgramBlock[] = [
   {
     id: "showcase",
-    title: "Talks & IR pitching",
+    title: "Welcome & startup pitching",
     time: "15:00 – 17:10",
-    description: "Opening remarks, a keynote, then six startup pitches (7 min pitch, 5 min Q&A each). Registration and coffee from 14:30.",
+    description: "Welcome from Lorong AI and KOSA, then two pitching sessions (5 min pitch, 5 min Q&A each) and the judges' feedback. Registration from 14:30.",
   },
   {
     id: "lunch",
     title: "Networking dinner",
     time: "17:10 – 20:00",
-    description: "Catered dinner with the founders, agencies, investors and partners in the room.",
+    description: "Dinner at The Meeting Point with the founders, agencies, investors and partners.",
   },
   {
     id: "meetups",
@@ -85,17 +91,20 @@ export const PROGRAM: ProgramBlock[] = [
   },
 ];
 
-// Demo Day run of show (timetable, TBC). Shown on the RSVP page.
-export const DEMO_AGENDA: [time: string, item: string][] = [
-  ["14:30 – 15:00", "Registration and networking reception (coffee & snacks)"],
-  ["15:00 – 15:10", "Opening and congratulatory remarks"],
-  ["15:10 – 15:25", "Keynote"],
-  ["15:25 – 15:30", "Introduction of the judges"],
-  ["15:30 – 15:55", "IR pitching, session 1 (3 startups)"],
-  ["16:10 – 16:20", "Break"],
-  ["16:20 – 16:45", "IR pitching, session 2 (3 startups)"],
+// Demo Day run of show (KOSA × Lorong AI proposed agenda, 24 Oct). Shown on the RSVP page.
+// Third element: venue, when a row isn't at EVENT_VENUE.
+export const DEMO_AGENDA: [time: string, item: string, venue?: string][] = [
+  ["14:30 – 15:00", "Registration and reception"],
+  ["15:00 – 15:02", "Opening"],
+  ["15:02 – 15:10", "Introduction to Lorong AI and welcome remarks"],
+  ["15:10 – 15:18", "Introduction to KOSA"],
+  ["15:18 – 15:20", "Introduction of the judges"],
+  ["15:20 – 16:00", "Pitching session 1 (4 startups)"],
+  ["16:00 – 16:10", "Break"],
+  ["16:10 – 16:50", "Pitching session 2 (4 startups)"],
+  ["16:50 – 17:00", "Judges' overall feedback"],
   ["17:00 – 17:10", "Group photo"],
-  ["17:10 – 20:00", "Networking dinner"],
+  ["17:10 – 20:00", "Networking dinner", DINNER_VENUE],
 ];
 
 // ── Legacy side-track exports (no side track on this event) ─────────

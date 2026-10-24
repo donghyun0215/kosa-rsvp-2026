@@ -61,7 +61,7 @@ const DAYS: ScheduleDay[] = [
       { time: "10:00 – 11:00", title: "Workshop · Singapore market-entry strategy & orientation", note: "Taehyon Ahn, CEO, LodestarT", highlight: true },
       { time: "11:00 – 12:00", title: "Setting up a Singapore company", note: "Accountant Minjin Jang" },
       { time: "12:00 – 13:30", title: "Lunch" },
-      ...DEMO_AGENDA.map(([time, title]) => ({ time, title, venue: /Registration/.test(title) ? EVENT_VENUE : undefined, highlight: /pitching|Registration/.test(title) })),
+      ...DEMO_AGENDA.map(([time, title, venue]) => ({ time, title, venue: venue ?? (/Registration/.test(title) ? EVENT_VENUE : undefined), highlight: /pitching|Registration/i.test(title) })),
     ],
   },
   {

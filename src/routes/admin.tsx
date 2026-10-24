@@ -13,7 +13,7 @@ export const Route = createFileRoute("/admin")({
   component: AdminPage,
   head: () => ({
     meta: [
-      { title: "Admin — K-GovTech Open Innovation Day in Singapore" },
+      { title: "Admin — KR-SG AI Connect Pitching & Networking" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -667,7 +667,7 @@ function downloadOutreachCsv(rsvps: AdminRsvp[]) {
   const header = "email,org,person,title,country,type,notes,sendable";
   const lines = rsvps.map((r) => {
     const notes = [
-      "K-GovTech Open Innovation Day 2026-11-03",
+      "KR-SG AI Connect 2026-11-03",
       r.primary_interest || null,
       r.contact_url || null,
       r.checked_in_at ? "attended" : "no-show",

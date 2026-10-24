@@ -36,7 +36,7 @@ export interface Company {
 // One cohort on this event; track2 kept empty so shared components compile.
 export const TRACKS = {
   track1: {
-    title: "K-GovTech Open Innovation Day in Singapore",
+    title: "KR-SG AI Connect Pitching & Networking",
     theme: "Six Korean GovTech startups selected by KOSA",
     dates: "3 – 4 November 2026",
   },

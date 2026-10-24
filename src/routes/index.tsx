@@ -10,6 +10,9 @@ import { companies } from "@/data/companies";
 import { STARTUP_IMAGES, STARTUP_LOGOS } from "@/data/companyImages";
 import {
   EVENT_ADDRESS,
+  DINNER_ADDRESS,
+  DINNER_MAP_URL,
+  DINNER_VENUE,
   EVENT_DAY_SHORT,
   EVENT_MAP_URL,
   EVENT_NAME,
@@ -137,7 +140,8 @@ function useTiltAndMagnet() {
   }, []);
 }
 
-const HEADLINE = ["K-GovTech", "Open", "Innovation", "Day", "in Singapore"];
+// Each entry stays on one line (the clip span is inline-block).
+const HEADLINE = ["KR-SG AI Connect", "Pitching &", "Networking"];
 
 // Hero art (Tammy's mock-up: night earth with routes). Asia at night is
 // NASA Black Marble rendered as a globe on #08142E (three.js, 2880×1300);
@@ -212,7 +216,7 @@ function Landing() {
             {HEADLINE.map((w, i) => (
               <span key={w} aria-hidden>
                 <span className="hero-word-clip">
-                  <span className={`hero-word ${i === 4 ? "text-yellow" : ""}`} style={{ "--i": i } as CSSProperties}>{w}</span>
+                  <span className={`hero-word ${i === HEADLINE.length - 1 ? "text-yellow" : ""}`} style={{ "--i": i } as CSSProperties}>{w}</span>
                 </span>{" "}
                 {(i === 1 || i === 3) && <br />}
               </span>
@@ -275,10 +279,11 @@ function Landing() {
             </p>
             <p className="mt-2 font-display text-2xl font-semibold text-primary">{EVENT_TIME}</p>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Six startup pitches and a keynote, then a networking dinner. Registration and coffee from 14:30.
+              Two pitching sessions at Lorong AI, then a networking dinner at The Meeting Point. Registration from 14:30.
             </p>
             <div className="mt-4">
               <Place venue={EVENT_VENUE} address={EVENT_ADDRESS} map={EVENT_MAP_URL} />
+              <div className="mt-1.5"><Place venue={`Dinner · ${DINNER_VENUE}`} address={DINNER_ADDRESS} map={DINNER_MAP_URL} /></div>
             </div>
             <div className="mt-auto pt-7">
               <Link to="/book" search={{ day: "7" }} className="inline-flex rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
@@ -406,11 +411,11 @@ function Landing() {
       <section id="about" className="relative isolate overflow-hidden bg-hero-gradient text-white">
         <div aria-hidden className="dotgrid pointer-events-none absolute inset-0 -z-10" />
         <div data-reveal className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20">
-          <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">About the K-GovTech Open Innovation Day in Singapore</h2>
+          <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">About KR-SG AI Connect</h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-white/80">
             A Korean government programme that takes Korean GovTech startups to Singapore to meet public agencies,
             investors and partners. The six startups selected in Korea spend 2–6 November in Singapore for a
-            market-entry workshop, 1:1 business meetings, the IR / Demo Day and visits to ecosystem partners.
+            market-entry workshop, the pitching and networking evening with Lorong AI, 1:1 business meetings and visits to ecosystem partners.
           </p>
 
           <div className="mt-12 grid gap-10 border-t border-white/15 pt-10 md:grid-cols-3 md:gap-8">

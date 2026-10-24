@@ -8,6 +8,7 @@ import {
   EVENT_DATE,
   EVENT_NAME,
   EVENT_NAME_LINE1,
+  DINNER_VENUE,
   EVENT_NAME_LINE2,
   EVENT_TIME,
   EVENT_VENUE,
@@ -51,7 +52,7 @@ export function buildInvite(team = false): { subject: string; html: string; text
     // registration row only when doors open before the programme starts
     ...(showcase && showcase.time.startsWith(EVENT_TIME.split("–")[0].trim()) ? [] : [[EVENT_TIME.split("–")[0].trim(), "Registration"] as [string, string]]),
     ...(showcase ? [[showcase.time, showcase.title] as [string, string]] : []),
-    ...(dinner ? [[dinner.time, dinner.title] as [string, string]] : []),
+    ...(dinner ? [[dinner.time, `${dinner.title} at ${DINNER_VENUE}`] as [string, string]] : []),
   ];
   const [h1, m1, h2, m2] = (TIMESLOTS[0]?.time.match(/\d+/g) ?? []).map(Number);
   const mins = (h2 * 60 + m2) - (h1 * 60 + m1);
