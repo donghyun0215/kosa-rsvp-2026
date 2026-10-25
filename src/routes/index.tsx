@@ -178,7 +178,7 @@ function Landing() {
       <section id="top" className="relative isolate overflow-hidden bg-[#08142e] text-white">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="hidden h-full md:block"><Globe align="xMaxYMid" /></div>
-          <div className="h-full md:hidden"><Globe align="xMidYMid" /></div>
+          <div className="h-full md:hidden"><Globe align="xMidYMid" focus="corridor" /></div>
           {/* keeps the copy readable where it crosses the globe */}
           <div className="absolute inset-0 bg-[linear-gradient(90deg,#08142e_0%,rgb(8_20_46/0.85)_30%,rgb(8_20_46/0.1)_62%,transparent_100%)] max-md:bg-[linear-gradient(180deg,rgb(8_20_46/0.9)_0%,rgb(8_20_46/0.7)_55%,transparent_80%)]" />
         </div>
@@ -211,6 +211,13 @@ function Landing() {
           <p className="hero-in [--i:7] mt-8 text-sm font-medium text-white/70">
             Demo Day {EVENT_DAY_SHORT} · 1:1 meetings {MEETUP_DAY_SHORT}
           </p>
+          {/* co-host lockup, one logo per country, as on joint KR–SG event art */}
+          <div className="hero-in [--i:8] mt-8 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span className="w-full text-xs font-medium text-white/60 sm:w-auto sm:pr-1">Organised by</span>
+            <span className="inline-flex h-9 items-center rounded-lg bg-white px-2.5 sm:h-11 sm:px-3.5"><img src={kosaLogo} alt="Korea AI·Software Industry Association (KOSA)" className="h-[18px] w-auto sm:h-6" /></span>
+            <span aria-hidden className="text-lg font-light text-white/60">×</span>
+            <span className="inline-flex h-9 items-center rounded-lg bg-white px-2.5 sm:h-11 sm:px-3.5"><img src={lorongLogo} alt="Lorong AI" className="h-[18px] w-auto sm:h-6" /></span>
+          </div>
         </div>
 
       </section>
