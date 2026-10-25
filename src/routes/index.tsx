@@ -5,6 +5,8 @@ import { Globe } from "@/components/Globe";
 import kosaLogo from "@/assets/logos/kosa-en-wide.png";
 import nipaLogo from "@/assets/logos/nipa-en.png";
 import msitLogo from "@/assets/logos/msit.png";
+import mddiLogo from "@/assets/logos/mddi.png";
+import lorongLogo from "@/assets/logos/lorong-ai.png";
 import { JUDGES } from "@/data/speakers";
 import { companies } from "@/data/companies";
 import { STARTUP_IMAGES, STARTUP_LOGOS } from "@/data/companyImages";
@@ -33,14 +35,21 @@ export const Route = createFileRoute("/")({
 
 const ORGANIZER_EMAIL = "support@lodestart.ai";
 const KOSA_SITE = "https://www.sw.or.kr";
-// Organisers in the order KOSA gave (15 Oct): 주무부처 · 전담기관 · 지원기관.
+// Partner logos, shown on white with no role labels (Tammy, 25 Oct):
+// Korea's MSIT · NIPA · KOSA, then Singapore's MDDI · Lorong AI.
+const PARTNERS = [
+  { name: "Ministry of Science and ICT (MSIT)", logo: msitLogo, href: "https://www.msit.go.kr/eng/", h: "h-10" },
+  { name: "National IT Industry Promotion Agency (NIPA)", logo: nipaLogo, href: "https://www.nipa.kr/eng/", h: "h-7" },
+  { name: "Korea AI·Software Industry Association (KOSA)", logo: kosaLogo, href: KOSA_SITE, h: "h-7" },
+  { name: "Ministry of Digital Development and Information (MDDI)", logo: mddiLogo, href: "https://www.mddi.gov.sg/", h: "h-14" },
+  { name: "Lorong AI", logo: lorongLogo, href: "https://go.gov.sg/lorongai", h: "h-7" },
+];
+// The two organisers, one line each.
 const ORGANISERS = [
-  { role: "Supervising ministry", name: "Ministry of Science and ICT (MSIT)", logo: msitLogo, href: "https://www.msit.go.kr/eng/", h: "h-11",
-    blurb: "Korea's ministry for science, ICT and digital policy." },
-  { role: "Implementing agency", name: "National IT Industry Promotion Agency (NIPA)", logo: nipaLogo, href: "https://www.nipa.kr/eng/", h: "h-8",
-    blurb: "The MSIT agency that runs Korea's IT and software industry programmes, including this one." },
-  { role: "Supporting organisation", name: "Korea AI·Software Industry Association (KOSA)", logo: kosaLogo, href: KOSA_SITE, h: "h-8",
-    blurb: "Korea's industry association for AI and software companies, which selected the startups." },
+  { name: "Korea AI·Software Industry Association (KOSA)", logo: kosaLogo, href: KOSA_SITE, h: "h-8",
+    blurb: "Korea's industry association for AI and software companies. KOSA selected the six startups and brings them to Singapore." },
+  { name: "Lorong AI", logo: lorongLogo, href: "https://go.gov.sg/lorongai", h: "h-9",
+    blurb: "Singapore's hub for the AI community, set up by the Ministry of Digital Development and Information, and host of the pitching and networking evening." },
 ];
 
 // Who each startup serves → what it gives them; shown on cards that have
@@ -175,8 +184,7 @@ function Landing() {
         </div>
 
         <div className="mx-auto flex min-h-[560px] max-w-7xl flex-col justify-center px-4 pb-56 pt-14 sm:px-6 md:pb-20 md:pt-20 md:min-h-[620px] lg:py-28">
-          <p className="hero-in text-xs font-bold uppercase tracking-[0.16em] text-yellow">Ministry of Science and ICT · NIPA · KOSA</p>
-          <h1 className="hero-title mt-4 max-w-2xl text-[clamp(2.5rem,7vw,4.4rem)] font-extrabold leading-[1.02] text-white" aria-label={HEADLINE.join(" ")}>
+          <h1 className="hero-title max-w-2xl text-[clamp(2.5rem,7vw,4.4rem)] font-extrabold leading-[1.02] text-white" aria-label={HEADLINE.join(" ")}>
             {HEADLINE.map((w, i) => (
               <span key={w} aria-hidden>
                 <span className="hero-word-clip">
@@ -187,8 +195,8 @@ function Landing() {
             ))}
           </h1>
           <p className="hero-in [--i:5] mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-[1.0625rem]">
-            Six Korean startups bring AI built for public services to Singapore. Meet the founders, see the live
-            demos and find your next pilot or cross-border partner.
+            Korea and Singapore, together on AI for the public sector. Six Korean AI startups pitch at Lorong AI
+            to Singapore's agencies, investors and AI builders, then meet them 1:1.
           </p>
           <div className="hero-in [--i:6] mt-8 flex flex-wrap gap-3">
             <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet rounded-full px-6 py-3.5 text-sm font-semibold">
@@ -371,37 +379,49 @@ function Landing() {
         </section>
       )}
 
-      {/* ORGANISERS — MSIT · NIPA · KOSA, as KOSA asked (15 Oct) */}
+      {/* ABOUT — a Korea–Singapore programme (Tammy, 25 Oct) */}
       <section id="about" className="relative isolate overflow-hidden bg-hero-gradient text-white">
         <div aria-hidden className="dotgrid pointer-events-none absolute inset-0 -z-10" />
         <div data-reveal className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20">
-          <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">About KR-SG AI Connect</h2>
+          <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">Korea and Singapore, together on AI</h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-white/80">
-            A Korean government programme that takes Korean GovTech startups to Singapore to meet public agencies,
-            investors and partners. The six startups selected in Korea spend 2–6 November in Singapore for a
-            market-entry workshop, the pitching and networking evening with Lorong AI, 1:1 business meetings and visits to ecosystem partners.
+            KR-SG AI Connect is a joint Korea–Singapore programme on AI for the public sector. From 2 to 6 November,
+            six Korean AI startups work with Singapore's agencies, investors and AI community: a market-entry
+            workshop, the pitching and networking evening at Lorong AI, 1:1 business meetings and visits to
+            ecosystem partners.
           </p>
 
-          <div className="mt-12 grid gap-10 border-t border-white/15 pt-10 md:grid-cols-3 md:gap-8">
+          <h3 className="mt-14 border-t border-white/15 pt-10 text-sm font-medium text-lichen">Organisers</h3>
+          <div className="mt-6 grid gap-10 md:grid-cols-2 md:gap-8">
             {ORGANISERS.map((o) => (
-              <div key={o.role}>
-                <p className="text-sm font-medium text-lichen">{o.role}</p>
-                <a href={o.href} target="_blank" rel="noopener noreferrer" className="mt-4 flex h-20 items-center rounded-xl bg-white px-5 shadow-sm">
+              <div key={o.name} className="flex flex-col gap-5 sm:flex-row sm:items-center">
+                <a href={o.href} target="_blank" rel="noopener noreferrer" className="flex h-20 w-full shrink-0 items-center justify-center rounded-xl bg-white px-5 shadow-sm sm:w-56">
                   <img src={o.logo} alt={o.name} className={`${o.h} w-auto max-w-full object-contain`} />
                 </a>
-                <p className="mt-4 text-sm leading-relaxed text-white/75">{o.blurb}</p>
+                <div>
+                  <p className="font-semibold">{o.name}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-white/75">{o.blurb}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* PARTNERS — logos only, on white */}
+      <section aria-label="Partners" className="border-b border-border bg-white">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-12 gap-y-8 px-4 py-12 sm:px-6 md:justify-between">
+          {PARTNERS.map((o) => (
+            <a key={o.name} href={o.href} target="_blank" rel="noopener noreferrer" title={o.name} className="transition hover:opacity-80">
+              <img src={o.logo} alt={o.name} className={`${o.h} w-auto object-contain`} />
+            </a>
+          ))}
+        </div>
+      </section>
+
       <footer className="bg-background">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-6 px-4 py-10 text-sm text-muted-foreground sm:px-6">
           <Wordmark />
-          <div className="flex flex-wrap items-center gap-6">
-            {ORGANISERS.map((o) => <img key={o.role} src={o.logo} alt={o.name} className={`${o.h === "h-11" ? "h-9" : "h-6"} w-auto`} />)}
-          </div>
           <div>
             <a href={`mailto:${ORGANIZER_EMAIL}`} className="font-semibold text-primary hover:underline">{ORGANIZER_EMAIL}</a>
           </div>

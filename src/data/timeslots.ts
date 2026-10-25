@@ -13,8 +13,9 @@ export interface Timeslot {
 // Lorong AI) and the 1:1 business meetings (Wed 4 Nov, NULDAM) — order
 // swapped by Tammy on 23 Oct.
 export const SITE_URL = "https://kosa-rsvp-2026.vercel.app";
-// Organisers as KOSA asked (15 Oct): 주무부처 MSIT · 전담기관 NIPA · 지원기관 KOSA.
-export const CREDITS = "Ministry of Science and ICT (MSIT) · National IT Industry Promotion Agency (NIPA) · Korea AI·Software Industry Association (KOSA)";
+// A Korea–Singapore programme (Tammy, 25 Oct): organised by KOSA and Lorong AI,
+// with Korea's MSIT and NIPA and Singapore's MDDI.
+export const CREDITS = "Organised by the Korea AI·Software Industry Association (KOSA) and Lorong AI, with Korea's Ministry of Science and ICT (MSIT) and NIPA and Singapore's Ministry of Digital Development and Information (MDDI)";
 
 export const EVENT_NAME = "KR-SG AI Connect Pitching & Networking";
 export const EVENT_NAME_SHORT = "KR-SG AI Connect";
