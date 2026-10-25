@@ -363,17 +363,11 @@ function RsvpPage() {
             <Wordmark />
           </Link>
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            <Link
-              to="/lounge"
-              className="inline-flex items-center rounded-full bg-secondary px-3.5 py-1.5 text-xs font-semibold text-secondary-foreground transition hover:bg-accent sm:px-4 sm:text-sm"
-            >
-              Lounge
+            <Link to="/" className="rounded-md px-2.5 py-2 text-sm font-medium text-navy transition hover:bg-secondary">
+              Home
             </Link>
-            <Link
-              to="/"
-              className="inline-flex items-center gap-1.5 rounded-full border border-primary px-3.5 py-1.5 text-xs font-semibold text-primary transition hover:bg-primary/10 sm:px-4 sm:text-sm"
-            >
-              ← Home
+            <Link to="/lounge" className="rounded-md px-2.5 py-2 text-sm font-medium text-navy transition hover:bg-secondary">
+              Lounge
             </Link>
           </div>
         </div>
@@ -542,7 +536,7 @@ function RsvpPage() {
                   Step 01
                 </span>
               )}
-              <h2 className="text-lg font-bold text-navy">{day === "5" ? "Pick Your Startups" : "Agenda"}</h2>
+              <h2 className="text-lg font-bold text-navy">{day === "5" ? "Pick your startups" : "Agenda"}</h2>
             </div>
             <p className="mt-1.5 text-sm text-muted-foreground">
               {day === "5" ? "One startup per round. Leave a round empty if you don't need it. Greyed-out slots are already taken." : "Pitching at Lorong AI from 14:30, then the networking dinner at The Meeting Point."}
@@ -591,7 +585,7 @@ function RsvpPage() {
 
             {/* 1:1 picker — appears when meetups checked and self-booking is open */}
             {ONE_ON_ONE_OPEN && attend.meetups && (
-              <div className="mt-5 rounded-xl border border-primary/25 bg-primary/[0.03] p-4 sm:p-5">
+              <div className="mt-5">
                 {loading && <LoadingNote text="Checking live availability…" className="text-xs font-semibold text-primary" />}
                 {/* Phones: one card per startup, the rounds as full-width
                     buttons underneath — the table's round columns sat off-screen
@@ -601,7 +595,7 @@ function RsvpPage() {
                     <div key={c.slug} className="rounded-xl border border-border bg-card p-3.5">
                       <div className="font-semibold text-navy">{c.name}</div>
                       <div className="text-xs text-muted-foreground">{c.sector}</div>
-                      <div className="mt-3 grid grid-cols-2 gap-2 min-[420px]:grid-cols-4">
+                      <div className="mt-3 grid grid-cols-3 gap-2">
                         {TIMESLOTS.map((t) => {
                           if (!isSlotOffered(c.slug, t.id)) {
                             return (
@@ -722,12 +716,12 @@ function RsvpPage() {
                   Step 02
                 </span>
               )}
-              <h2 className="text-lg font-bold text-navy">Your Details</h2>
+              <h2 className="text-lg font-bold text-navy">Your details</h2>
             </div>
 
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="text-xs font-semibold text-navy">Full Name *</label>
+                <label className="text-xs font-semibold text-navy">Full name *</label>
                 <input
                   required
                   value={form.fullName}
@@ -745,7 +739,7 @@ function RsvpPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-navy">Job Title *</label>
+                <label className="text-xs font-semibold text-navy">Job title *</label>
                 <input
                   required
                   value={form.jobTitle}
@@ -777,7 +771,7 @@ function RsvpPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-navy">Primary Interest *</label>
+                <label className="text-xs font-semibold text-navy">Primary interest *</label>
                 <select
                   required
                   value={form.primaryInterest}
@@ -865,7 +859,7 @@ function RsvpPage() {
               disabled={submitting}
               className="mt-6 w-full rounded-full bg-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:opacity-60"
             >
-              <BusyLabel busy={submitting} text="Submitting…">Confirm My RSVP →</BusyLabel>
+              <BusyLabel busy={submitting} text="Submitting…">Confirm my RSVP</BusyLabel>
             </button>
           </div>
         </form>

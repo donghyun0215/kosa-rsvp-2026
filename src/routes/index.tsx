@@ -198,13 +198,13 @@ function Landing() {
             Korea and Singapore, together on AI for the public sector. Six Korean AI startups pitch at Lorong AI
             to Singapore's agencies, investors and AI builders, then meet them 1:1.
           </p>
-          <div className="hero-in [--i:6] mt-8 flex flex-wrap gap-3">
-            <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet rounded-full px-6 py-3.5 text-sm font-semibold">
-              Join Demo Day →
+          <div className="hero-in [--i:6] mt-8 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap">
+            <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet rounded-full px-6 py-3.5 text-center text-sm font-semibold">
+              RSVP for Demo Day
             </Link>
             {ONE_ON_ONE_OPEN && (
-              <Link to="/book" search={{ day: "5" }} data-magnet className="btn-outline-hero magnet rounded-full px-6 py-3.5 text-sm font-semibold">
-                Schedule a 1:1 Meeting
+              <Link to="/book" search={{ day: "5" }} data-magnet className="btn-outline-hero magnet rounded-full px-6 py-3.5 text-center text-sm font-semibold">
+                Book a 1:1 meeting
               </Link>
             )}
           </div>
@@ -259,7 +259,7 @@ function Landing() {
             </div>
             <div className="mt-auto pt-7">
               <Link to="/book" search={{ day: "7" }} className="inline-flex rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
-                RSVP for the Demo Day
+                RSVP for Demo Day
               </Link>
             </div>
           </article>
@@ -297,7 +297,7 @@ function Landing() {
             Open a profile for more, or book a 1:1 straight away.
           </p>
 
-          <div className="mt-10 grid grid-cols-2 gap-3 [perspective:1200px] sm:gap-4 lg:grid-cols-3">
+          <div className="mt-10 grid grid-cols-1 gap-4 [perspective:1200px] sm:grid-cols-2 lg:grid-cols-3">
             {companies.map((c, i) => (
               <article key={c.slug} data-reveal style={{ "--rd": `${(i % 3) * 70}ms` } as CSSProperties} data-tilt className="card-startup tilt group flex flex-col overflow-hidden rounded-xl">
                 <Link to="/companies/$slug" params={{ slug: c.slug }} className="relative block aspect-[3/2] overflow-hidden bg-hero-gradient">
@@ -318,7 +318,7 @@ function Landing() {
                     </>
                   )}
                 </Link>
-                <div className="flex flex-1 flex-col gap-2 p-3 sm:p-4">
+                <div className="flex flex-1 flex-col gap-2 p-5">
                   <Link to="/companies/$slug" params={{ slug: c.slug }} className="flex h-10 items-center" title={c.name}>
                     {STARTUP_LOGOS[c.slug] ? (
                       <img src={STARTUP_LOGOS[c.slug]} alt={c.name} className={`${c.slug === "mediaiplus" ? "max-h-10" : "max-h-7 sm:max-h-8"} max-w-[120px] object-contain object-left sm:max-w-[150px]`} />
@@ -327,24 +327,24 @@ function Landing() {
                     )}
                   </Link>
                   <div className="text-xs font-semibold text-primary">{c.sector}</div>
-                  <p className="line-clamp-3 text-xs leading-relaxed text-muted-foreground sm:text-[13px]">{c.tagline}</p>
-                  <div className="mt-auto flex flex-col gap-2 pt-2">
+                  <p className="line-clamp-3 text-[13px] leading-relaxed text-muted-foreground">{c.tagline}</p>
+                  <div className="mt-auto flex items-center justify-between gap-3 border-t border-border pt-4">
+                    <Link
+                      to="/companies/$slug"
+                      params={{ slug: c.slug }}
+                      className="text-[13px] font-semibold text-navy transition hover:text-primary"
+                    >
+                      View profile
+                    </Link>
                     {ONE_ON_ONE_OPEN && (
                       <Link
                         to="/book"
                         search={{ day: "5", company: c.slug }}
-                        className="rounded-full bg-primary px-3 py-2 text-center text-xs font-semibold text-primary-foreground hover:bg-primary/90"
+                        className="rounded-full border border-primary px-4 py-2 text-[13px] font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground"
                       >
-                        Book a 1:1 meeting
+                        Book a 1:1
                       </Link>
                     )}
-                    <Link
-                      to="/companies/$slug"
-                      params={{ slug: c.slug }}
-                      className="py-1 text-center text-xs font-semibold text-navy/70 transition hover:text-primary"
-                    >
-                      View profile →
-                    </Link>
                   </div>
                 </div>
               </article>

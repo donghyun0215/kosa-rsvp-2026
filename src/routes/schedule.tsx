@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Wordmark } from "@/components/Wordmark";
 import { useEffect, useState } from "react";
 import { companies, MEETUP_COMPANIES } from "@/data/companies";
@@ -116,21 +116,18 @@ function SchedulePage() {
       {/* Nav — logo only, deliberately no site links (unlisted page) */}
       <header className="border-b border-border bg-background">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-          <Wordmark />
-          <div className="text-right">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">
-              {EVENT_NAME}
-            </div>
-            <div className="text-sm font-bold text-navy">Programme Schedule</div>
-          </div>
+          <Link to="/" className="min-w-0"><Wordmark /></Link>
+          <Link to="/" className="rounded-md px-2.5 py-2 text-sm font-medium text-navy transition hover:bg-secondary">
+            Home
+          </Link>
         </div>
       </header>
 
       <main className="mx-auto max-w-6xl px-5 pb-16 pt-8">
         <div className="text-center">
-          <h1 className="font-display text-2xl font-bold text-navy md:text-3xl">Programme Schedule</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Internal schedule for participating startups and partners · latest version, subject to change on the day
+          <h1 className="font-display text-2xl font-bold text-navy md:text-3xl">Programme schedule</h1>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
+            For the participating startups and partners. This is the latest version; times can still change on the day.
           </p>
         </div>
 
@@ -159,37 +156,17 @@ function SchedulePage() {
           <MeetingRoster />
         ) : (
           <>
-        {/* Programme card (single cohort) */}
-        <div className="mt-6 grid grid-cols-1 gap-2">
-          {TRACK_META.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setTrackId(t.id as "t1")}
-              className={`rounded-2xl border px-4 py-3 text-left transition ${
-                trackId === t.id
-                  ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                  : "border-border bg-card text-navy hover:border-primary/40"
-              }`}
-            >
-              <div className={`text-[10px] font-semibold uppercase tracking-widest ${trackId === t.id ? "text-primary-foreground/80" : "text-primary"}`}>
-                {t.label}
-              </div>
-              <div className="mt-0.5 text-sm font-bold leading-snug">{t.title}</div>
-              <div className={`mt-0.5 truncate text-[11px] ${trackId === t.id ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
-                {t.period}
-              </div>
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-3 rounded-xl bg-card px-4 py-3 text-xs text-muted-foreground shadow-sm">
-          <span className="font-semibold text-navy">{track.title}</span> · {track.companies}
-          {track.note && <span className="block mt-1">{track.note}</span>}
+        {/* One cohort: its dates and line-up in a single quiet line */}
+        <div className="mt-8 flex flex-col gap-1 border-y border-border py-4 text-sm sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+          <p className="text-navy">
+            <span className="font-semibold">{track.period}</span>
+            <span className="text-muted-foreground"> · {track.companies}</span>
+          </p>
+          {track.note && <p className="shrink-0 text-xs text-muted-foreground">{track.note}</p>}
         </div>
 
         {/* Desktop: at-a-glance grid (whole track on one screen) */}
-        <div className="mt-6 hidden gap-3 lg:grid lg:grid-cols-4">
+        <div className="mt-6 hidden items-start gap-3 lg:grid lg:grid-cols-5">
           {track.days.map((d) => (
             <button
               type="button"
@@ -220,7 +197,7 @@ function SchedulePage() {
               ) : (
                 <div className="flex-1 space-y-1.5 px-3 py-2">
                   {d.items.map((it, i) => (
-                    <div key={i} className="text-[11px] leading-snug">
+                    <div key={i} className="text-[11px] leading-snug [text-wrap:pretty]">
                       {it.time && <span className="mr-1 font-bold text-primary">{it.time}</span>}
                       <span className={it.highlight ? "font-bold text-navy" : "text-navy/80"}>{it.title}</span>
                       {it.highlight && it.venue && (

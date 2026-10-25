@@ -157,7 +157,7 @@ function Profile({ company }: { company: Company }) {
           <Link to="/" className="flex min-w-0 items-center"><Wordmark compact /></Link>
           <nav className="flex shrink-0 items-center gap-2 text-sm font-semibold text-navy">
             <span className="hidden tabular-nums text-navy/45 sm:inline">Company {idx + 1} of {companies.length}</span>
-            <Link to="/" hash="startups" className="rounded-full border border-border px-3.5 py-1.5 transition hover:bg-muted">All companies</Link>
+            <Link to="/" hash="startups" className="rounded-md px-2.5 py-2 font-medium transition hover:bg-secondary">All companies</Link>
           </nav>
         </div>
       </header>
