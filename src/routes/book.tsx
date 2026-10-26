@@ -8,6 +8,7 @@ import {
   EVENT_DAY_SHORT,
   DEMO_AGENDA,
   DINNER_ADDRESS,
+  DINNER_VENUE,
   EVENT_TIME,
   EVENT_VENUE,
   EVENT_ADDRESS,
@@ -98,12 +99,11 @@ function RsvpPage() {
 
   // rsvp form
   const [attend, setAttend] = useState({ showcase: false, lunch: false, meetups: false });
-  // Day 5 = 1:1 only, always on; Day 7 = showcase/dinner checkboxes, 1:1 off.
-  // Day 5 = 1:1 only; Day 7 = the whole demo day (pitches + networking), no
-  // per-session choice — RSVP means you're coming for the afternoon.
+  // Day 5 = 1:1 only, always on. Day 7 = guests tick the pitching, the
+  // networking dinner or both (two venues, so the counts are planned apart).
   useEffect(() => {
     setAttend((a) =>
-      day === "5" ? { ...a, meetups: true } : { showcase: true, lunch: true, meetups: false },
+      day === "5" ? { ...a, meetups: true } : { showcase: false, lunch: false, meetups: false },
     );
   }, [day]);
   const [selections, setSelections] = useState<Record<string, string | null>>(
@@ -236,6 +236,11 @@ function RsvpPage() {
           companySlug: selections[t.id] as string,
         }))
       : [];
+    if (day === "7" && !attend.showcase && !attend.lunch) {
+      setFormError("Please choose the pitching, the networking dinner, or both.");
+      document.getElementById("attend-parts")?.scrollIntoView({ block: "center", behavior: "smooth" });
+      return;
+    }
     if (ONE_ON_ONE_OPEN && attend.meetups && meetupSelections.length === 0 && Object.keys(myBookings).length === 0) {
       setFormError("Please pick at least one startup for your 1:1 meetups (or untick that session).");
       return;
@@ -462,7 +467,10 @@ function RsvpPage() {
                 </DialogHeader>
                 <ul className="space-y-1.5 rounded-xl bg-muted/60 p-4 text-sm text-navy">
                   {(submitted.attend.showcase || submitted.attend.lunch) && (
-                    <li>✓ Demo Day · {EVENT_DAY_SHORT} · {EVENT_TIME}</li>
+                    <li>
+                      ✓ Demo Day · {EVENT_DAY_SHORT}:{" "}
+                      {[submitted.attend.showcase && "Pitching", submitted.attend.lunch && "Networking dinner"].filter(Boolean).join(" + ")}
+                    </li>
                   )}
                   {submitted.bookings.map((b) => {
                     const c = companies.find((x) => x.slug === b.companySlug);
@@ -509,7 +517,7 @@ function RsvpPage() {
           <div className="mb-8 rounded-2xl border border-red-200 bg-red-50 p-5 text-red-900">
             <div className="font-semibold">Some 1:1 picks couldn't be booked — the rest of your RSVP is confirmed.</div>
             <ul className="mt-2 space-y-1 text-sm">
-              {(submitted.attend.showcase || submitted.attend.lunch) && <li>✓ Demo Day ({EVENT_DAY_SHORT} · {EVENT_TIME}: registration, talks, pitches & networking dinner)</li>}
+              {(submitted.attend.showcase || submitted.attend.lunch) && <li>✓ Demo Day ({EVENT_DAY_SHORT}: {[submitted.attend.showcase && "Pitching", submitted.attend.lunch && "Networking dinner"].filter(Boolean).join(" + ")})</li>}
               {submitted.bookings.map((b) => {
                 const c = companies.find((x) => x.slug === b.companySlug);
                 const t = TIMESLOTS.find((x) => x.id === b.timeslotId);
@@ -556,7 +564,11 @@ function RsvpPage() {
               </div>
             )}
 
-            <div className="hidden">
+            {day === "7" && (
+            <fieldset id="attend-parts" className="mt-7 scroll-mt-24">
+              <legend className="text-base font-bold text-navy">Which part will you join?</legend>
+              <p className="mt-1 text-sm text-muted-foreground">Tick one or both. The pitching and the dinner are at different venues.</p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {PROGRAM.filter((p) => p.id !== "meetups").map((p) => {
                 const checked = attend[p.id];
                 return (
@@ -573,15 +585,20 @@ function RsvpPage() {
                       className="mt-1 h-4 w-4 accent-[var(--primary)]"
                     />
                     <span>
-                      <span className="block text-sm font-bold text-navy">
-                        {p.title} <span className="ml-1 font-medium text-muted-foreground">{p.time}</span>
+                      <span className="block text-base font-bold text-navy">{p.title}</span>
+                      <span className="mt-0.5 block text-sm font-semibold text-primary">
+                        {p.id === "showcase" ? "14:30 – 17:10" : p.time}
                       </span>
-                      <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{p.description}</span>
+                      <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
+                        {p.id === "showcase" ? EVENT_VENUE : DINNER_VENUE}
+                      </span>
                     </span>
                   </label>
                 );
               })}
-            </div>
+              </div>
+            </fieldset>
+            )}
 
             {/* 1:1 picker — appears when meetups checked and self-booking is open */}
             {ONE_ON_ONE_OPEN && attend.meetups && (

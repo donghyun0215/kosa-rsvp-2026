@@ -1,4 +1,4 @@
-// K-GovTech Open Innovation Day in Singapore — six Korean GovTech startups.
+// K-GovTech Open Innovation Day in Singapore — five Korean GovTech startups.
 // Source: each startup's programme one-pager (12 Oct, via the KOSA master
 // sheet links). Copy follows the companies' own wording (light edits for
 // grammar). Clotho has no one-pager yet: its profile is translated from its
@@ -37,7 +37,7 @@ export interface Company {
 export const TRACKS = {
   track1: {
     title: "KR-SG AI Connect Pitching & Networking",
-    theme: "Six Korean GovTech startups selected by KOSA",
+    theme: "Five Korean GovTech startups selected by KOSA",
     dates: "3 – 4 November 2026",
   },
   track2: {
@@ -294,62 +294,6 @@ export const companies: Company[] = [
       "Pilot projects with Singapore pharma, biotech and medtech companies.",
       "CRO partnerships for Southeast Asian expansion.",
       "Investor connections for AI development and regional growth.",
-    ],
-  },
-  {
-    slug: "llumos",
-    onepager: "/onepagers/llumos.pdf",
-    name: "LUMOS",
-    displayName: "LLUMOS Co., Ltd.",
-    tagline: "Vertical AI agent for grant administration: it understands the company and handles each grant expense end to end, from rule judgment to evidence, filing and approval.",
-    sector: "Vertical AI agent · Grant administration",
-    stage: "Raising Pre-A · founded 2024",
-    track: "track1",
-    website: "https://llumos.co/en",
-    email: "jin@llumos.co",
-    phone: "+82 10-3257-3247",
-    problem: [
-      "Slow: an accounting-firm review reply takes 1–2 months, so a project gets only about two review cycles.",
-      "Every programme differs: 22,000 programme calls, each with its own rules; one cost line can need 10–19 documents.",
-      "Mistakes cost money: rejected spend is clawed back. In Singapore, EDG claims are paid only after outcome and audit checks.",
-      "The only fix today is more people: agencies and audit firms grow headcount with every new company and programme.",
-    ],
-    solution: [
-      "Company memory (ESM): finance, budget, transactions and evidence kept as one model.",
-      "Rule judgment: “Can we spend this?” answered with the cited clause; in a grey zone it asks for the one fact that decides it.",
-      "Documents & approval: finds missing evidence, fills forms with company data, routes to the authority and records the result.",
-    ],
-    keyFeatures: [
-      "#1 on rule citation: the same base model goes from 0.000 to 0.648 with LUMOS training and version-aware retrieval.",
-      "#1 on document extraction: admin-document score 0.757, filling original HWPX forms as-is.",
-      "Self-improving: learns daily from real work and expert feedback; new programme onboarding cut from 3 months to 1 week.",
-    ],
-    targetAudience: [
-      "Grant-claim auditors and accounting firms.",
-      "Programme operators and agencies.",
-      "Credit & company-data providers, SI / cloud partners and SME finance teams.",
-    ],
-    businessModel: [
-      "Agencies: supply, build and operate contracts — one contract brings hundreds of portfolio companies.",
-      "Usage fees: KRW 0.4–1.2M (≈USD 280–850) per company per month; per-engagement contracts for accounting firms.",
-      "Grant-spend marketplace: commission when a matched supplier deal closes.",
-    ],
-    businessSnapshot: [
-      "Revenue KRW 554M in FY2025 (+132%); FY2026E KRW 1.0B. Profitable 2 years, zero debt.",
-      "83.3% voluntary adoption (265 of 318 LIPS SMEs); agency renewal grew from 318 to 450.",
-      "Median resolution time 3 days, down from 1–2 months, with 0 clawbacks.",
-      "KRW 8.85B of grant spend processed; 1,414 work requests.",
-      "Partners: KODIT BASA two-way API (~560K SMEs), NICE BizINFO, KODATA PoC, NIPA GovTech, TIPA & KEIT data.",
-    ],
-    team: [
-      {"name": "Kyungjin Kim", "role": "Founder & CEO", "bio": ["Korean Certified Public Accountant.", "Deloitte Anjin — grant-fund audit & tax; Shinhan Securities IPO team.", "Built in-house tax software."]},
-      {"name": "AI Lead", "role": "AI", "bio": ["Multimodal post-training at LG AI Research · CVPR 2026."]},
-      {"name": "Dev Lead", "role": "Engineering", "bio": ["Full-stack engineer, 12 years · multiple AI hackathon awards."]},
-    ],
-    seekingOpportunities: [
-      "One paid pilot where grant claims and accounting evidence review overlap.",
-      "Partners: claim audit teams, programme operators, accounting reviewers, company-data providers and Microsoft partners.",
-      "Investors for the Pre-A round with an ASEAN B2B or GovTech focus.",
     ],
   },
 ];

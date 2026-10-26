@@ -37,13 +37,12 @@ const LINES: Record<string, string> = {
   hellofriends: "Multilingual AI kiosks giving migrant workers trusted public-service answers",
   shareplat: "Physical AI robots for safer, faster utility infrastructure work",
   mediaiplus: "AI matching between biotechs and global CROs for faster clinical trials",
-  llumos: "Vertical AI agent that handles grant expense administration end to end",
 };
 const ORDER: ("demo" | "meetup")[] = ["demo", "meetup"]; // chronological
 // Lorong AI / MDDI asked (26 Oct) that the invite say Singapore startups are
-// joining too, so the six Korean companies don't read as the whole line-up.
+// joining too, so the five Korean companies don't read as the whole line-up.
 const SG_NOTE =
-  "Alongside the six Korean startups below, AI startups from Singapore's Lorong AI community will also be joining. We will share the full line-up on the event website.";
+  "Alongside the five Korean startups below, AI startups from Singapore's Lorong AI community will also be joining. We will share the full line-up on the event website.";
 const SG_LINE = "AI startups from the Lorong AI community. Line-up to be announced on the event website.";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

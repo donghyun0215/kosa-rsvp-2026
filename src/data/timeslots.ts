@@ -74,7 +74,7 @@ export interface ProgramBlock {
 export const PROGRAM: ProgramBlock[] = [
   {
     id: "showcase",
-    title: "Welcome & startup pitching",
+    title: "Startup pitching",
     time: "15:00 – 17:10",
     description: "Welcome from Lorong AI and KOSA, then two pitching sessions (5 min pitch, 5 min Q&A each) and the judges' feedback. Registration from 14:30.",
   },

@@ -303,7 +303,7 @@ function LoungePage() {
                     landed.
                   </h1>
                   <p className="hero-in mt-5 max-w-md text-[17px] leading-relaxed text-white/70" style={{ "--i": 2 } as CSSProperties}>
-                    Six Korean GovTech teams are in Singapore this week. Meet the agencies, investors and partners in
+                    Five Korean GovTech teams are in Singapore this week. Meet the agencies, investors and partners in
                     the room, and keep the people you meet.
                   </p>
                   {key && !useEmailGate ? (

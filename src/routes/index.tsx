@@ -47,7 +47,7 @@ const PARTNERS = [
 // The two organisers, one line each.
 const ORGANISERS = [
   { name: "Korea AI·Software Industry Association (KOSA)", logo: kosaLogo, href: KOSA_SITE, h: "h-8",
-    blurb: "Korea's industry association for AI and software companies. KOSA selected the six startups and brings them to Singapore." },
+    blurb: "Korea's industry association for AI and software companies. KOSA selected the five startups and brings them to Singapore." },
   { name: "Lorong AI", logo: lorongLogo, href: "https://go.gov.sg/lorongai", h: "h-9",
     blurb: "Singapore's hub for the AI community, set up by the Ministry of Digital Development and Information, and host of the pitching and networking evening." },
 ];
@@ -60,7 +60,6 @@ const LEDGER: Record<string, [from: string, to: string]> = {
   hellofriends: ["Migrant workers", "multilingual AI kiosks"],
   shareplat: ["Utility crews", "cable-routing robots"],
   mediaiplus: ["Biotechs", "AI-matched global CROs"],
-  llumos: ["Grant-funded companies", "end-to-end expense filing"],
 };
 
 function ContactOrganizer() {
@@ -204,13 +203,13 @@ function Landing() {
           </p>
           <div className="hero-in [--i:6] mt-8 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap">
             <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet flex flex-col items-center rounded-full px-7 py-2.5 text-center leading-tight">
-              <span className="text-sm font-semibold">RSVP for Demo Day</span>
-              <span className="mt-0.5 text-xs font-medium opacity-85">{EVENT_DAY_SHORT} · {EVENT_TIME}</span>
+              <span className="text-base font-bold sm:text-[1.0625rem]">RSVP for Demo Day</span>
+              <span className="mt-0.5 text-[11px] font-medium opacity-80">{EVENT_DAY_SHORT}</span>
             </Link>
             {ONE_ON_ONE_OPEN && (
               <Link to="/book" search={{ day: "5" }} data-magnet className="btn-outline-hero magnet flex flex-col items-center rounded-full px-7 py-2.5 text-center leading-tight">
-                <span className="text-sm font-semibold">Book a 1:1 meeting</span>
-                <span className="mt-0.5 text-xs font-medium opacity-75">{MEETUP_DAY_SHORT} · {MEETUP_TIME}</span>
+                <span className="text-base font-bold sm:text-[1.0625rem]">Book a 1:1 meeting</span>
+                <span className="mt-0.5 text-[11px] font-medium opacity-70">{MEETUP_DAY_SHORT}</span>
               </Link>
             )}
           </div>
@@ -320,7 +319,7 @@ function Landing() {
                       src={STARTUP_IMAGES[c.slug]}
                       alt={`${c.name}: ${c.sector}`}
                       loading="lazy"
-                      className={`h-full w-full object-cover ${c.slug === "llumos" ? "object-left-top" : ""} transition duration-500 group-hover:scale-[1.03]`}
+                      className={`h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]`}
                     />
                   ) : (
                     // No product photo yet: the "serves" line from the hero, set large.

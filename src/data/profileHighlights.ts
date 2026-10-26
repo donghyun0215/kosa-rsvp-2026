@@ -80,16 +80,4 @@ export const HIGHLIGHTS: Record<string, Highlight> = {
     ],
     problem: "Trial data is scattered by country, and finding a CRO still depends on who you know.",
   },
-  llumos: {
-    does: "An AI agent that answers “can we spend this?” with the cited rule, then prepares and files the evidence.",
-    serves: "Grant auditors, programme operators and the SMEs they fund.",
-    references: ["KODIT (BASA API, ~560K SMEs)", "NIPA GovTech", "NICE BizINFO"],
-    ask: "One paid pilot where grant claims and accounting evidence review overlap.",
-    figures: [
-      ["3 days", "median resolution, down from 1–2 months"],
-      ["0", "clawbacks"],
-      ["83.3%", "voluntary adoption among participating SMEs"],
-    ],
-    problem: "Every programme has its own rules, and one review reply takes 1–2 months.",
-  },
 };

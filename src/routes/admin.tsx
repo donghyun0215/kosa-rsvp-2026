@@ -256,7 +256,7 @@ function AdminPage() {
           
           <Stat label="Checked in (3 Nov)" value={`${day2CheckedIn} / ${day2.length}`} />
           <Stat label="Pre-registered / Walk-in" value={`${day2.length - day2WalkIns.length} / ${day2WalkIns.length}`} />
-          <Stat label="Showcase" value={`${rsvps.filter((r) => r.attend_showcase).length}`} />
+          <Stat label="Pitching" value={`${rsvps.filter((r) => r.attend_showcase).length}`} />
           <Stat label="Networking" value={`${rsvps.filter((r) => r.attend_lunch).length}`} />
           <Stat
             label="1:1 bookers (4 Nov)"
