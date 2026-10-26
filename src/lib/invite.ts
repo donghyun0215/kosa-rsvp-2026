@@ -50,7 +50,7 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 const F = "font-family:Arial,Helvetica,sans-serif;";
 const P = `margin:0 0 14px;${F}font-size:14px;line-height:21px;color:#222222;`;
 
-export function buildInvite(team = false): { subject: string; html: string; text: string } {
+export function buildInvite(team = false, unsub = false): { subject: string; html: string; text: string } {
   const [I, my, sign] = team ? ["We are", "we would", "The LodestarT team"] : ["I am", "I would", "Tammy"];
   const showcase = PROGRAM.find((p) => p.id === "showcase");
   const dinner = PROGRAM.find((p) => p.id === "lunch");
@@ -133,7 +133,12 @@ ${ORDER.map((k) => blocks[k]).join("")}
  <div style="${F}padding-top:12px;font-size:14px;"><a href="${SITE}/#startups" style="color:${C.brand};font-weight:bold;">View the startup profiles →</a></div>
 </td></tr>
 </table>
-<p style="max-width:600px;margin:14px auto 0;${F}font-size:12px;color:#8a8f9e;">If you would rather not receive invitations like this, just let ${team ? "us" : "me"} know.</p>
+<p style="max-width:600px;margin:14px auto 0;${F}font-size:12px;color:#8a8f9e;">${
+  // {{UNSUB}} = per-recipient link, filled in by the invite sheet (it asks with ?unsub=1)
+  unsub
+    ? `Don't want invitations like this? <a href="{{UNSUB}}" style="color:#8a8f9e;text-decoration:underline;">Unsubscribe</a>`
+    : `If you would rather not receive invitations like this, just let ${team ? "us" : "me"} know.`
+}</p>
 </body></html>`;
 
   const plain = (s: string) => s.replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
@@ -157,7 +162,9 @@ ${ORDER.map((k) => blocks[k]).join("")}
     SG_LINE,
     `Startup profiles: ${SITE}/#startups`,
     "",
-    `If you would rather not receive invitations like this, just let ${team ? "us" : "me"} know.`,
+    unsub
+      ? "Don't want invitations like this? Unsubscribe: {{UNSUB}}"
+      : `If you would rather not receive invitations like this, just let ${team ? "us" : "me"} know.`,
   ].join("\n");
 
   return { subject: SUBJECT, html, text };
