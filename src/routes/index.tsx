@@ -195,22 +195,21 @@ function Landing() {
             ))}
           </h1>
           <p className="hero-in [--i:5] mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-[1.0625rem]">
-            Korea and Singapore, together on AI for the public sector. Six Korean AI startups pitch at Lorong AI
-            to Singapore's agencies, investors and AI builders, then meet them 1:1.
+            Korea and Singapore, together on AI for the public sector. Selected AI startups from Korea and Singapore
+            pitch at Lorong AI to agencies, investors and AI builders, then meet them 1:1.
           </p>
           <div className="hero-in [--i:6] mt-8 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap">
-            <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet rounded-full px-6 py-3.5 text-center text-sm font-semibold">
-              RSVP for Demo Day
+            <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet flex flex-col items-center rounded-full px-7 py-2.5 text-center leading-tight">
+              <span className="text-sm font-semibold">RSVP for Demo Day</span>
+              <span className="mt-0.5 text-xs font-medium opacity-85">{EVENT_DAY_SHORT} · {EVENT_TIME}</span>
             </Link>
             {ONE_ON_ONE_OPEN && (
-              <Link to="/book" search={{ day: "5" }} data-magnet className="btn-outline-hero magnet rounded-full px-6 py-3.5 text-center text-sm font-semibold">
-                Book a 1:1 meeting
+              <Link to="/book" search={{ day: "5" }} data-magnet className="btn-outline-hero magnet flex flex-col items-center rounded-full px-7 py-2.5 text-center leading-tight">
+                <span className="text-sm font-semibold">Book a 1:1 meeting</span>
+                <span className="mt-0.5 text-xs font-medium opacity-75">{MEETUP_DAY_SHORT} · {MEETUP_TIME}</span>
               </Link>
             )}
           </div>
-          <p className="hero-in [--i:7] mt-8 text-sm font-medium text-white/70">
-            Demo Day {EVENT_DAY_SHORT} · 1:1 meetings {MEETUP_DAY_SHORT}
-          </p>
           {/* co-host lockup, one logo per country, as on joint KR–SG event art */}
           <div className="hero-in [--i:8] mt-8 flex flex-wrap items-center gap-x-3 gap-y-2">
             <span className="w-full text-xs font-medium text-white/60 sm:w-auto sm:pr-1">Organised by</span>
@@ -223,13 +222,13 @@ function Landing() {
       </section>
 
       {/* Cohort marquee: logos (names until supplied) glide under the hero */}
-      <section className="bg-[#08142e]">
-        <div className="marquee relative border-t border-white/10 py-5" aria-hidden>
+      <section className="border-b border-border bg-white">
+        <div className="marquee relative py-5" aria-hidden>
           <div className="marquee-track">
             {[...companies, ...companies].map((c, i) => (
-              <span key={`${c.slug}-${i}`} className="mx-6 inline-flex shrink-0 items-center gap-6 font-display text-2xl font-semibold text-white/80">
+              <span key={`${c.slug}-${i}`} className="mx-6 inline-flex shrink-0 items-center gap-6 font-display text-2xl font-semibold text-navy/80">
                 {STARTUP_LOGOS[c.slug] ? (
-                  <span className="inline-flex h-12 w-36 items-center justify-center rounded-lg bg-white/95 px-4">
+                  <span className="inline-flex h-12 w-36 items-center justify-center px-4">
                     <img src={STARTUP_LOGOS[c.slug]} alt="" className="max-h-7 max-w-full object-contain" />
                   </span>
                 ) : (
@@ -393,7 +392,7 @@ function Landing() {
           <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">Korea and Singapore, together on AI</h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-white/80">
             KR-SG AI Connect is a joint Korea–Singapore programme on AI for the public sector. From 2 to 6 November,
-            six Korean AI startups work with Singapore's agencies, investors and AI community: a market-entry
+            selected AI startups from Korea and Singapore work with agencies, investors and the AI community: a market-entry
             workshop, the pitching and networking evening at Lorong AI, 1:1 business meetings and visits to
             ecosystem partners.
           </p>

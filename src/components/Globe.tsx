@@ -39,7 +39,7 @@ export function Globe({ align, focus }: { align: "xMaxYMid" | "xMidYMid"; focus?
         <path d={arc("singapore", "seoul")} pathLength={1} className="route-pulse" style={{ "--i": 3.5 } as CSSProperties} />
         <circle cx={CITY.singapore[0]} cy={CITY.singapore[1]} r="12" className="city-ring city-ring-sg" />
         <circle cx={CITY.singapore[0]} cy={CITY.singapore[1]} r="13" className="city city-hub city-sg" style={{ "--i": 6 } as CSSProperties} />
-        <text x={CITY.seoul[0] + 34} y={CITY.seoul[1] + 14} className="city-label" style={{ "--i": 7 } as CSSProperties}>Seoul</text>
+        <text x={CITY.seoul[0] + 34} y={CITY.seoul[1] + 14} className="city-label" style={{ "--i": 7 } as CSSProperties}>Korea</text>
         <text x={CITY.singapore[0] + 38} y={CITY.singapore[1] + 16} className="city-label" style={{ "--i": 7 } as CSSProperties}>Singapore</text>
       </g>
     </svg>

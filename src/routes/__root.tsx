@@ -85,7 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // Invite-only event site: keep it out of search engines (6 Oct)
       { name: "robots", content: "noindex, nofollow" },
       { title: "KR-SG AI Connect Pitching & Networking · Singapore, 3–4 Nov 2026" },
-      { name: "description", content: "A Korea–Singapore programme on AI for the public sector: six Korean AI startups pitch at Lorong AI on 3 November and meet Singapore's agencies, investors and partners 1:1 on 4 November 2026." },
+      { name: "description", content: "A Korea–Singapore programme on AI for the public sector: selected AI startups from Korea and Singapore pitch at Lorong AI on 3 November and meet agencies, investors and partners 1:1 on 4 November 2026." },
       { name: "author", content: "LodestarT" },
       { property: "og:title", content: "KR-SG AI Connect Pitching & Networking" },
       { property: "og:description", content: "Korea and Singapore, together on AI for the public sector. Pitching at Lorong AI and 1:1 meetings, 3–4 November 2026." },
