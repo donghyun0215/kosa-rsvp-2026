@@ -1,5 +1,5 @@
 // Outreach invitation email, served by /api/invite and sent from the invite
-// Google Sheet. `team` = signed by the LodestarT team (the default at /api/invite), otherwise by Tammy. Built from the same constants as the
+// Google Sheet. Signed by Tammy as KOCHAM vice chairman whichever sender the sheet uses. Built from the same constants as the
 // site, so a confirmed venue or time is picked up without touching the sheet.
 // {{GREETING}} is replaced per recipient by the sheet script.
 import { companies } from "@/data/companies";
@@ -28,9 +28,11 @@ const C = { brand: "#0b7468", accent: "#f2c14e", ink: "#10233a", muted: "#4a5b59
 // Joint Korea–Singapore framing (Tammy, 25–26 Oct): one organiser per country up top.
 const HOST_LINE = "KOSA × Lorong AI";
 const DATES = "3–4 November 2026 · Singapore";
-const SUBJECT = "Invitation: KR-SG AI Connect | Startup Pitching & Networking (3–4 Nov, Singapore)";
+const SUBJECT = "Invitation: KR-SG AI Connect | Startup Pitching & Networking";
 // Tammy's copy (26 Oct). Set to "" to drop the deadline line.
-const RSVP_BY = "Friday, 30 October";
+const RSVP_BY = "";
+// 10/27: sent as "K-Innovation Partners", signed by Tammy as KOCHAM vice chairman.
+const SIGN = "Tammy Ahn<br>Vice Chairman, Korea Chamber of Commerce in Singapore (KOCHAM)";
 // One line per startup for the "Featuring" list (falls back to the site tagline).
 const LINES: Record<string, string> = {
   stellarvision: "SAR satellite data and AI analytics for defence, public-sector and disaster response",
@@ -46,8 +48,7 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 const F = "font-family:Arial,Helvetica,sans-serif;";
 const P = `margin:0 0 14px;${F}font-size:14px;line-height:21px;color:#222222;`;
 
-export function buildInvite(team = false, unsub = false): { subject: string; html: string; text: string } {
-  const sign = team ? "The LodestarT Team" : "Tammy";
+export function buildInvite(_team = false, unsub = false): { subject: string; html: string; text: string } {
   const showcase = PROGRAM.find((p) => p.id === "showcase");
   const dinner = PROGRAM.find((p) => p.id === "lunch");
   const demoRows: [string, string][] = [
@@ -98,15 +99,16 @@ export function buildInvite(team = false, unsub = false): { subject: string; htm
 
   // Tammy's draft (26 Oct), tightened. The cards below carry times and
   // addresses, so the letter only names the two days.
-  const we = team ? "we" : "I";
+  const dayLine = (d: string) => esc(d.replace(" 2026", ""));
   const intro = [
     "I hope this email finds you well.",
-    `Following the launch of the Korea–Singapore AI Alliance in March 2026 to strengthen bilateral cooperation in artificial intelligence, ${we} ${team ? "are" : "am"} delighted to invite you to <b>KR-SG AI Connect: Pitching &amp; Networking</b>.`,
-    "Co-organised by the Korea AI·Software Industry Association (KOSA) and Lorong AI, this inaugural joint event brings together AI startups, public-sector stakeholders, investors and industry partners from both countries for live pitches, product demos and networking. It features a curated cohort of Korean AI startups alongside homegrown AI innovators from Singapore's Lorong AI community; the full line-up will be published on the event website.",
-    `<b>Day 1 · ${esc(EVENT_DATE.replace(" 2026", ""))}</b><br>Pitching sessions at ${esc(EVENT_VENUE)}, followed by a networking dinner at ${esc(DINNER_VENUE)} (JTC LaunchPad @ one-north)` +
-      (ONE_ON_ONE_OPEN ? `<br><b>Day 2 · ${esc(MEETUP_DATE.replace(" 2026", ""))}</b><br>Private 1:1 meetings with the startups of your choice, by appointment` : ""),
-    `Please confirm your attendance with the buttons below${RSVP_BY ? ` by <b>${esc(RSVP_BY)}</b>` : ""}.${ONE_ON_ONE_OPEN ? ` If you would like to meet specific startups on ${esc(MEETUP_DATE.replace(/^\w+, | 2026/g, ""))}, you can book your 1:1 slots there too.` : ""}`,
-    `It would mean a great deal to have you join us for this milestone collaboration. ${team ? "We look" : "I look"} forward to welcoming you.`,
+    "Following the launch of the Korea–Singapore AI Alliance in March 2026 to strengthen bilateral cooperation in artificial intelligence, we are delighted to invite you to <b>KR-SG AI Connect: Pitching &amp; Networking</b>.",
+    "Co-organised by the Korea AI·Software Industry Association (KOSA) and Lorong AI, representing the AI ecosystems of Korea and Singapore respectively, this inaugural joint event brings together leading AI startups, public-sector stakeholders, investors and industry partners for live pitches, product demos and strategic networking.",
+    "The event will showcase a curated cohort of promising Korean AI startups alongside homegrown AI innovators from Singapore's Lorong AI community. The full startup line-up will be published on the event website.",
+    `<b>Day 1: Demo Day &amp; Networking Dinner · ${dayLine(EVENT_DATE)}</b><br>Demo Day at ${esc(EVENT_VENUE)} (14:30–17:10)<br>Networking Dinner at ${esc(DINNER_VENUE)}, JTC LaunchPad @ one-north (17:10–20:00)` +
+      (ONE_ON_ONE_OPEN ? `<br><br><b>Day 2: 1:1 Meetings · ${dayLine(MEETUP_DATE)}</b><br>Curated business matching sessions with the participating startups (${esc(MEETUP_TIME)}, ${esc(MEETUP_VENUE)})` : ""),
+    `Please confirm your attendance via the link below${RSVP_BY ? ` by <b>${esc(RSVP_BY)}</b>` : ""}.<br>👉 <a href="${SITE}/book?day=7" style="color:${C.brand};font-weight:bold;">Click here to RSVP</a>`,
+    "It would mean a great deal to have you join us for this milestone collaboration. We look forward to welcoming you.",
   ];
 
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -114,7 +116,7 @@ export function buildInvite(team = false, unsub = false): { subject: string; htm
 <div style="max-width:600px;margin:0 auto;padding:4px 4px 18px;text-align:left;">
 <p style="${P}">{{GREETING}}</p>
 ${intro.map((l) => `<p style="${P}">${l}</p>`).join("\n")}
-<p style="${P}">Warm regards,<br>${sign}</p>
+<p style="${P}">Warm regards,<br><br>${SIGN}</p>
 </div>
 <table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff;border:1px solid ${C.line};">
 <tr><td style="background:${C.brand};padding:14px 36px 20px;">
@@ -134,7 +136,7 @@ ${ORDER.map((k) => blocks[k]).join("")}
   // {{UNSUB}} = per-recipient link, filled in by the invite sheet (it asks with ?unsub=1)
   unsub
     ? `Don't want invitations like this? <a href="{{UNSUB}}" style="color:#8a8f9e;text-decoration:underline;">Unsubscribe</a>`
-    : `If you would rather not receive invitations like this, just let ${team ? "us" : "me"} know.`
+    : `If you would rather not receive invitations like this, just let us know.`
 }</p>
 </body></html>`;
 
@@ -148,7 +150,8 @@ ${ORDER.map((k) => blocks[k]).join("")}
     "",
     ...intro.map(plain).flatMap((l) => [l, ""]),
     "Warm regards,",
-    sign,
+    "",
+    plain(SIGN),
     "",
     "----",
     ...ORDER.flatMap((k) => [...(k === "demo" ? demoText : meetText), ""]),
@@ -161,7 +164,7 @@ ${ORDER.map((k) => blocks[k]).join("")}
     "",
     unsub
       ? "Don't want invitations like this? Unsubscribe: {{UNSUB}}"
-      : `If you would rather not receive invitations like this, just let ${team ? "us" : "me"} know.`,
+      : `If you would rather not receive invitations like this, just let us know.`,
   ].join("\n");
 
   return { subject: SUBJECT, html, text };
