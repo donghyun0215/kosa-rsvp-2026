@@ -24,11 +24,12 @@ import {
 
 // ── per-event copy and colours ──
 const C = { brand: "#0b7468", accent: "#f2c14e", ink: "#10233a", muted: "#4a5b59", line: "#d6e2e0" };
-const HOST_LINE = "MSIT · NIPA · KOSA";
+// Joint Korea–Singapore framing (Tammy, 25–26 Oct): one organiser per country up top.
+const HOST_LINE = "KOSA × Lorong AI";
 const DATES = "3–4 November 2026 · Singapore";
 const SUBJECT = `Invitation to the ${EVENT_NAME} (3–4 Nov, Singapore)`;
 const PITCH =
-  "Six Korean startups building AI for public services, selected by the Korea AI·Software Industry Association (KOSA), are coming to Singapore to meet public agencies, investors and partners.";
+  "Organised by the Korea AI·Software Industry Association (KOSA) and Lorong AI, it brings selected AI startups from Korea and Singapore together with public agencies, investors and partners to pitch, demo and meet 1:1.";
 // One line per startup for the "Featuring" list (falls back to the site tagline).
 const LINES: Record<string, string> = {
   stellarvision: "SAR satellite data and AI analytics for defence, public-sector and disaster response",
