@@ -247,13 +247,16 @@ function Landing() {
 
       {/* JOIN — two days. One big line per card says what matters (day + time);
           everything else is small. Details repeat on the RSVP page. */}
-      <section id="rsvp" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
-        <h2 data-reveal className="max-w-xl text-3xl font-bold text-navy md:text-4xl">Two days in Singapore</h2>
-        <p className="mt-3 max-w-xl text-muted-foreground">
+      {/* navy band to match the hero (Tammy, 26 Oct); the cards stay white */}
+      <section id="rsvp" className="relative isolate overflow-hidden bg-[#08142e] text-white">
+      <div aria-hidden className="dotgrid pointer-events-none absolute inset-0 -z-10" />
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
+        <h2 data-reveal className="max-w-xl text-3xl font-bold text-white md:text-4xl">Two days in Singapore</h2>
+        <p className="mt-3 max-w-xl text-white/70">
           For investors, corporates and ecosystem partners. Register for either day or both.
         </p>
 
-        <div data-reveal className="mt-10 grid gap-px rounded-2xl border border-border bg-border shadow-[var(--shadow-card)] [perspective:1200px] md:grid-cols-2">
+        <div data-reveal className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-border text-foreground shadow-[0_30px_70px_-30px_rgb(0_0_0/0.7)] [perspective:1200px] md:grid-cols-2">
           <article data-tilt className="tilt flex flex-col bg-card p-6 sm:p-8">
             <h3 className="text-xl font-semibold text-muted-foreground">Demo Day</h3>
             <p className="mt-2 font-display text-[clamp(2rem,4.5vw,3rem)] font-bold leading-none tracking-tight text-navy">
@@ -297,6 +300,7 @@ function Landing() {
           </article>
 
         </div>
+      </div>
       </section>
 
       {/* STARTUPS */}
