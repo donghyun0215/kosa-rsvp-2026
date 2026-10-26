@@ -40,6 +40,11 @@ const LINES: Record<string, string> = {
   llumos: "Vertical AI agent that handles grant expense administration end to end",
 };
 const ORDER: ("demo" | "meetup")[] = ["demo", "meetup"]; // chronological
+// Lorong AI / MDDI asked (26 Oct) that the invite say Singapore startups are
+// joining too, so the six Korean companies don't read as the whole line-up.
+const SG_NOTE =
+  "Alongside the six Korean startups below, AI startups from Singapore's Lorong AI community will also be joining. We will share the full line-up on the event website.";
+const SG_LINE = "AI startups from the Lorong AI community. Line-up to be announced on the event website.";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const F = "font-family:Arial,Helvetica,sans-serif;";
@@ -87,7 +92,7 @@ export function buildInvite(team = false): { subject: string; html: string; text
 
   const intro = [
     "I hope this email finds you well.",
-    `${I} delighted to invite you to the <b>${esc(EVENT_NAME)}</b>. ${esc(PITCH)}`,
+    `${I} delighted to invite you to the <b>${esc(EVENT_NAME)}</b>. ${esc(PITCH)} ${esc(SG_NOTE)}`,
     ONE_ON_ONE_OPEN
       ? `They will pitch at the Demo Day on <b>${esc(EVENT_DATE)}</b>, and you are welcome to book private 1:1 meetings with the ones that interest you ${(EVENT_DATE as string) === MEETUP_DATE ? "that afternoon" : `on <b>${esc(MEETUP_DATE)}</b>`}.`
       : `They will pitch at the Demo Day on <b>${esc(EVENT_DATE)}</b>.`,
@@ -109,15 +114,17 @@ ${intro.map((l) => `<p style="${P}">${l}</p>`).join("\n")}
 </td></tr>
 ${ORDER.map((k) => blocks[k]).join("")}
 <tr><td style="padding:22px 36px 24px;">
- <div style="${F}font-size:11px;letter-spacing:1.4px;font-weight:bold;color:${C.brand};text-transform:uppercase;">Featuring</div>
+ <div style="${F}font-size:11px;letter-spacing:1.4px;font-weight:bold;color:${C.brand};text-transform:uppercase;">Featuring · From Korea</div>
  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px;">${featuring}</table>
+ <div style="${F}padding-top:16px;font-size:11px;letter-spacing:1.4px;font-weight:bold;color:${C.brand};text-transform:uppercase;">From Singapore</div>
+ <div style="${F}padding-top:6px;font-size:13px;line-height:18px;color:${C.muted};">${esc(SG_LINE)}</div>
  <div style="${F}padding-top:12px;font-size:14px;"><a href="${SITE}/#startups" style="color:${C.brand};font-weight:bold;">View the startup profiles →</a></div>
 </td></tr>
 </table>
 <p style="max-width:600px;margin:14px auto 0;${F}font-size:12px;color:#8a8f9e;">If you would rather not receive invitations like this, just let ${team ? "us" : "me"} know.</p>
 </body></html>`;
 
-  const plain = (s: string) => s.replace(/<[^>]+>/g, "");
+  const plain = (s: string) => s.replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
   const demoText = [`DEMO DAY · ${EVENT_DATE}`, ...demoRows.map(([t, w]) => `${t}  ${w}`), `${EVENT_VENUE}, ${EVENT_ADDRESS}`, `RSVP: ${SITE}/book?day=7`];
   const meetText = ONE_ON_ONE_OPEN
     ? [`1:1 BUSINESS MEETINGS · ${MEETUP_DATE}`, `${MEETUP_TIME}  ${rounds}`, `${MEETUP_VENUE}, ${MEETUP_ADDRESS}`, `Book: ${SITE}/book?day=5`]
@@ -131,8 +138,11 @@ ${ORDER.map((k) => blocks[k]).join("")}
     "",
     "----",
     ...ORDER.flatMap((k) => [...(k === "demo" ? demoText : meetText), ""]),
-    "Featuring:",
+    "Featuring, from Korea:",
     ...companies.map((c, i) => `${String(i + 1).padStart(2, "0")} ${c.name} — ${lineOf(c)}`),
+    "",
+    "From Singapore:",
+    SG_LINE,
     `Startup profiles: ${SITE}/#startups`,
     "",
     `If you would rather not receive invitations like this, just let ${team ? "us" : "me"} know.`,
