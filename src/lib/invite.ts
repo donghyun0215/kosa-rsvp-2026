@@ -28,9 +28,9 @@ const C = { brand: "#0b7468", accent: "#f2c14e", ink: "#10233a", muted: "#4a5b59
 // Joint Korea–Singapore framing (Tammy, 25–26 Oct): one organiser per country up top.
 const HOST_LINE = "KOSA × Lorong AI";
 const DATES = "3–4 November 2026 · Singapore";
-const SUBJECT = `Invitation to the ${EVENT_NAME} (3–4 Nov, Singapore)`;
-const PITCH =
-  "Organised by the Korea AI·Software Industry Association (KOSA) and Lorong AI, it brings selected AI startups from Korea and Singapore together with public agencies, investors and partners to pitch, demo and meet 1:1.";
+const SUBJECT = "Invitation: KR-SG AI Connect | Startup Pitching & Networking (3–4 Nov, Singapore)";
+// Tammy's copy (26 Oct). Set to "" to drop the deadline line.
+const RSVP_BY = "Friday, 30 October";
 // One line per startup for the "Featuring" list (falls back to the site tagline).
 const LINES: Record<string, string> = {
   stellarvision: "SAR satellite data and AI analytics for defence, public-sector and disaster response",
@@ -40,10 +40,6 @@ const LINES: Record<string, string> = {
   mediaiplus: "AI matching between biotechs and global CROs for faster clinical trials",
 };
 const ORDER: ("demo" | "meetup")[] = ["demo", "meetup"]; // chronological
-// Lorong AI / MDDI asked (26 Oct) that the invite say Singapore startups are
-// joining too, so the five Korean companies don't read as the whole line-up.
-const SG_NOTE =
-  "Alongside the five Korean startups below, AI startups from Singapore's Lorong AI community will also be joining. We will share the full line-up on the event website.";
 const SG_LINE = "AI startups from the Lorong AI community. Line-up to be announced on the event website.";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -51,7 +47,7 @@ const F = "font-family:Arial,Helvetica,sans-serif;";
 const P = `margin:0 0 14px;${F}font-size:14px;line-height:21px;color:#222222;`;
 
 export function buildInvite(team = false, unsub = false): { subject: string; html: string; text: string } {
-  const [I, my, sign] = team ? ["We are", "we would", "The LodestarT team"] : ["I am", "I would", "Tammy"];
+  const sign = team ? "The LodestarT Team" : "Tammy";
   const showcase = PROGRAM.find((p) => p.id === "showcase");
   const dinner = PROGRAM.find((p) => p.id === "lunch");
   const demoRows: [string, string][] = [
@@ -100,13 +96,17 @@ export function buildInvite(team = false, unsub = false): { subject: string; htm
   <div style="${F}padding-top:12px;font-size:13px;font-weight:bold;color:${C.accent};">Revealed on the event website soon.</div>
  </td></tr></table>`;
 
+  // Tammy's draft (26 Oct), tightened. The cards below carry times and
+  // addresses, so the letter only names the two days.
+  const we = team ? "we" : "I";
   const intro = [
     "I hope this email finds you well.",
-    `${I} delighted to invite you to the <b>${esc(EVENT_NAME)}</b>. ${esc(PITCH)} ${esc(SG_NOTE)}`,
-    ONE_ON_ONE_OPEN
-      ? `They will pitch at the Demo Day on <b>${esc(EVENT_DATE)}</b>, and you are welcome to book private 1:1 meetings with the ones that interest you ${(EVENT_DATE as string) === MEETUP_DATE ? "that afternoon" : `on <b>${esc(MEETUP_DATE)}</b>`}.`
-      : `They will pitch at the Demo Day on <b>${esc(EVENT_DATE)}</b>.`,
-    `It would mean a great deal to have you with us. Please find the details below, and ${my} be grateful if you could RSVP at your earliest convenience.`,
+    `Following the launch of the Korea–Singapore AI Alliance in March 2026 to strengthen bilateral cooperation in artificial intelligence, ${we} ${team ? "are" : "am"} delighted to invite you to <b>KR-SG AI Connect: Pitching &amp; Networking</b>.`,
+    "Co-organised by the Korea AI·Software Industry Association (KOSA) and Lorong AI, this inaugural joint event brings together AI startups, public-sector stakeholders, investors and industry partners from both countries for live pitches, product demos and networking. It features a curated cohort of Korean AI startups alongside homegrown AI innovators from Singapore's Lorong AI community; the full line-up will be published on the event website.",
+    `<b>Day 1 · ${esc(EVENT_DATE.replace(" 2026", ""))}</b><br>Pitching sessions at ${esc(EVENT_VENUE)}, followed by a networking dinner at ${esc(DINNER_VENUE)} (JTC LaunchPad @ one-north)` +
+      (ONE_ON_ONE_OPEN ? `<br><b>Day 2 · ${esc(MEETUP_DATE.replace(" 2026", ""))}</b><br>Private 1:1 meetings with the startups of your choice, by appointment` : ""),
+    `Please confirm your attendance with the buttons below${RSVP_BY ? ` by <b>${esc(RSVP_BY)}</b>` : ""}.${ONE_ON_ONE_OPEN ? ` If you would like to meet specific startups on ${esc(MEETUP_DATE.replace(/^\w+, | 2026/g, ""))}, you can book your 1:1 slots there too.` : ""}`,
+    `It would mean a great deal to have you join us for this milestone collaboration. ${team ? "We look" : "I look"} forward to welcoming you.`,
   ];
 
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -138,7 +138,7 @@ ${ORDER.map((k) => blocks[k]).join("")}
 }</p>
 </body></html>`;
 
-  const plain = (s: string) => s.replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+  const plain = (s: string) => s.replace(/<br>/g, "\n").replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
   const demoText = [`DEMO DAY · ${EVENT_DATE}`, ...demoRows.map(([t, w]) => `${t}  ${w}`), `Pitching Sessions @ ${EVENT_VENUE}, ${EVENT_ADDRESS}`, `Networking Dinner @ ${DINNER_VENUE}, ${DINNER_ADDRESS}`, `RSVP: ${SITE}/book?day=7`];
   const meetText = ONE_ON_ONE_OPEN
     ? [`1:1 BUSINESS MEETINGS · ${MEETUP_DATE}`, `${MEETUP_TIME}  ${rounds}`, `${MEETUP_VENUE}, ${MEETUP_ADDRESS}`, `Book: ${SITE}/book?day=5`]
