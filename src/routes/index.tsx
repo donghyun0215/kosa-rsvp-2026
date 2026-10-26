@@ -204,12 +204,12 @@ function Landing() {
           <div className="hero-in [--i:6] mt-8 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap">
             <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet flex flex-col items-center rounded-full px-7 py-2.5 text-center leading-tight">
               <span className="text-base font-bold sm:text-[1.0625rem]">RSVP for Demo Day</span>
-              <span className="mt-0.5 text-[11px] font-medium opacity-80">{EVENT_DAY_SHORT}</span>
+              <span className="mt-0.5 text-[13px] font-semibold opacity-90 sm:text-sm">{EVENT_DAY_SHORT} · {EVENT_TIME.split(" – ")[0]}</span>
             </Link>
             {ONE_ON_ONE_OPEN && (
               <Link to="/book" search={{ day: "5" }} data-magnet className="btn-outline-hero magnet flex flex-col items-center rounded-full px-7 py-2.5 text-center leading-tight">
                 <span className="text-base font-bold sm:text-[1.0625rem]">Book a 1:1 meeting</span>
-                <span className="mt-0.5 text-[11px] font-medium opacity-70">{MEETUP_DAY_SHORT}</span>
+                <span className="mt-0.5 text-[13px] font-semibold opacity-85 sm:text-sm">{MEETUP_DAY_SHORT} · {MEETUP_TIME.split(" – ")[0]}</span>
               </Link>
             )}
           </div>
