@@ -47,7 +47,7 @@ const PARTNERS = [
 // The two organisers, one line each.
 const ORGANISERS = [
   { name: "Korea AI·Software Industry Association (KOSA)", logo: kosaLogo, href: KOSA_SITE, h: "h-8",
-    blurb: "Korea's industry association for AI and software companies. KOSA selected the five startups and brings them to Singapore." },
+    blurb: "The Korea Software Industry Association (KOSA) is a statutory organization under the Ministry of Science and ICT (MSIT) dedicated to fostering the domestic AI and software ecosystem and representing the interests of its member companies." },
   { name: "Lorong AI", logo: lorongLogo, href: "https://go.gov.sg/lorongai", h: "h-9",
     blurb: "Singapore's hub for the AI community, set up by the Ministry of Digital Development and Information, and host of the pitching and networking evening." },
 ];
