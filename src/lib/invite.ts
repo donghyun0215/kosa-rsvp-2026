@@ -90,6 +90,19 @@ export function buildInvite(team = false): { subject: string; html: string; text
     .map((c, i) => `<tr><td style="padding:5px 10px 5px 0;${F}font-size:13px;line-height:18px;color:${C.brand};font-weight:bold;vertical-align:top;white-space:nowrap;">${String(i + 1).padStart(2, "0")}</td><td style="padding:5px 0;${F}font-size:13px;line-height:18px;color:${C.ink};"><b>${esc(c.name)}</b> <span style="color:${C.muted};">— ${esc(lineOf(c))}</span></td></tr>`)
     .join("");
 
+  // "From Singapore" teaser: the numbering carries on from the Korean list
+  // into redacted slots, so the line-up reads as still being revealed.
+  // Email-safe: tables, inline styles, no images or web fonts.
+  const redacted = (n: number, w: number) =>
+    `<tr><td style="padding:6px 12px 6px 0;${F}font-size:13px;line-height:18px;font-weight:bold;color:${C.accent};vertical-align:middle;white-space:nowrap;">${String(n).padStart(2, "0")}</td><td style="padding:6px 0;vertical-align:middle;"><span style="display:inline-block;width:${w}px;height:12px;background:#2e4561;border-radius:2px;"></span>&nbsp;&nbsp;<span style="${F}font-size:12px;color:#9fb3c8;white-space:nowrap;">Singapore</span></td></tr>`;
+  const sgTeaser = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:18px;background:${C.ink};"><tr><td style="padding:22px 22px 20px;">
+  <div style="${F}font-size:11px;letter-spacing:1.4px;font-weight:bold;color:${C.accent};text-transform:uppercase;">+ From Singapore</div>
+  <div style="${F}padding-top:8px;font-size:34px;line-height:36px;letter-spacing:-1px;font-weight:800;color:#ffffff;">Coming soon.</div>
+  <div style="${F}padding-top:8px;font-size:14px;line-height:20px;color:#d5dee8;">AI startups from Singapore's Lorong AI community are joining the line-up.</div>
+  <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:12px;">${redacted(companies.length + 1, 120)}${redacted(companies.length + 2, 88)}</table>
+  <div style="${F}padding-top:12px;font-size:13px;font-weight:bold;color:${C.accent};">Revealed on the event website soon.</div>
+ </td></tr></table>`;
+
   const intro = [
     "I hope this email finds you well.",
     `${I} delighted to invite you to the <b>${esc(EVENT_NAME)}</b>. ${esc(PITCH)} ${esc(SG_NOTE)}`,
@@ -116,8 +129,7 @@ ${ORDER.map((k) => blocks[k]).join("")}
 <tr><td style="padding:22px 36px 24px;">
  <div style="${F}font-size:11px;letter-spacing:1.4px;font-weight:bold;color:${C.brand};text-transform:uppercase;">Featuring · From Korea</div>
  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px;">${featuring}</table>
- <div style="${F}padding-top:16px;font-size:11px;letter-spacing:1.4px;font-weight:bold;color:${C.brand};text-transform:uppercase;">From Singapore</div>
- <div style="${F}padding-top:6px;font-size:13px;line-height:18px;color:${C.muted};">${esc(SG_LINE)}</div>
+ ${sgTeaser}
  <div style="${F}padding-top:12px;font-size:14px;"><a href="${SITE}/#startups" style="color:${C.brand};font-weight:bold;">View the startup profiles →</a></div>
 </td></tr>
 </table>
