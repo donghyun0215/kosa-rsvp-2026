@@ -383,7 +383,7 @@ function RsvpPage() {
         <div aria-hidden className="dotgrid pointer-events-none absolute inset-0 -z-10" />
         <div className="mx-auto max-w-5xl px-5 py-10 sm:px-6 sm:py-12">
           <div className="text-sm font-semibold text-primary-foreground/70">
-            {day === "5" ? "RSVP · 1:1 business meetings" : "RSVP · Demo Day"}
+            {day === "5" ? "RSVP · 1:1 Business Meetings" : "RSVP · Demo Day"}
           </div>
           <h1 className="mt-2 text-4xl font-bold leading-none sm:text-5xl">
             <span className="sm:hidden">{day === "5" ? MEETUP_DAY_SHORT : EVENT_DAY_SHORT}</span>

@@ -9,6 +9,7 @@ import {
   EVENT_NAME,
   EVENT_NAME_LINE1,
   DINNER_VENUE,
+  DINNER_ADDRESS,
   EVENT_NAME_LINE2,
   EVENT_TIME,
   EVENT_VENUE,
@@ -57,7 +58,7 @@ export function buildInvite(team = false, unsub = false): { subject: string; htm
     // registration row only when doors open before the programme starts
     ...(showcase && showcase.time.startsWith(EVENT_TIME.split("–")[0].trim()) ? [] : [[EVENT_TIME.split("–")[0].trim(), "Registration"] as [string, string]]),
     ...(showcase ? [[showcase.time, showcase.title] as [string, string]] : []),
-    ...(dinner ? [[dinner.time, `${dinner.title} at ${DINNER_VENUE}`] as [string, string]] : []),
+    ...(dinner ? [[dinner.time, dinner.title] as [string, string]] : []),
   ];
   const [h1, m1, h2, m2] = (TIMESLOTS[0]?.time.match(/\d+/g) ?? []).map(Number);
   const mins = (h2 * 60 + m2) - (h1 * 60 + m1);
@@ -78,7 +79,7 @@ export function buildInvite(team = false, unsub = false): { subject: string; htm
 </td></tr>`;
 
   const blocks = {
-    demo: card(`Demo Day · ${EVENT_DATE}`, demoRows, EVENT_VENUE, EVENT_ADDRESS, btn(`${SITE}/book?day=7`, "RSVP for the Demo Day")),
+    demo: card(`Demo Day · ${EVENT_DATE}`, demoRows, `Pitching Sessions @ ${EVENT_VENUE}, ${EVENT_ADDRESS}`, `Networking Dinner @ ${DINNER_VENUE}, ${DINNER_ADDRESS}`, btn(`${SITE}/book?day=7`, "RSVP for the Demo Day")),
     meetup: ONE_ON_ONE_OPEN
       ? card(`1:1 Business Meetings · ${MEETUP_DATE}`, [[MEETUP_TIME, rounds]], MEETUP_VENUE, MEETUP_ADDRESS, btn(`${SITE}/book?day=5`, "Book a 1:1 meeting"))
       : "",
@@ -141,7 +142,7 @@ ${ORDER.map((k) => blocks[k]).join("")}
 </body></html>`;
 
   const plain = (s: string) => s.replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
-  const demoText = [`DEMO DAY · ${EVENT_DATE}`, ...demoRows.map(([t, w]) => `${t}  ${w}`), `${EVENT_VENUE}, ${EVENT_ADDRESS}`, `RSVP: ${SITE}/book?day=7`];
+  const demoText = [`DEMO DAY · ${EVENT_DATE}`, ...demoRows.map(([t, w]) => `${t}  ${w}`), `Pitching Sessions @ ${EVENT_VENUE}, ${EVENT_ADDRESS}`, `Networking Dinner @ ${DINNER_VENUE}, ${DINNER_ADDRESS}`, `RSVP: ${SITE}/book?day=7`];
   const meetText = ONE_ON_ONE_OPEN
     ? [`1:1 BUSINESS MEETINGS · ${MEETUP_DATE}`, `${MEETUP_TIME}  ${rounds}`, `${MEETUP_VENUE}, ${MEETUP_ADDRESS}`, `Book: ${SITE}/book?day=5`]
     : [];

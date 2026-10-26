@@ -263,11 +263,11 @@ function Landing() {
             </p>
             <p className="mt-2 font-display text-2xl font-semibold text-primary">{EVENT_TIME}</p>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Two pitching sessions at Lorong AI, then a networking dinner at The Meeting Point. Registration from 14:30.
+              Pitching by AI startups selected by KOSA and Lorong AI, followed by a networking dinner. Registration from 14:30.
             </p>
             <div className="mt-4">
-              <Place venue={EVENT_VENUE} address={EVENT_ADDRESS} map={EVENT_MAP_URL} />
-              <div className="mt-1.5"><Place venue={`Dinner · ${DINNER_VENUE}`} address={DINNER_ADDRESS} map={DINNER_MAP_URL} /></div>
+              <Place venue={`Pitching Sessions @ ${EVENT_VENUE}`} address={EVENT_ADDRESS} map={EVENT_MAP_URL} />
+              <div className="mt-1.5"><Place venue={`Networking Dinner @ ${DINNER_VENUE}`} address={DINNER_ADDRESS} map={DINNER_MAP_URL} /></div>
             </div>
             <div className="mt-auto pt-7">
               <Link to="/book" search={{ day: "7" }} className="inline-flex rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
@@ -276,7 +276,7 @@ function Landing() {
             </div>
           </article>
           <article data-tilt className="tilt flex flex-col bg-card p-6 sm:p-8">
-            <h3 className="text-xl font-semibold text-muted-foreground">1:1 business meetings</h3>
+            <h3 className="text-xl font-semibold text-muted-foreground">1:1 Business Meetings</h3>
             <p className="mt-2 font-display text-[clamp(2rem,4.5vw,3rem)] font-bold leading-none tracking-tight text-navy">
               {MEETUP_DAY_SHORT}
             </p>
