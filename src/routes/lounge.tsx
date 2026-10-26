@@ -483,7 +483,7 @@ function LoungePage() {
               <>
                 {/* ── toolbar: fare-class codes double as filters ── */}
                 <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                  <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] lg:mx-0 lg:flex-wrap lg:px-0 [&::-webkit-scrollbar]:hidden">
+                  <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
                     {groups.map(([label, n]) => {
                       const c = codeOf(label);
                       const active = interest === label;

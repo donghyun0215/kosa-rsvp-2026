@@ -166,7 +166,7 @@ function SchedulePage() {
         </div>
 
         {/* Desktop: at-a-glance grid (whole track on one screen) */}
-        <div className="mt-6 hidden items-start gap-3 lg:grid lg:grid-cols-5">
+        <div className="mt-6 hidden items-start gap-3 lg:grid lg:grid-cols-3 xl:grid-cols-5">
           {track.days.map((d) => (
             <button
               type="button"

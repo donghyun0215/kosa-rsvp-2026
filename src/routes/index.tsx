@@ -160,16 +160,20 @@ function Landing() {
       {/* HEADER — white bar above the hero, as in the mock-up */}
       <header className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:px-6 md:flex-row md:items-center md:justify-between">
-          <a href="#top" className="min-w-0">
-            <Wordmark />
-          </a>
-          <nav className="-mx-1 flex items-center gap-1.5 text-xs font-semibold text-navy sm:text-sm md:mx-0 md:gap-2">
+          {/* phones: Contact sits beside the wordmark so the link row never overflows (320px) */}
+          <div className="flex items-center justify-between gap-3">
+            <a href="#top" className="min-w-0">
+              <Wordmark />
+            </a>
+            <span className="md:hidden"><ContactOrganizer /></span>
+          </div>
+          <nav className="-mx-2.5 flex items-center gap-0.5 text-[13px] font-semibold text-navy sm:gap-1.5 sm:text-sm md:mx-0 md:gap-2">
             <a href="#rsvp" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">RSVP</a>
             <a href="#startups" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">Companies</a>
             {JUDGES.length > 0 && <a href="#judges" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">Judges</a>}
             <a href="#about" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">About</a>
             <a href="/lounge" className="rounded-md px-2.5 py-2 transition hover:bg-secondary md:px-3.5">Lounge</a>
-            <span className="ml-auto md:ml-2"><ContactOrganizer /></span>
+            <span className="ml-2 hidden md:block"><ContactOrganizer /></span>
           </nav>
         </div>
       </header>
@@ -400,8 +404,8 @@ function Landing() {
           <h3 className="mt-14 border-t border-white/15 pt-10 text-sm font-medium text-lichen">Organisers</h3>
           <div className="mt-6 grid gap-10 md:grid-cols-2 md:gap-8">
             {ORGANISERS.map((o) => (
-              <div key={o.name} className="flex flex-col gap-5 sm:flex-row sm:items-center">
-                <a href={o.href} target="_blank" rel="noopener noreferrer" className="flex h-20 w-full shrink-0 items-center justify-center rounded-xl bg-white px-5 shadow-sm sm:w-56">
+              <div key={o.name} className="flex flex-col gap-5 sm:flex-row sm:items-center md:flex-col md:items-stretch xl:flex-row xl:items-center">
+                <a href={o.href} target="_blank" rel="noopener noreferrer" className="flex h-20 w-full shrink-0 items-center justify-center rounded-xl bg-white px-5 shadow-sm sm:w-56 md:w-full xl:w-56">
                   <img src={o.logo} alt={o.name} className={`${o.h} w-auto max-w-full object-contain`} />
                 </a>
                 <div>
@@ -416,7 +420,7 @@ function Landing() {
 
       {/* PARTNERS — logos only, on white */}
       <section aria-label="Partners" className="border-b border-border bg-white">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-12 gap-y-8 px-4 py-12 sm:px-6 md:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-8 px-4 py-12 sm:px-6 xl:justify-between">
           {PARTNERS.map((o) => (
             <a key={o.name} href={o.href} target="_blank" rel="noopener noreferrer" title={o.name} className="transition hover:opacity-80">
               <img src={o.logo} alt={o.name} className={`${o.h} w-auto object-contain`} />
