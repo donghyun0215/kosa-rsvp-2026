@@ -107,7 +107,7 @@ export function buildInvite(_team = false, unsub = false): { subject: string; ht
     "The event will showcase a curated cohort of promising Korean AI startups alongside homegrown AI innovators from Singapore's Lorong AI community. The full startup line-up will be published on the event website.",
     `<b>Day 1: Demo Day &amp; Networking Dinner · ${dayLine(EVENT_DATE)}</b><br>Demo Day at ${esc(EVENT_VENUE)} (14:30–17:10)<br>Networking Dinner at ${esc(DINNER_VENUE)}, JTC LaunchPad @ one-north (17:10–20:00)` +
       (ONE_ON_ONE_OPEN ? `<br><br><b>Day 2: 1:1 Meetings · ${dayLine(MEETUP_DATE)}</b><br>Curated business matching sessions with the participating startups (${esc(MEETUP_TIME)}, ${esc(MEETUP_VENUE)})` : ""),
-    `Please confirm your attendance via the link below${RSVP_BY ? ` by <b>${esc(RSVP_BY)}</b>` : ""}.<br>👉 <a href="${SITE}/book?day=7" style="color:${C.brand};font-weight:bold;">Click here to RSVP</a>`,
+    `Please confirm your attendance via the link below${RSVP_BY ? ` by <b>${esc(RSVP_BY)}</b>` : ""}.<br>&#128073; <a href="${SITE}/book?day=7" style="color:${C.brand};font-weight:bold;">Click here to RSVP</a>`,
     "It would mean a great deal to have you join us for this milestone collaboration. We look forward to welcoming you.",
   ];
 
@@ -140,7 +140,7 @@ ${ORDER.map((k) => blocks[k]).join("")}
 }</p>
 </body></html>`;
 
-  const plain = (s: string) => s.replace(/<br>/g, "\n").replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+  const plain = (s: string) => s.replace(/<br>/g, "\n").replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&#128073; /g, "→ ");
   const demoText = [`DEMO DAY · ${EVENT_DATE}`, ...demoRows.map(([t, w]) => `${t}  ${w}`), `Pitching Sessions @ ${EVENT_VENUE}, ${EVENT_ADDRESS}`, `Networking Dinner @ ${DINNER_VENUE}, ${DINNER_ADDRESS}`, `RSVP: ${SITE}/book?day=7`];
   const meetText = ONE_ON_ONE_OPEN
     ? [`1:1 BUSINESS MEETINGS · ${MEETUP_DATE}`, `${MEETUP_TIME}  ${rounds}`, `${MEETUP_VENUE}, ${MEETUP_ADDRESS}`, `Book: ${SITE}/book?day=5`]
