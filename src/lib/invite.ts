@@ -1,5 +1,5 @@
 // Outreach invitation email, served by /api/invite and sent from the invite
-// Google Sheet. `team` = signed by the LodestarT team (support@), otherwise by Tammy. Built from the same constants as the
+// Google Sheet. `team` = signed by the LodestarT team (the default at /api/invite), otherwise by Tammy. Built from the same constants as the
 // site, so a confirmed venue or time is picked up without touching the sheet.
 // {{GREETING}} is replaced per recipient by the sheet script.
 import { companies } from "@/data/companies";

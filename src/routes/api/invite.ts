@@ -3,14 +3,14 @@ import { buildInvite } from "@/lib/invite";
 
 // GET → { ok, subject, html, text } for the invite Google Sheet.
 // GET ?preview → the HTML itself, to eyeball the email in a browser.
-// ?from=support → signed by the LodestarT team instead of Tammy.
+// Signed by the LodestarT team by default (26 Oct); ?from=tammy → signed by Tammy.
 // Public on purpose: it is the same marketing copy that goes out by email.
 export const Route = createFileRoute("/api/invite")({
   server: {
     handlers: {
       GET: async ({ request }) => {
         const url = new URL(request.url);
-        const mail = buildInvite(url.searchParams.get("from") === "support", url.searchParams.has("unsub"));
+        const mail = buildInvite(url.searchParams.get("from") !== "tammy", url.searchParams.has("unsub"));
         if (url.searchParams.has("preview")) {
           const html = mail.html.replace("{{GREETING}}", "Dear Guest,");
           return new Response(html, { headers: { "Content-Type": "text/html; charset=utf-8" } });
