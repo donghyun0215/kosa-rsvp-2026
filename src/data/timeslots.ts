@@ -76,7 +76,7 @@ export const PROGRAM: ProgramBlock[] = [
     id: "showcase",
     title: "Pitching Sessions",
     time: "15:00 – 17:10",
-    description: "Welcome from Lorong AI and KOSA, then two pitching sessions (5 min pitch, 5 min Q&A each) and the judges' feedback. Registration from 14:30.",
+    description: "Welcome from Lorong AI and KOSA, then pitches from AI startups carefully selected by KOSA and Lorong AI (5 min pitch, 5 min Q&A each) and the judges' feedback. Registration from 14:30.",
   },
   {
     id: "lunch",
