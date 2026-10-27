@@ -75,13 +75,13 @@ export const PROGRAM: ProgramBlock[] = [
   {
     id: "showcase",
     title: "Pitching Sessions",
-    time: "15:00 – 17:10",
+    time: "15:00 – 17:00",
     description: "Welcome from Lorong AI and KOSA, then pitches from AI startups carefully selected by KOSA and Lorong AI (5 min pitch, 5 min Q&A each) and the judges' feedback. Registration from 14:30.",
   },
   {
     id: "lunch",
     title: "Networking Dinner",
-    time: "17:10 – 20:00",
+    time: "17:00 – 20:00",
     description: "Dinner at The Meeting Point with the founders, agencies, investors and partners.",
   },
   {
@@ -92,21 +92,14 @@ export const PROGRAM: ProgramBlock[] = [
   },
 ];
 
-// Demo Day run of show (KOSA × Lorong AI proposed agenda, 24 Oct). Shown on the RSVP page.
+// Demo Day run of show, simplified by Tammy (27 Oct): group photo after the closing. Shown on the RSVP page.
 // Third element: venue, when a row isn't at EVENT_VENUE.
 export const DEMO_AGENDA: [time: string, item: string, venue?: string][] = [
   ["14:30 – 15:00", "Registration and reception"],
-  ["15:00 – 15:02", "Opening"],
-  ["15:02 – 15:10", "Introduction to Lorong AI and welcome remarks"],
-  ["15:10 – 15:18", "Introduction to KOSA"],
-  ["15:18 – 15:20", "Introduction of the judges"],
-  ["15:20 – 16:00", "Pitching session 1 (4 startups)"],
-  ["16:00 – 16:10", "Break"],
-  ["16:10 – 16:50", "Pitching session 2 (4 startups)"],
-  ["16:50 – 17:00", "Judges' overall feedback"],
-  ["17:00 – 17:10", "Group photo"],
-  ["17:10 – 20:00", "Networking dinner", DINNER_VENUE],
-];
+  ["15:00 – 16:50", "Pitching"],
+  ["16:50 – 17:00", "Closing"],
+  ["17:00 – 20:00", "Networking dinner", DINNER_VENUE],
+]
 
 // ── Legacy side-track exports (no side track on this event) ─────────
 export const NULDAM_VENUE = "";

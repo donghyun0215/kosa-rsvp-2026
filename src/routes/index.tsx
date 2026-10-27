@@ -197,9 +197,11 @@ function Landing() {
               </span>
             ))}
           </h1>
-          <p className="hero-in [--i:5] mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-[1.0625rem]">
-            Korea and Singapore, together on AI for the public sector. Selected AI startups from Korea and Singapore
-            pitch at Lorong AI to agencies, investors and AI builders, then meet them 1:1.
+          <p className="hero-in [--i:5] mt-6 max-w-xl text-xl font-semibold leading-snug text-white sm:text-2xl">
+            Korea and Singapore, together on AI for the public sector
+          </p>
+          <p className="hero-in [--i:5] mt-3 max-w-xl text-base leading-relaxed text-white/80 sm:text-[1.0625rem]">
+            Connect with the best AI startups from both countries through Demo Day and 1:1 Meetings.
           </p>
           <div className="hero-in [--i:6] mt-8 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap">
             <Link to="/book" search={{ day: "7" }} data-magnet className="btn-hero magnet flex flex-col items-center rounded-full px-7 py-2.5 text-center leading-tight">

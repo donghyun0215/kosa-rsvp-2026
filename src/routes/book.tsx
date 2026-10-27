@@ -587,7 +587,7 @@ function RsvpPage() {
                     <span>
                       <span className="block text-base font-bold text-navy">{p.title}</span>
                       <span className="mt-0.5 block text-sm font-semibold text-primary">
-                        {p.id === "showcase" ? "14:30 – 17:10" : p.time}
+                        {p.id === "showcase" ? "14:30 – 17:00" : p.time}
                       </span>
                       <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
                         {p.id === "showcase" ? EVENT_VENUE : DINNER_VENUE}
