@@ -374,7 +374,7 @@ function Landing() {
         <section id="judges" className="relative isolate overflow-hidden bg-hero-gradient text-white">
           <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 md:py-24">
             <p data-reveal className="text-sm font-semibold text-yellow">Demo Day · {EVENT_DAY_SHORT}</p>
-            <h2 data-reveal className="mt-2 text-3xl font-bold md:text-5xl">Who You'll Meet</h2>
+            <h2 data-reveal className="mt-2 text-3xl font-bold md:text-5xl">Judges You'll Meet</h2>
             <div className="mt-12 flex flex-wrap justify-center gap-x-6 gap-y-10 md:gap-x-12">
               {JUDGES.map((j, i) => (
                 <div key={j.name} data-reveal style={{ "--rd": `${i * 90}ms` } as CSSProperties} className="group flex w-[44%] flex-col items-center text-center sm:w-56">
