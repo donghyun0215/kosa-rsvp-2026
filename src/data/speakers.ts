@@ -1,5 +1,9 @@
-// Demo Day judges and speakers (Tue 3 Nov). ponytail: empty until KOSA
-// confirms the line-up — the "Who You'll Meet" section hides while empty.
+// Demo Day judges (Tue 3 Nov). Source: Tammy's email to Lorong AI (27 Oct),
+// three confirmed so far; a fourth may come from Lorong AI. Photos from
+// LinkedIn, greyscale. Titles from their LinkedIn profiles.
+import jeffreyPaine from "@/assets/people/jeffrey-paine.jpg";
+import jeremySim from "@/assets/people/jeremy-sim.jpg";
+import peterChang from "@/assets/people/peter-chang.jpg";
 export interface Person {
   name: string;
   title: string;
@@ -9,4 +13,9 @@ export interface Person {
 
 export const CONGRATULATORY: Person | null = null;
 
-export const JUDGES: Person[] = [];
+export const JUDGES: Person[] = [
+  { name: "Jeffrey Paine", title: "Founding Partner", org: "Golden Gate Ventures", photo: jeffreyPaine },
+  { name: "Jeremy Sim", title: "Innovation Director", org: "Mistletoe", photo: jeremySim },
+  // ponytail: title not confirmed; org from his LinkedIn
+  { name: "Dr. Peter Chang", title: "", org: "A*STAR Institute of Microelectronics (IME)", photo: peterChang },
+];
