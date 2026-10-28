@@ -46,13 +46,25 @@ const PARTNERS = [
   { name: "Lorong AI", logo: lorongLogo, href: "https://go.gov.sg/lorongai", h: "h-7" },
   { name: "JTC", logo: jtcLogo, href: "https://www.jtc.gov.sg/", h: "h-12" },
 ];
-// Venue partner for the networking dinner (Tammy, 28 Oct).
-const VENUE_PARTNER = {
-  name: "JTC",
-  logo: jtcLogo,
-  href: "https://www.jtc.gov.sg/",
-  blurb: "Singapore's lead agency for industrial infrastructure. Its startup hub, LaunchPad @ one-north, hosts the networking dinner at The Meeting Point.",
-};
+// Supporting partners under the organisers: JTC as venue partner (28 Oct),
+// KOCHAM as ecosystem partner (29 Oct). ponytail: KOCHAM logo not in hand
+// yet — its tile shows the name until the file arrives.
+const SUPPORT_PARTNERS: { role: string; name: string; logo: string | null; href: string; blurb: string }[] = [
+  {
+    role: "Venue partner",
+    name: "JTC",
+    logo: jtcLogo,
+    href: "https://www.jtc.gov.sg/",
+    blurb: "Singapore's lead agency for industrial infrastructure. Its startup hub, LaunchPad @ one-north, hosts the networking dinner at The Meeting Point.",
+  },
+  {
+    role: "Ecosystem partner",
+    name: "Korea Chamber of Commerce in Singapore (KOCHAM)",
+    logo: null,
+    href: "",
+    blurb: "The business association of Korean companies in Singapore, connecting the Korean startups with the local business community.",
+  },
+];
 // The two organisers, one line each.
 const ORGANISERS = [
   { name: "Korea AI·Software Industry Association (KOSA)", logo: kosaLogo, href: KOSA_SITE, h: "h-8",
@@ -384,9 +396,9 @@ function Landing() {
           <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 md:py-24">
             <p data-reveal className="text-sm font-semibold text-yellow">Demo Day · {EVENT_DAY_SHORT}</p>
             <h2 data-reveal className="mt-2 text-3xl font-bold md:text-5xl">Judging Panel</h2>
-            <div className="mt-12 flex flex-wrap justify-center gap-x-6 gap-y-10 md:gap-x-12">
+            <div className="mt-12 flex flex-wrap justify-center gap-x-6 gap-y-10 md:gap-x-10">
               {JUDGES.map((j, i) => (
-                <div key={j.name} data-reveal style={{ "--rd": `${i * 90}ms` } as CSSProperties} className="group flex w-[44%] flex-col items-center text-center sm:w-56">
+                <div key={j.name} data-reveal style={{ "--rd": `${i * 90}ms` } as CSSProperties} className="group flex w-[44%] flex-col items-center text-center sm:w-52 lg:w-[11.5rem]">
                   <img
                     src={j.photo}
                     alt={j.name}
@@ -430,15 +442,27 @@ function Landing() {
             ))}
           </div>
 
-          <h3 className="mt-14 border-t border-white/15 pt-10 text-sm font-medium text-lichen">Venue partner</h3>
-          <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center">
-            <a href={VENUE_PARTNER.href} target="_blank" rel="noopener noreferrer" className="flex h-20 w-full shrink-0 items-center justify-center rounded-xl bg-white px-5 shadow-sm sm:w-56">
-              <img src={VENUE_PARTNER.logo} alt={VENUE_PARTNER.name} className="h-12 w-auto max-w-full object-contain" />
-            </a>
-            <div className="max-w-xl">
-              <p className="font-semibold">{VENUE_PARTNER.name}</p>
-              <p className="mt-1 text-sm leading-relaxed text-white/75">{VENUE_PARTNER.blurb}</p>
-            </div>
+          <div className="mt-14 grid gap-10 border-t border-white/15 pt-10 md:grid-cols-2 md:gap-8">
+            {SUPPORT_PARTNERS.map((o) => {
+              const tile = o.logo ? (
+                <img src={o.logo} alt={o.name} className="h-12 w-auto max-w-full object-contain" />
+              ) : (
+                <span className="font-display text-2xl font-bold tracking-tight text-navy">KOCHAM</span>
+              );
+              const box = "flex h-20 w-full shrink-0 items-center justify-center rounded-xl bg-white px-5 shadow-sm sm:w-56 md:w-full xl:w-56";
+              return (
+                <div key={o.name}>
+                  <h3 className="text-sm font-medium text-lichen">{o.role}</h3>
+                  <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center md:flex-col md:items-stretch xl:flex-row xl:items-center">
+                    {o.href ? <a href={o.href} target="_blank" rel="noopener noreferrer" className={box}>{tile}</a> : <div className={box}>{tile}</div>}
+                    <div>
+                      <p className="font-semibold">{o.name}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-white/75">{o.blurb}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
