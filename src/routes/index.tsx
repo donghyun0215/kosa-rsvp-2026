@@ -7,6 +7,7 @@ import nipaLogo from "@/assets/logos/nipa-en.png";
 import msitLogo from "@/assets/logos/msit.png";
 import mddiLogo from "@/assets/logos/mddi.png";
 import lorongLogo from "@/assets/logos/lorong-ai.png";
+import jtcLogo from "@/assets/logos/jtc.png";
 import { JUDGES } from "@/data/speakers";
 import { companies } from "@/data/companies";
 import { STARTUP_IMAGES, STARTUP_LOGOS } from "@/data/companyImages";
@@ -43,7 +44,15 @@ const PARTNERS = [
   { name: "Korea AI·Software Industry Association (KOSA)", logo: kosaLogo, href: KOSA_SITE, h: "h-7" },
   { name: "Ministry of Digital Development and Information (MDDI)", logo: mddiLogo, href: "https://www.mddi.gov.sg/", h: "h-14" },
   { name: "Lorong AI", logo: lorongLogo, href: "https://go.gov.sg/lorongai", h: "h-7" },
+  { name: "JTC", logo: jtcLogo, href: "https://www.jtc.gov.sg/", h: "h-12" },
 ];
+// Venue partner for the networking dinner (Tammy, 28 Oct).
+const VENUE_PARTNER = {
+  name: "JTC",
+  logo: jtcLogo,
+  href: "https://www.jtc.gov.sg/",
+  blurb: "Singapore's lead agency for industrial infrastructure. Its startup hub, LaunchPad @ one-north, hosts the networking dinner at The Meeting Point.",
+};
 // The two organisers, one line each.
 const ORGANISERS = [
   { name: "Korea AI·Software Industry Association (KOSA)", logo: kosaLogo, href: KOSA_SITE, h: "h-8",
@@ -419,6 +428,17 @@ function Landing() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <h3 className="mt-14 border-t border-white/15 pt-10 text-sm font-medium text-lichen">Venue partner</h3>
+          <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center">
+            <a href={VENUE_PARTNER.href} target="_blank" rel="noopener noreferrer" className="flex h-20 w-full shrink-0 items-center justify-center rounded-xl bg-white px-5 shadow-sm sm:w-56">
+              <img src={VENUE_PARTNER.logo} alt={VENUE_PARTNER.name} className="h-12 w-auto max-w-full object-contain" />
+            </a>
+            <div className="max-w-xl">
+              <p className="font-semibold">{VENUE_PARTNER.name}</p>
+              <p className="mt-1 text-sm leading-relaxed text-white/75">{VENUE_PARTNER.blurb}</p>
+            </div>
           </div>
         </div>
       </section>
