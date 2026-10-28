@@ -4,6 +4,7 @@ import { MEETUP_COMPANIES } from "@/data/companies";
 import { TIMESLOTS } from "@/data/timeslots";
 import { buildConfirmation } from "./confirmation";
 import { absUrl } from "./url";
+import { foldName, nameMatches } from "./namematch";
 
 export interface BookingInput {
   companySlug: string;
@@ -529,6 +530,15 @@ export const lookupRsvpByEmail = createServerFn({ method: "POST" })
 // only see what a name badge already shows.
 
 const LOUNGE_ACCESS_KEY = process.env.LOUNGE_ACCESS_KEY; // no fallback on purpose
+// The printed entrance QR carries its own key. Only its SHA-256 lives here
+// (public repo), so it works without touching Vercel env.
+const ENTRANCE_KEY_SHA256 = "b3bf19cd47c210a2f3ca1084887cfa221aecd5f634989e0fef871954cb6c0ffb";
+async function keyOk(k?: string): Promise<boolean> {
+  if (!k) return false;
+  if (LOUNGE_ACCESS_KEY && k === LOUNGE_ACCESS_KEY) return true;
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(k));
+  return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("") === ENTRANCE_KEY_SHA256;
+}
 
 // Addresses/domains ("@x.com") that may RSVP but are kept out of the lounge.
 const LOUNGE_BLOCKED: string[] = [];
@@ -551,7 +561,7 @@ export const listLoungeProfiles = createServerFn({ method: "POST" })
   .handler(async ({ data }): Promise<{ ok: true; profiles: LoungeProfile[] } | { ok: false }> => {
     let authorised = false;
     if (isLoungeBlocked(data.email)) return { ok: false };
-    if (data.key && LOUNGE_ACCESS_KEY && data.key === LOUNGE_ACCESS_KEY) {
+    if (await keyOk(data.key)) {
       authorised = true;
     } else if (data.email) {
       const email = data.email.toLowerCase().trim();
@@ -668,15 +678,15 @@ export const markLoungeCheckIn = createServerFn({ method: "POST" })
     // CMK lesson: badge QR check-ins weren't always landing, so during
     // Demo Day hours any lounge entry with a registered email counts as
     // attendance. ponytail: hardcoded window; make it an admin setting next event.
-    const keyOk = Boolean(LOUNGE_ACCESS_KEY && data.key === LOUNGE_ACCESS_KEY);
+    const keyValid = await keyOk(data.key);
     const now = Date.now();
-    const eventLive = now >= Date.parse("2026-11-03T12:00:00+08:00") && now <= Date.parse("2026-11-03T22:00:00+08:00");
-    if (!keyOk && !eventLive) return { ok: false };
+    const eventLive = now >= Date.parse("2026-11-03T08:00:00+08:00") && now <= Date.parse("2026-11-03T22:00:00+08:00");
+    if (!keyValid && !eventLive) return { ok: false };
     const email = data.email?.toLowerCase().trim();
     if (!email) return { ok: false };
     const { error } = await supabaseAdmin
       .from("rsvps")
-      .update({ checked_in_at: new Date().toISOString(), checked_in_via: keyOk ? "qr" : "lounge" })
+      .update({ checked_in_at: new Date().toISOString(), checked_in_via: keyValid ? "qr" : "lounge" })
       .eq("email", email)
       .is("checked_in_at", null);
     if (error) {
@@ -693,22 +703,11 @@ export const markLoungeCheckIn = createServerFn({ method: "POST" })
 // wall; My Contacts still asks for the RSVP email. Outside the event window
 // the QR still opens the lounge, it just doesn't count anyone.
 // ponytail: hardcoded window, same as markLoungeCheckIn.
-const CHECKIN_FROM = Date.parse("2026-11-03T12:00:00+08:00");
+const CHECKIN_FROM = Date.parse("2026-11-03T08:00:00+08:00");
 const CHECKIN_TO = Date.parse("2026-11-03T22:00:00+08:00");
-const loungeKeyOk = (k?: string) => Boolean(LOUNGE_ACCESS_KEY && k === LOUNGE_ACCESS_KEY);
+const loungeKeyOk = (k?: string) => keyOk(k);
 const checkInLive = () => Date.now() >= CHECKIN_FROM && Date.now() <= CHECKIN_TO;
 
-// Case, punctuation, word order and common romanisation variants don't matter.
-const foldName = (s: string) =>
-  s
-    .toLowerCase()
-    .normalize("NFKC")
-    .replace(/[^a-z0-9\uac00-\ud7a3\s]/g, " ")
-    .replace(/eo/g, "u").replace(/oo/g, "u").replace(/ee/g, "i")
-    .replace(/rh/g, "r").replace(/\b(yi|ri)\b/g, "li")
-    .replace(/gw/g, "kw").replace(/ch/g, "j")
-    .replace(/\s+/g, " ")
-    .trim();
 const maskEmail = (e: string) => {
   const [u = "", d = ""] = e.split("@");
   return `${u.slice(0, 2)}${"•".repeat(Math.max(2, Math.min(u.length - 2, 5)))}@${d}`;
@@ -725,7 +724,7 @@ export interface CheckInMatch {
 export const findRsvpForCheckIn = createServerFn({ method: "POST" })
   .validator((data: { key: string; q: string }) => data)
   .handler(async ({ data }): Promise<{ ok: true; matches: CheckInMatch[] } | { ok: false }> => {
-    if (!loungeKeyOk(data.key)) return { ok: false };
+    if (!(await loungeKeyOk(data.key))) return { ok: false };
     const words = foldName(data.q ?? "").split(" ").filter(Boolean);
     if (words.join("").length < 2) return { ok: true, matches: [] };
     const { data: rows, error } = await supabaseAdmin
@@ -737,10 +736,8 @@ export const findRsvpForCheckIn = createServerFn({ method: "POST" })
     }
     const scored = (rows ?? [])
       .map((r) => {
-        const name = foldName(String(r.full_name));
-        const hay = `${name} ${foldName(String(r.organisation))}`;
-        const hit = words.every((w) => hay.includes(w)) || hay.replace(/ /g, "").includes(words.join(""));
-        return { r, hit, score: name.startsWith(words[0]) ? 0 : name.includes(words[0]) ? 1 : 2 };
+        const m = nameMatches(data.q, String(r.full_name), String(r.organisation ?? ""));
+        return { r, hit: m.hit, score: m.front ? 0 : 1 };
       })
       .filter((x) => x.hit)
       .sort((a, b) => a.score - b.score || String(a.r.full_name).localeCompare(String(b.r.full_name)));
@@ -755,10 +752,36 @@ export const findRsvpForCheckIn = createServerFn({ method: "POST" })
     return { ok: true, matches };
   });
 
+// The whole guest list (name, organisation, masked email) for the gate to
+// filter locally, so suggestions appear on every keystroke with no round trip.
+// Same audience as the lounge wall: only with the entrance QR key.
+export const listCheckInRoster = createServerFn({ method: "POST" })
+  .validator((data: { key: string }) => data)
+  .handler(async ({ data }): Promise<{ ok: true; people: CheckInMatch[] } | { ok: false }> => {
+    if (!(await loungeKeyOk(data.key))) return { ok: false };
+    const { data: rows, error } = await supabaseAdmin
+      .from("rsvps")
+      .select("id, full_name, organisation, email, checked_in_at");
+    if (error) {
+      console.error("listCheckInRoster error:", error);
+      return { ok: false };
+    }
+    return {
+      ok: true,
+      people: (rows ?? []).map((r) => ({
+        id: String(r.id),
+        full_name: String(r.full_name),
+        organisation: String(r.organisation ?? ""),
+        hint: maskEmail(String(r.email)),
+        checked_in: Boolean(r.checked_in_at),
+      })),
+    };
+  });
+
 export const checkInById = createServerFn({ method: "POST" })
   .validator((data: { key: string; rsvpId: string }) => data)
   .handler(async ({ data }): Promise<{ ok: boolean; recorded?: boolean }> => {
-    if (!loungeKeyOk(data.key) || !data.rsvpId) return { ok: false };
+    if (!(await loungeKeyOk(data.key)) || !data.rsvpId) return { ok: false };
     if (!checkInLive()) return { ok: true, recorded: false };
     const { error } = await supabaseAdmin
       .from("rsvps")
@@ -778,8 +801,8 @@ export const walkInRsvp = createServerFn({ method: "POST" })
   .validator(
     (data: { key: string; fullName: string; organisation: string; jobTitle: string; email: string; primaryInterest?: string }) => data,
   )
-  .handler(async ({ data }): Promise<{ ok: boolean; message?: string }> => {
-    if (!loungeKeyOk(data.key)) return { ok: false, message: "Scan the QR code at the entrance to register." };
+  .handler(async ({ data }): Promise<{ ok: boolean; message?: string; existing?: boolean }> => {
+    if (!(await loungeKeyOk(data.key))) return { ok: false, message: "Scan the QR code at the entrance to register." };
     const email = data.email?.toLowerCase().trim();
     const fullName = data.fullName?.trim();
     const organisation = data.organisation?.trim();
@@ -798,7 +821,8 @@ export const walkInRsvp = createServerFn({ method: "POST" })
           .eq("id", existing.id)
           .is("checked_in_at", null);
       }
-      return { ok: true };
+      // Already on the list: no second RSVP, just checked in.
+      return { ok: true, existing: true };
     }
     const { error } = await supabaseAdmin.from("rsvps").insert({
       full_name: fullName,

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { checkInById, findRsvpForCheckIn, walkInRsvp, type CheckInMatch } from "@/lib/booking.server";
+import { checkInById, findRsvpForCheckIn, listCheckInRoster, walkInRsvp, type CheckInMatch } from "@/lib/booking.server";
+import { nameMatches } from "@/lib/namematch";
 import { BusyLabel } from "@/components/Spinner";
 
 // Entrance QR flow: find your name → confirm → checked in (show the desk for
@@ -78,11 +79,49 @@ function Steps({
   const [err, setErr] = useState("");
   const [w, setW] = useState({ fullName: "", organisation: "", jobTitle: "", email: "", primaryInterest: "" });
   const seq = useRef(0);
+  const [walkOpen, setWalkOpen] = useState(false);
+  const [already, setAlready] = useState(false);
+  const walkRef = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (walkOpen) walkRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }, [walkOpen]);
+
+  // Guest list loaded once (and refreshed every 2 min for late RSVPs), then
+  // filtered in the browser so suggestions follow every keystroke. Until it
+  // arrives, or if it fails, the server search is the fallback.
+  const [roster, setRoster] = useState<CheckInMatch[] | null>(null);
+  useEffect(() => {
+    let alive = true;
+    const load = () =>
+      listCheckInRoster({ data: { key: loungeKey } })
+        .then((r) => {
+          if (!alive) return;
+          if (r.ok) setRoster(r.people);
+          else setErr("This QR code isn't valid any more. Please ask the desk.");
+        })
+        .catch(() => {});
+    void load();
+    const t = setInterval(load, 120_000);
+    return () => {
+      alive = false;
+      clearInterval(t);
+    };
+  }, [loungeKey]);
+
+  const term = q.trim();
+  const tooShort = term.replace(/\s/g, "").length < (/[\uac00-\ud7a3]/.test(term) ? 1 : 2);
+  const local = roster && !tooShort
+    ? roster
+        .map((r) => ({ r, m: nameMatches(term, r.full_name, r.organisation) }))
+        .filter((x) => x.m.hit)
+        .sort((a, b) => Number(b.m.front) - Number(a.m.front) || a.r.full_name.localeCompare(b.r.full_name))
+        .slice(0, 6)
+        .map((x) => x.r)
+    : null;
 
   useEffect(() => {
-    if (step !== "search") return;
-    const term = q.trim();
-    if (term.replace(/\s/g, "").length < 2) {
+    if (step !== "search" || roster) return;
+    if (tooShort) {
       setMatches(null);
       return;
     }
@@ -94,9 +133,10 @@ function Steps({
       setSearching(false);
       if (res.ok) setMatches(res.matches);
       else setErr("This QR code isn't valid any more. Please ask the desk.");
-    }, 220);
+    }, 150);
     return () => clearTimeout(t);
-  }, [q, step, loungeKey]);
+  }, [term, tooShort, step, loungeKey, roster]);
+  const shown = roster ? local : matches;
 
   const finish = (who: CheckedInAs, recorded: boolean) => {
     setMe(who);
@@ -112,6 +152,7 @@ function Steps({
     const res = await checkInById({ data: { key: loungeKey, rsvpId: pick.id } });
     setBusy(false);
     if (!res.ok) return setErr("Couldn't check you in. Please try again or ask the desk.");
+    if (res.recorded !== false) setRoster((r) => r && r.map((x) => (x.id === pick.id ? { ...x, checked_in: true } : x)));
     finish({ id: pick.id, name: pick.full_name }, res.recorded !== false);
   };
 
@@ -122,6 +163,7 @@ function Steps({
     const res = await walkInRsvp({ data: { key: loungeKey, ...w } });
     setBusy(false);
     if (!res.ok) return setErr(res.message ?? "Something went wrong.");
+    setAlready(Boolean(res.existing));
     finish({ id: null, name: w.fullName.trim(), email: w.email.trim().toLowerCase() }, true);
   };
 
@@ -138,6 +180,7 @@ function Steps({
           {me.name}
           {counted && <span className={T.faint}>, {at}</span>}
         </p>
+        {already && <p className={`${T.note} mt-4`}>This email was already registered, so we checked you in on your existing RSVP.</p>}
         {counted && <p className={`${T.note} mt-4`}>Show this screen at the desk to collect your name badge.</p>}
         <button type="button" onClick={() => onEnter(me)} className={`${T.donePrimary} mt-6 w-full sm:w-auto`}>
           Enter the lounge
@@ -167,11 +210,12 @@ function Steps({
     );
   }
 
-  if (step === "walkin") {
-    const ready = w.fullName.trim() && w.organisation.trim() && w.jobTitle.trim() && /^\S+@\S+\.\S+$/.test(w.email.trim());
-    const set = (k: keyof typeof w) => (e: { target: { value: string } }) => setW((v) => ({ ...v, [k]: e.target.value }));
-    return (
+  const ready = w.fullName.trim() && w.organisation.trim() && w.jobTitle.trim() && /^\S+@\S+\.\S+$/.test(w.email.trim());
+  const set = (k: keyof typeof w) => (e: { target: { value: string } }) => setW((v) => ({ ...v, [k]: e.target.value }));
+  const walkinForm = (
       <form
+        ref={walkRef}
+        className="mt-8 scroll-mt-24 border-t border-white/12 pt-6"
         onSubmit={(e) => {
           e.preventDefault();
           if (ready) void register();
@@ -204,14 +248,13 @@ function Steps({
           <button type="submit" disabled={busy || !ready} className={T.primary}>
             <BusyLabel busy={busy} text="Registering…">Register and check in</BusyLabel>
           </button>
-          <button type="button" onClick={() => setStep("search")} className={T.ghost}>
-            Back to search
+          <button type="button" onClick={() => setWalkOpen(false)} className={T.ghost}>
+            Cancel
           </button>
         </div>
         {err && <p role="alert" className={`${T.error} mt-4`}>{err}</p>}
       </form>
-    );
-  }
+  );
 
   return (
     <div>
@@ -232,9 +275,9 @@ function Steps({
         className={`${T.field} mt-2`}
       />
       <div className="min-h-[3rem]" aria-live="polite">
-        {matches && matches.length > 0 && (
+        {shown && shown.length > 0 && (
           <ul className="mt-1">
-            {matches.map((m) => (
+            {shown.map((m) => (
               <li key={m.id}>
                 <button
                   type="button"
@@ -255,17 +298,27 @@ function Steps({
             ))}
           </ul>
         )}
-        {matches && matches.length === 0 && !searching && <p className={`${T.meta} mt-3`}>No one by that name yet.</p>}
-        {err && <p role="alert" className={`${T.error} mt-3`}>{err}</p>}
+        {shown && shown.length === 0 && (roster || !searching) && <p className={`${T.meta} mt-3`}>No one by that name yet.</p>}
+        {err && !walkOpen && <p role="alert" className={`${T.error} mt-3`}>{err}</p>}
       </div>
       <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
-        <button type="button" onClick={() => setStep("walkin")} className={T.secondary}>
-          I'm not on the list
+        <button
+          type="button"
+          aria-expanded={walkOpen}
+          onClick={() => {
+            if (!walkOpen && !w.fullName && q.trim() && !/[\uac00-\ud7a3]/.test(q)) setW((v) => ({ ...v, fullName: q.trim() }));
+            setWalkOpen((o) => !o);
+            setErr("");
+          }}
+          className={T.secondary}
+        >
+          I'm not on the list (walk-in)
         </button>
         <button type="button" onClick={onUseEmail} className={T.ghost}>
           Use my email instead
         </button>
       </div>
+      {walkOpen && walkinForm}
     </div>
   );
 }
