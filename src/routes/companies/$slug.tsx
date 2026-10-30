@@ -141,7 +141,7 @@ function Profile({ company }: { company: Company }) {
     company.solution.length || company.keyFeatures.length ? { id: "how", title: "How it works" } : null,
     company.businessModel.length || company.targetAudience.length ? { id: "model", title: "Users and business model" } : null,
     company.businessSnapshot.length ? { id: "record", title: "Track record" } : null,
-    { id: "singapore", title: "In Singapore" },
+    { id: "singapore", title: company.track === "track1" ? "In Singapore" : "Opportunities" },
     company.team.length ? { id: "team", title: "Team" } : null,
   ].filter(Boolean) as { id: string; title: string }[];
   const active = useScrollSpy(sections.map((x) => x.id));
@@ -199,7 +199,7 @@ function Profile({ company }: { company: Company }) {
                 <dt>{hl.referencesLabel ?? "Proven with"}</dt>
                 <dd className="flex flex-wrap gap-2">{hl.references.map((r) => <span key={r} className="ref-chip">{r}</span>)}</dd>
               </div>
-              <div className="glance-row"><dt>Wants to pilot</dt><dd className="font-semibold text-navy">{hl.ask}</dd></div>
+              <div className="glance-row"><dt>{hl.askLabel ?? "Wants to pilot"}</dt><dd className="font-semibold text-navy">{hl.ask}</dd></div>
               <div className="glance-row"><dt>Stage</dt><dd>{company.stage}</dd></div>
             </dl>
             <div className="figures mt-6 grid border-t border-border pt-6 sm:grid-cols-3">
@@ -299,7 +299,7 @@ function Profile({ company }: { company: Company }) {
             </Section>
           )}
 
-          <Section id="singapore" title="In Singapore">
+          <Section id="singapore" title={company.track === "track1" ? "In Singapore" : "Opportunities"}>
             {hl && (
               <div className="inset">
                 <p className="text-sm font-semibold text-primary">Their ask</p>

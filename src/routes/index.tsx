@@ -81,6 +81,7 @@ const LEDGER: Record<string, [from: string, to: string]> = {
   hellofriends: ["Migrant workers", "multilingual AI kiosks"],
   shareplat: ["Utility crews", "cable-routing robots"],
   mediaiplus: ["Biotechs", "AI-matched global CROs"],
+  "nora-ai": ["Parents", "AI parenting coach"],
 };
 
 function ContactOrganizer() {
@@ -372,7 +373,7 @@ function Landing() {
                     >
                       View profile
                     </Link>
-                    {ONE_ON_ONE_OPEN && (
+                    {ONE_ON_ONE_OPEN && c.track === "track1" && (
                       <Link
                         to="/book"
                         search={{ day: "5", company: c.slug }}

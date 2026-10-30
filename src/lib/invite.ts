@@ -2,7 +2,10 @@
 // Google Sheet. Signed by Tammy as KOCHAM vice chairman whichever sender the sheet uses. Built from the same constants as the
 // site, so a confirmed venue or time is picked up without touching the sheet.
 // {{GREETING}} is replaced per recipient by the sheet script.
-import { companies } from "@/data/companies";
+import { companies as cohort } from "@/data/companies";
+
+// The invite lists the Korean cohort; Singapore startups sit in the teaser.
+const companies = cohort.filter((c) => c.track === "track1");
 import {
   EVENT_ADDRESS,
   EVENT_DATE,

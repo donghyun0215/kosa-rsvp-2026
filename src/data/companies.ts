@@ -33,7 +33,8 @@ export interface Company {
   onepager?: string;
 }
 
-// One cohort on this event; track2 kept empty so shared components compile.
+// track1: the five Korean startups (KOSA) — Demo Day + 1:1s.
+// track2: Singapore startups from the Lorong AI community — Demo Day only.
 export const TRACKS = {
   track1: {
     title: "KR-SG AI Connect Pitching & Networking",
@@ -41,9 +42,9 @@ export const TRACKS = {
     dates: "3 – 4 November 2026",
   },
   track2: {
-    title: "",
-    theme: "",
-    dates: "",
+    title: "KR-SG AI Connect Pitching & Networking",
+    theme: "AI startups from Singapore's Lorong AI community",
+    dates: "3 November 2026",
   },
 } as const;
 
@@ -296,11 +297,60 @@ export const companies: Company[] = [
       "Investor connections for AI development and regional growth.",
     ],
   },
+  // Lorong AI cohort. Source: Nora AI's KR-SG AI Connect one-pager, as
+  // lightly edited by Tammy (30 Oct). No product photo or logo yet.
+  {
+    slug: "nora-ai",
+    name: "Nora AI",
+    displayName: "Nora AI",
+    tagline: "Prevention and early-intervention tool for behavioural and emotional challenges in early childhood.",
+    sector: "Parenting AI · Early childhood",
+    stage: "Fundraising",
+    track: "track2",
+    website: "https://hinora.co",
+    email: "mialiu@hinora.co",
+    phone: "+65 9640 9568",
+    problem: [
+      "Limited access to support: evidence-based parenting support is expensive, with long waiting lists for professional help.",
+      "The advice-to-action gap: parents struggle to apply positive parenting strategies consistently in everyday situations.",
+    ],
+    solution: [
+      "AI-powered coaching: personalised feedback from real parent–child interaction recordings.",
+      "Evidence-based strategies: clinically grounded parenting techniques made practical for everyday life.",
+      "Progress tracking: track parenting skills and strengthen parent–child relationships over time.",
+    ],
+    keyFeatures: [
+      "AI voice analysis.",
+      "Real-time personalised reports.",
+      "Evidence-based learning modules.",
+    ],
+    targetAudience: [],
+    businessModel: [
+      "B2C subscriptions: paid subscriptions for parents to access AI coaching and personalised parenting support.",
+      "B2B partnerships: with clinics, hospitals and social service organisations to support families at scale.",
+      "Enterprise & licensing: licensing AI-powered parenting technology to healthcare providers and family service organisations.",
+    ],
+    businessSnapshot: [
+      "User traction: 2,700+ families reached across Singapore and Taiwan.",
+      "Research recognition: pilot findings presented at NUS's Behavioural and Implementation Sciences in Health conference (September 2026).",
+      "Innovation: provisional patent for AI-powered caregiver–child interaction analysis through voice.",
+    ],
+    team: [
+      {"name": "Mia Liu", "role": "Co-Founder & CEO", "bio": ["Former Lead AI Product Manager at Temasek and J.P. Morgan.", "Leads product development and business strategy."]},
+      {"name": "Dr. Qiu Yihui", "role": "Co-Founder & CAO", "bio": ["PhD in Machine Learning with AI research expertise.", "Leads AI development and technology innovation."]},
+      {"name": "Prof. Yi-Chuen Chen", "role": "Clinical Consultant", "bio": ["Clinical child psychologist based in Taiwan.", "Designs and validates the clinical framework for digital delivery."]},
+    ],
+    seekingOpportunities: [
+      "Fundraising.",
+      "Market entry to South Korea.",
+      "Partnerships.",
+    ],
+  },
 ];
 
 export function getCompanyBySlug(slug: string): Company | undefined {
   return companies.find((c) => c.slug === slug);
 }
 
-// Companies that take 1:1 bookings: the whole cohort on this event.
-export const MEETUP_COMPANIES: Company[] = companies;
+// Companies that take 1:1 bookings: the Korean cohort (track1) only.
+export const MEETUP_COMPANIES: Company[] = companies.filter((c) => c.track === "track1");

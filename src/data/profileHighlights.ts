@@ -14,6 +14,8 @@ export interface Highlight {
   referencesLabel?: string;
   /** The pilot or first step they want in Singapore. */
   ask: string;
+  /** Label for the ask row ("Wants to pilot" unless it isn't a pilot). */
+  askLabel?: string;
   figures: [value: string, label: string][];
   /** One-line problem headline; omitted when the one-pager has no problem section. */
   problem?: string;
@@ -79,5 +81,19 @@ export const HIGHLIGHTS: Record<string, Highlight> = {
       ["4.7×", "revenue growth since 2023"],
     ],
     problem: "Trial data is scattered by country, and finding a CRO still depends on who you know.",
+  },
+  "nora-ai": {
+    does: "AI coaching for parents, built on recordings of real parent–child interactions.",
+    serves: "Parents of young children, and the clinics, hospitals and family services that support them.",
+    references: ["NUS Behavioural and Implementation Sciences in Health conference (pilot findings)"],
+    referencesLabel: "Recognised by",
+    ask: "Fundraising, partnerships and entry into the Korean market.",
+    askLabel: "Looking for",
+    figures: [
+      ["2,700+", "families reached"],
+      ["SG · TW", "live in Singapore and Taiwan"],
+      ["Patent-pending", "voice analysis of caregiver–child interaction"],
+    ],
+    problem: "Expert parenting help is costly and slow to reach, and advice is hard to apply day to day.",
   },
 };

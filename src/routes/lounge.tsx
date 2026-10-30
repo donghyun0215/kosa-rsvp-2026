@@ -361,11 +361,11 @@ function LoungePage() {
                         style={{ "--d": `${300 + i * 70}ms` } as CSSProperties}
                         className="board-row grid grid-cols-[56px_minmax(0,1fr)_auto] items-center gap-4 border-b border-white/10 py-3.5 md:grid-cols-[72px_minmax(0,0.9fr)_minmax(0,1.1fr)_120px]"
                       >
-                        <span className="font-mono text-[13px] font-semibold tracking-wider text-yellow">ICN</span>
+                        <span className="font-mono text-[13px] font-semibold tracking-wider text-yellow">{c.track === "track1" ? "ICN" : "SIN"}</span>
                         <span className="truncate text-[17px] font-bold tracking-tight">{c.name}</span>
                         <span className="hidden truncate text-sm text-white/55 md:block">{c.sector}</span>
                         <span className="flex items-center justify-end gap-2 text-[13px] font-semibold text-emerald-300">
-                          <i className="h-1.5 w-1.5 rounded-full bg-emerald-300" /> Landed
+                          <i className="h-1.5 w-1.5 rounded-full bg-emerald-300" /> {c.track === "track1" ? "Landed" : "Local"}
                         </span>
                       </li>
                     ))}
