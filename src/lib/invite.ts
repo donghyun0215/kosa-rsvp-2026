@@ -178,118 +178,72 @@ ${ORDER.map((k) => blocks[k]).join("")}
 }
 
 // ── Second round (30 Oct): sign-ups were slow, so Tammy follows up with a
-// shorter personal note and a one-screen eDM: what it is, who's judging,
-// the five startups, and the three ways to join. Sent from Tammy's account
-// to the first-round list minus everyone who has already registered.
+// personal note. Tammy wants it to read like an email she typed herself, so
+// the HTML is what Gmail produces for a plain message: one font, no colours,
+// no buttons, no banner, two links. Fewer links and no layout tables also keep
+// it out of the Promotions tab.
 function buildSecondInvite(unsub: boolean): { subject: string; html: string; text: string } {
-  const NIGHT = "#08142e", NAVY = "#0e1f3f", ORANGE = "#e0702e", SKY = "#6cb4f5", PALE = "#eef3fb", INK = "#10233a", MUTED = "#5a6678", LINE = "#dde4ef";
-  const H = "font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;";
-  const btn = (href: string, label: string, solid: boolean) =>
-    `<a href="${href}" style="display:inline-block;margin:0 8px 8px 0;padding:13px 20px;${H}font-size:14px;font-weight:bold;text-decoration:none;border-radius:3px;${
-      solid ? `background:${ORANGE};color:#ffffff;` : "background:transparent;color:#ffffff;border:1.5px solid rgba(255,255,255,0.45);"
-    }">${label}</a>`;
   const lineOf = (c: (typeof companies)[number]) => LINES[c.slug] ?? c.tagline;
+  const RSVP = `${SITE}/book?day=7`;
+  const BOOK = `${SITE}/book?day=5`;
+  const a = (href: string, label: string) => `<a href="${href}">${label}</a>`;
 
-  // Tammy's own draft (30 Oct), tightened. Dates and venues live in the eDM
-  // below, so the note keeps the story and the ask.
-  const note = [
+  // Tammy's own draft (30 Oct), tightened.
+  const intro = [
     "Was SWITCH a hectic week for you too? I heard so many Korean startups came this year that some struggled to find flights to Singapore.",
     "It made me wonder why Korean startups, the agencies that support them and even our government love Singapore so much. Maybe that's why I keep filling your inbox with Korean startup invitations. Sorry about that! Should I tell Korea to stop loving Singapore? Maybe after this one.",
     "There is a good reason we keep coming. In March, during President Lee Jae Myung's visit to Singapore, our two governments launched the Korea&ndash;Singapore AI Alliance, giving fresh momentum to AI cooperation in public services and between businesses.",
     "<b>KR-SG AI Connect: Pitching &amp; Networking</b> takes that spirit into a room where people can meet. It is co-hosted by KOSA, Korea's statutory AI and software industry association under the Ministry of Science and ICT, and Lorong AI, Singapore's AI community hub set up by the Ministry of Digital Development and Information, with JTC as venue partner and KOCHAM as ecosystem partner.",
-    "It is less about competition and more about understanding each other, and the conversation continues over a networking dinner. Join us for the pitches, the dinner, or a 1:1 the next day. If SWITCH week left little time for a proper conversation, I would love to catch up here.",
-    "Hope to see you there, and thank you for making room for one more invitation from me.",
+    "It is less about competition and more about understanding each other, and the conversation continues over a networking dinner. Here are the details:",
   ];
+  const details = [
+    `<b>${esc(EVENT_DAY_SHORT)}</b>: pitching at ${esc(EVENT_VENUE)} from 14:30, then a networking dinner at ${esc(DINNER_VENUE)} until 20:00. ${a(RSVP, "RSVP here")}`,
+    ...(ONE_ON_ONE_OPEN ? [`<b>${esc(MEETUP_DAY_SHORT)}</b>: private 1:1 meetings with the startups, ${esc(MEETUP_TIME).replace(" – ", "&ndash;")} at ${esc(MEETUP_VENUE)}. ${a(BOOK, "Book a slot")}`] : []),
+  ];
+  const judgesLine = `Judging the pitches: ${JUDGES.map((j) => `${esc(j.name)} (${esc(j.org.replace(" Institute of Microelectronics (IME)", " IME"))})`).join(", ")}.`;
+  const outro = [
+    "They are looking for pilots with public agencies, partners and investment. AI startups from Singapore's Lorong AI community will pitch too.",
+    "If SWITCH week left little time for a proper conversation, I would love to catch up here. Hope to see you there, and thank you for making room for one more invitation from me.",
+  ];
+  const optOut = unsub
+    ? `P.S. If you'd rather not get event invitations from me, you can <a href="{{UNSUB}}">unsubscribe here</a>.`
+    : "P.S. If you'd rather not get event invitations from me, just reply and let me know.";
 
-  const row = (when: string, what: string) =>
-    `<tr><td style="padding:3px 16px 3px 0;${H}font-size:13px;font-weight:bold;color:#ffffff;white-space:nowrap;vertical-align:top;">${when}</td><td style="padding:3px 0;${H}font-size:13px;line-height:19px;color:#c7d3ea;">${what}</td></tr>`;
-
-  const roster = companies
-    .map((c) => `<tr><td style="padding:10px 0;border-top:1px solid ${LINE};">
-    <a href="${SITE}/companies/${c.slug}" style="${H}font-size:14px;font-weight:bold;color:${INK};text-decoration:none;">${esc(c.name)}</a>
-    <div style="${H}padding-top:2px;font-size:13px;line-height:18px;color:${MUTED};">${esc(lineOf(c))}</div>
-  </td></tr>`)
-    .join("");
-
-  const judges = JUDGES.map((j) => `<tr><td style="padding:6px 0;border-top:1px solid ${LINE};${H}font-size:13px;line-height:18px;color:${INK};"><b>${esc(j.name)}</b> <span style="color:${MUTED};">&middot; ${esc(j.org)}</span></td></tr>`).join("");
-
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"></head>
-<body style="margin:0;padding:0;background:#ffffff;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;"><tr><td align="center" style="padding:20px 12px 28px;">
-
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;"><tr><td style="padding:0 4px 26px;text-align:left;">
-<p style="${P}">{{GREETING}}</p>
-${note.map((l) => `<p style="${P}">${l}</p>`).join("\n")}
-<p style="margin:0;${F}font-size:14px;line-height:21px;color:#222222;">Warm regards,<br>${SIGN}</p>
-</td></tr></table>
-
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;border:1px solid ${LINE};border-radius:4px;overflow:hidden;">
-<tr><td style="background:${NIGHT};background-image:radial-gradient(120% 140% at 100% 0%,#1d3a6e 0%,${NIGHT} 58%);padding:30px 28px 28px;">
-  <div style="${H}font-size:12px;font-weight:bold;color:${SKY};">KOSA &times; Lorong AI &middot; Singapore &middot; 3&ndash;4 November 2026</div>
-  <div style="${H}padding-top:12px;font-size:34px;line-height:37px;font-weight:800;color:#ffffff;letter-spacing:-1px;">KR-SG AI Connect</div>
-  <div style="${H}padding-top:4px;font-size:18px;line-height:24px;font-weight:600;color:#ffffff;">Korea and Singapore, together on AI for the public sector</div>
-  <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:20px;">
-    ${row(esc(EVENT_DAY_SHORT), `Pitching at ${esc(EVENT_VENUE)} from 14:30, then the networking dinner at ${esc(DINNER_VENUE)} (17:00&ndash;20:00).`)}
-    ${ONE_ON_ONE_OPEN ? row(esc(MEETUP_DAY_SHORT), `Private 1:1 meetings, ${esc(MEETUP_TIME)} at ${esc(MEETUP_VENUE)}.`) : ""}
-  </table>
-  <div style="padding-top:22px;">${btn(`${SITE}/book?day=7`, "RSVP for Tue 3 Nov", true)}${ONE_ON_ONE_OPEN ? btn(`${SITE}/book?day=5`, "Book a 1:1", false) : ""}</div>
-</td></tr>
-
-<tr><td style="padding:22px 28px 4px;">
-  <div style="${H}font-size:12px;font-weight:bold;color:${ORANGE};">Judging panel</div>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:6px;">${judges}</table>
-</td></tr>
-
-<tr><td style="padding:18px 28px 4px;">
-  <div style="${H}font-size:12px;font-weight:bold;color:${ORANGE};">The Korean startups</div>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:6px;">${roster}</table>
-  <div style="${H}padding-top:10px;font-size:13px;line-height:19px;color:${MUTED};">Plus AI startups from Singapore's Lorong AI community.</div>
-</td></tr>
-
-<tr><td style="padding:18px 28px 0;">
-  <div style="${H}font-size:12px;font-weight:bold;color:${ORANGE};">They are looking for</div>
-  <div style="padding-top:8px;">${["Pilots with agencies", "Partners", "Investment"].map((t) => `<span style="display:inline-block;margin:0 6px 6px 0;padding:7px 12px;${H}font-size:13px;font-weight:bold;color:${INK};background:${PALE};border-radius:3px;">${t}</span>`).join("")}</div>
-</td></tr>
-
-<tr><td style="padding:22px 28px 28px;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${NAVY};border-radius:3px;"><tr><td style="padding:18px 20px;">
-    <div style="${H}font-size:15px;font-weight:bold;color:#ffffff;">${esc(EVENT_DATE)} &middot; ${esc(EVENT_VENUE)}</div>
-    <div style="${H}padding-top:4px;font-size:13px;color:#c7d3ea;">${esc(EVENT_ADDRESS)}</div>
-    <div style="padding-top:14px;">${btn(`${SITE}/book?day=7`, "RSVP now", true)}<a href="${SITE}/#startups" style="${H}display:inline-block;padding:13px 4px;font-size:13px;font-weight:bold;color:${SKY};text-decoration:none;">See the startup profiles</a></div>
-  </td></tr></table>
-</td></tr>
-</table>
-
-<p style="max-width:600px;margin:16px auto 0;${F}font-size:11px;line-height:16px;color:#9aa0b2;text-align:left;">Organised by the Korea AI&middot;Software Industry Association (KOSA) and Lorong AI. ${unsub ? `Don't want invitations like this? <a href="{{UNSUB}}" style="color:#9aa0b2;text-decoration:underline;">Unsubscribe</a>` : "If you'd rather not hear from us about events like this, just reply and let us know."}</p>
-</td></tr></table>
-</body></html>`;
+  const para = (x: string) => `<div>${x}</div><div><br></div>`;
+  const list = (items: string[]) => `<ul style="margin:0 0 0 0;padding-left:24px;">${items.map((i) => `<li style="margin-bottom:4px;">${i}</li>`).join("")}</ul><div><br></div>`;
+  const html = `<div dir="ltr" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5;color:#222222;">
+${para("{{GREETING}}")}
+${intro.map(para).join("\n")}
+${list(details)}
+${para(judgesLine)}
+<div>The Korean startups pitching:</div>
+${list(companies.map((c) => `<b>${esc(c.name)}</b>: ${esc(lineOf(c))}`))}
+${outro.map(para).join("\n")}
+<div>Warm regards,</div>
+<div>${SIGN}</div>
+<div><br></div>
+<div>${optOut}</div>
+</div>`;
 
   const plain = (x: string) =>
-    x.replace(/<br>/g, "\n").replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&middot;/g, "·").replace(/&ndash;/g, "–").replace(/&mdash;/g, "—").replace(/&times;/g, "×");
+    x.replace(/<br>/g, "\n").replace(/<a href="([^"]+)">([^<]+)<\/a>/g, "$2: $1").replace(/<[^>]+>/g, "")
+      .replace(/&amp;/g, "&").replace(/&middot;/g, "·").replace(/&ndash;/g, "–").replace(/&mdash;/g, "—").replace(/&times;/g, "×");
   const text = [
     "{{GREETING}}",
     "",
-    ...note.map(plain).flatMap((l) => [l, ""]),
+    ...intro.map(plain).flatMap((l) => [l, ""]),
+    ...details.map((d) => `- ${plain(d)}`),
+    "",
+    plain(judgesLine),
+    "",
+    "The Korean startups pitching:",
+    ...companies.map((c) => `- ${c.name}: ${lineOf(c)}`),
+    "",
+    ...outro.map(plain).flatMap((l) => [l, ""]),
     "Warm regards,",
     plain(SIGN),
     "",
-    "----",
-    "KR-SG AI CONNECT · KOSA × LORONG AI · SINGAPORE, 3–4 NOVEMBER 2026",
-    `${EVENT_DAY_SHORT}: Pitching at ${EVENT_VENUE} from 14:30, then the networking dinner at ${DINNER_VENUE} (17:00–20:00).`,
-    ...(ONE_ON_ONE_OPEN ? [`${MEETUP_DAY_SHORT}: Private 1:1 meetings, ${MEETUP_TIME} at ${MEETUP_VENUE}.`] : []),
-    `RSVP: ${SITE}/book?day=7`,
-    ...(ONE_ON_ONE_OPEN ? [`Book a 1:1: ${SITE}/book?day=5`] : []),
-    "",
-    "Judging panel:",
-    ...JUDGES.map((j) => `- ${j.name}, ${j.org}`),
-    "",
-    "The Korean startups:",
-    ...companies.map((c) => `- ${c.name}: ${lineOf(c)}`),
-    "Plus AI startups from Singapore's Lorong AI community.",
-    "",
-    `Startup profiles: ${SITE}/#startups`,
-    "",
-    unsub ? "Don't want invitations like this? Unsubscribe: {{UNSUB}}" : "If you'd rather not hear from us about events like this, just reply and let us know.",
+    plain(optOut),
   ].join("\n");
 
   return { subject: "Should I tell Korea to stop loving Singapore?", html, text };
