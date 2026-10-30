@@ -190,10 +190,15 @@ function buildSecondInvite(unsub: boolean): { subject: string; html: string; tex
     }">${label}</a>`;
   const lineOf = (c: (typeof companies)[number]) => LINES[c.slug] ?? c.tagline;
 
+  // Tammy's own draft (30 Oct), tightened. Dates and venues live in the eDM
+  // below, so the note keeps the story and the ask.
   const note = [
-    `Next Tuesday, <b>3 November</b>, five AI startups selected by the Korea AI&middot;Software Industry Association (KOSA) will pitch at <b>Lorong AI</b>, alongside AI innovators from Singapore's Lorong AI community. It is the first joint KR&ndash;SG AI programme since the Korea&ndash;Singapore AI Alliance was launched in March.`,
-    "The Korean teams build AI for the public sector &mdash; satellite analytics, grant compliance, multilingual public-service kiosks, utility robotics and clinical-trial matching &mdash; and are looking for pilots, partners and investors in Singapore.",
-    `If any of them fit your work, I would love for you to join us &mdash; for the pitches, the networking dinner at ${esc(DINNER_VENUE)}, or a private 1:1 meeting on 4 November.`,
+    "Was SWITCH a hectic week for you too? I heard so many Korean startups came this year that some struggled to find flights to Singapore.",
+    "It made me wonder why Korean startups, the agencies that support them and even our government love Singapore so much. Maybe that's why I keep filling your inbox with Korean startup invitations. Sorry about that! Should I tell Korea to stop loving Singapore? Maybe after this one.",
+    "There is a good reason we keep coming. In March, during President Lee Jae Myung's visit to Singapore, our two governments launched the Korea&ndash;Singapore AI Alliance, giving fresh momentum to AI cooperation in public services and between businesses.",
+    "<b>KR-SG AI Connect: Pitching &amp; Networking</b> takes that spirit into a room where people can meet. It is co-hosted by KOSA, Korea's statutory AI and software industry association under the Ministry of Science and ICT, and Lorong AI, Singapore's AI community hub set up by the Ministry of Digital Development and Information, with JTC as venue partner and KOCHAM as ecosystem partner.",
+    "It is less about competition and more about understanding each other, and the conversation continues over a networking dinner. Join us for the pitches, the dinner, or a 1:1 the next day. If SWITCH week left little time for a proper conversation, I would love to catch up here.",
+    "Hope to see you there, and thank you for making room for one more invitation from me.",
   ];
 
   const row = (when: string, what: string) =>
@@ -287,5 +292,5 @@ ${note.map((l) => `<p style="${P}">${l}</p>`).join("\n")}
     unsub ? "Don't want invitations like this? Unsubscribe: {{UNSUB}}" : "If you'd rather not hear from us about events like this, just reply and let us know.",
   ].join("\n");
 
-  return { subject: "Korea's public-sector AI startups pitch in Singapore next Tuesday (3 Nov)", html, text };
+  return { subject: "Should I tell Korea to stop loving Singapore?", html, text };
 }
