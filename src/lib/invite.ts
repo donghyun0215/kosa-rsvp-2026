@@ -3,12 +3,15 @@
 // site, so a confirmed venue or time is picked up without touching the sheet.
 // {{GREETING}} is replaced per recipient by the sheet script.
 import { companies as cohort } from "@/data/companies";
+import { JUDGES } from "@/data/speakers";
 
 // The invite lists the Korean cohort; Singapore startups sit in the teaser.
 const companies = cohort.filter((c) => c.track === "track1");
 import {
   EVENT_ADDRESS,
   EVENT_DATE,
+  EVENT_DAY_SHORT,
+  MEETUP_DAY_SHORT,
   EVENT_NAME,
   EVENT_NAME_LINE1,
   DINNER_VENUE,
@@ -51,7 +54,8 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 const F = "font-family:Arial,Helvetica,sans-serif;";
 const P = `margin:0 0 14px;${F}font-size:14px;line-height:21px;color:#222222;`;
 
-export function buildInvite(_team = false, unsub = false): { subject: string; html: string; text: string } {
+export function buildInvite(_team = false, unsub = false, round: 1 | 2 = 1): { subject: string; html: string; text: string } {
+  if (round === 2) return buildSecondInvite(unsub);
   const showcase = PROGRAM.find((p) => p.id === "showcase");
   const dinner = PROGRAM.find((p) => p.id === "lunch");
   const demoRows: [string, string][] = [
@@ -171,4 +175,117 @@ ${ORDER.map((k) => blocks[k]).join("")}
   ].join("\n");
 
   return { subject: SUBJECT, html, text };
+}
+
+// ── Second round (30 Oct): sign-ups were slow, so Tammy follows up with a
+// shorter personal note and a one-screen eDM: what it is, who's judging,
+// the five startups, and the three ways to join. Sent from Tammy's account
+// to the first-round list minus everyone who has already registered.
+function buildSecondInvite(unsub: boolean): { subject: string; html: string; text: string } {
+  const NIGHT = "#08142e", NAVY = "#0e1f3f", ORANGE = "#e0702e", SKY = "#6cb4f5", PALE = "#eef3fb", INK = "#10233a", MUTED = "#5a6678", LINE = "#dde4ef";
+  const H = "font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;";
+  const btn = (href: string, label: string, solid: boolean) =>
+    `<a href="${href}" style="display:inline-block;margin:0 8px 8px 0;padding:13px 20px;${H}font-size:14px;font-weight:bold;text-decoration:none;border-radius:3px;${
+      solid ? `background:${ORANGE};color:#ffffff;` : "background:transparent;color:#ffffff;border:1.5px solid rgba(255,255,255,0.45);"
+    }">${label}</a>`;
+  const lineOf = (c: (typeof companies)[number]) => LINES[c.slug] ?? c.tagline;
+
+  const note = [
+    `Next Tuesday, <b>3 November</b>, five AI startups selected by the Korea AI&middot;Software Industry Association (KOSA) will pitch at <b>Lorong AI</b>, alongside AI innovators from Singapore's Lorong AI community. It is the first joint KR&ndash;SG AI programme since the Korea&ndash;Singapore AI Alliance was launched in March.`,
+    "The Korean teams build AI for the public sector &mdash; satellite analytics, grant compliance, multilingual public-service kiosks, utility robotics and clinical-trial matching &mdash; and are looking for pilots, partners and investors in Singapore.",
+    `If any of them fit your work, I would love for you to join us &mdash; for the pitches, the networking dinner at ${esc(DINNER_VENUE)}, or a private 1:1 meeting on 4 November.`,
+  ];
+
+  const row = (when: string, what: string) =>
+    `<tr><td style="padding:3px 16px 3px 0;${H}font-size:13px;font-weight:bold;color:#ffffff;white-space:nowrap;vertical-align:top;">${when}</td><td style="padding:3px 0;${H}font-size:13px;line-height:19px;color:#c7d3ea;">${what}</td></tr>`;
+
+  const roster = companies
+    .map((c) => `<tr><td style="padding:10px 0;border-top:1px solid ${LINE};">
+    <a href="${SITE}/companies/${c.slug}" style="${H}font-size:14px;font-weight:bold;color:${INK};text-decoration:none;">${esc(c.name)}</a>
+    <div style="${H}padding-top:2px;font-size:13px;line-height:18px;color:${MUTED};">${esc(lineOf(c))}</div>
+  </td></tr>`)
+    .join("");
+
+  const judges = JUDGES.map((j) => `<tr><td style="padding:6px 0;border-top:1px solid ${LINE};${H}font-size:13px;line-height:18px;color:${INK};"><b>${esc(j.name)}</b> <span style="color:${MUTED};">&middot; ${esc(j.org)}</span></td></tr>`).join("");
+
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"></head>
+<body style="margin:0;padding:0;background:#ffffff;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;"><tr><td align="center" style="padding:20px 12px 28px;">
+
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;"><tr><td style="padding:0 4px 26px;text-align:left;">
+<p style="${P}">{{GREETING}}</p>
+${note.map((l) => `<p style="${P}">${l}</p>`).join("\n")}
+<p style="margin:0;${F}font-size:14px;line-height:21px;color:#222222;">Warm regards,<br>${SIGN}</p>
+</td></tr></table>
+
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;border:1px solid ${LINE};border-radius:4px;overflow:hidden;">
+<tr><td style="background:${NIGHT};background-image:radial-gradient(120% 140% at 100% 0%,#1d3a6e 0%,${NIGHT} 58%);padding:30px 28px 28px;">
+  <div style="${H}font-size:12px;font-weight:bold;color:${SKY};">KOSA &times; Lorong AI &middot; Singapore &middot; 3&ndash;4 November 2026</div>
+  <div style="${H}padding-top:12px;font-size:34px;line-height:37px;font-weight:800;color:#ffffff;letter-spacing:-1px;">KR-SG AI Connect</div>
+  <div style="${H}padding-top:4px;font-size:18px;line-height:24px;font-weight:600;color:#ffffff;">Korea and Singapore, together on AI for the public sector</div>
+  <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+    ${row(esc(EVENT_DAY_SHORT), `Pitching at ${esc(EVENT_VENUE)} from 14:30, then the networking dinner at ${esc(DINNER_VENUE)} (17:00&ndash;20:00).`)}
+    ${ONE_ON_ONE_OPEN ? row(esc(MEETUP_DAY_SHORT), `Private 1:1 meetings, ${esc(MEETUP_TIME)} at ${esc(MEETUP_VENUE)}.`) : ""}
+  </table>
+  <div style="padding-top:22px;">${btn(`${SITE}/book?day=7`, "RSVP for Tue 3 Nov", true)}${ONE_ON_ONE_OPEN ? btn(`${SITE}/book?day=5`, "Book a 1:1", false) : ""}</div>
+</td></tr>
+
+<tr><td style="padding:22px 28px 4px;">
+  <div style="${H}font-size:12px;font-weight:bold;color:${ORANGE};">Judging panel</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:6px;">${judges}</table>
+</td></tr>
+
+<tr><td style="padding:18px 28px 4px;">
+  <div style="${H}font-size:12px;font-weight:bold;color:${ORANGE};">The Korean startups</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:6px;">${roster}</table>
+  <div style="${H}padding-top:10px;font-size:13px;line-height:19px;color:${MUTED};">Plus AI startups from Singapore's Lorong AI community.</div>
+</td></tr>
+
+<tr><td style="padding:18px 28px 0;">
+  <div style="${H}font-size:12px;font-weight:bold;color:${ORANGE};">They are looking for</div>
+  <div style="padding-top:8px;">${["Pilots with agencies", "Partners", "Investment"].map((t) => `<span style="display:inline-block;margin:0 6px 6px 0;padding:7px 12px;${H}font-size:13px;font-weight:bold;color:${INK};background:${PALE};border-radius:3px;">${t}</span>`).join("")}</div>
+</td></tr>
+
+<tr><td style="padding:22px 28px 28px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${NAVY};border-radius:3px;"><tr><td style="padding:18px 20px;">
+    <div style="${H}font-size:15px;font-weight:bold;color:#ffffff;">${esc(EVENT_DATE)} &middot; ${esc(EVENT_VENUE)}</div>
+    <div style="${H}padding-top:4px;font-size:13px;color:#c7d3ea;">${esc(EVENT_ADDRESS)}</div>
+    <div style="padding-top:14px;">${btn(`${SITE}/book?day=7`, "RSVP now", true)}<a href="${SITE}/#startups" style="${H}display:inline-block;padding:13px 4px;font-size:13px;font-weight:bold;color:${SKY};text-decoration:none;">See the startup profiles</a></div>
+  </td></tr></table>
+</td></tr>
+</table>
+
+<p style="max-width:600px;margin:16px auto 0;${F}font-size:11px;line-height:16px;color:#9aa0b2;text-align:left;">Organised by the Korea AI&middot;Software Industry Association (KOSA) and Lorong AI. ${unsub ? `Don't want invitations like this? <a href="{{UNSUB}}" style="color:#9aa0b2;text-decoration:underline;">Unsubscribe</a>` : "If you'd rather not hear from us about events like this, just reply and let us know."}</p>
+</td></tr></table>
+</body></html>`;
+
+  const plain = (x: string) =>
+    x.replace(/<br>/g, "\n").replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&middot;/g, "·").replace(/&ndash;/g, "–").replace(/&mdash;/g, "—").replace(/&times;/g, "×");
+  const text = [
+    "{{GREETING}}",
+    "",
+    ...note.map(plain).flatMap((l) => [l, ""]),
+    "Warm regards,",
+    plain(SIGN),
+    "",
+    "----",
+    "KR-SG AI CONNECT · KOSA × LORONG AI · SINGAPORE, 3–4 NOVEMBER 2026",
+    `${EVENT_DAY_SHORT}: Pitching at ${EVENT_VENUE} from 14:30, then the networking dinner at ${DINNER_VENUE} (17:00–20:00).`,
+    ...(ONE_ON_ONE_OPEN ? [`${MEETUP_DAY_SHORT}: Private 1:1 meetings, ${MEETUP_TIME} at ${MEETUP_VENUE}.`] : []),
+    `RSVP: ${SITE}/book?day=7`,
+    ...(ONE_ON_ONE_OPEN ? [`Book a 1:1: ${SITE}/book?day=5`] : []),
+    "",
+    "Judging panel:",
+    ...JUDGES.map((j) => `- ${j.name}, ${j.org}`),
+    "",
+    "The Korean startups:",
+    ...companies.map((c) => `- ${c.name}: ${lineOf(c)}`),
+    "Plus AI startups from Singapore's Lorong AI community.",
+    "",
+    `Startup profiles: ${SITE}/#startups`,
+    "",
+    unsub ? "Don't want invitations like this? Unsubscribe: {{UNSUB}}" : "If you'd rather not hear from us about events like this, just reply and let us know.",
+  ].join("\n");
+
+  return { subject: "Korea's public-sector AI startups pitch in Singapore next Tuesday (3 Nov)", html, text };
 }
