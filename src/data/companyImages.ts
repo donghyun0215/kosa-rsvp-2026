@@ -5,6 +5,8 @@ import imgHellofriends from "@/assets/startups/hellofriends.jpg";
 import imgShareplat from "@/assets/startups/shareplat.jpg";
 import imgMediaiplus from "@/assets/startups/mediaiplus.jpg";
 import imgClotho from "@/assets/startups/clotho.jpg";
+// Nora AI: the mascot from its own website (hinora.co og-image), set on its lavender.
+import imgNora from "@/assets/startups/nora-ai.jpg";
 import logoStellarvision from "@/assets/startups/logos/stellarvision.png";
 import logoHellofriends from "@/assets/startups/logos/hellofriends.png";
 import logoShareplat from "@/assets/startups/logos/shareplat.png";
@@ -17,6 +19,7 @@ export const STARTUP_IMAGES: Record<string, string> = {
   shareplat: imgShareplat,
   mediaiplus: imgMediaiplus,
   clotho: imgClotho,
+  "nora-ai": imgNora,
 };
 
 export const STARTUP_LOGOS: Record<string, string> = {

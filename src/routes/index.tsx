@@ -334,8 +334,14 @@ function Landing() {
             Open a profile for more, or book a 1:1 straight away.
           </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-4 [perspective:1200px] sm:grid-cols-2 lg:grid-cols-3">
-            {companies.map((c, i) => (
+          {([
+            ["From Korea", companies.filter((c) => c.track === "track1")],
+            ["From Singapore · Lorong AI community", companies.filter((c) => c.track !== "track1")],
+          ] as const).filter(([, list]) => list.length).map(([label, list]) => (
+          <div key={label} className="mt-10">
+            <h3 className="text-sm font-semibold text-navy/60">{label}</h3>
+            <div className="mt-5 grid grid-cols-1 gap-4 [perspective:1200px] sm:grid-cols-2 lg:grid-cols-3">
+            {list.map((c, i) => (
               <article key={c.slug} data-reveal style={{ "--rd": `${(i % 3) * 70}ms` } as CSSProperties} data-tilt className="card-startup tilt group flex flex-col overflow-hidden rounded-xl">
                 <Link to="/companies/$slug" params={{ slug: c.slug }} className="relative block aspect-[3/2] overflow-hidden bg-hero-gradient">
                   {STARTUP_IMAGES[c.slug] ? (
@@ -386,7 +392,9 @@ function Landing() {
                 </div>
               </article>
             ))}
+            </div>
           </div>
+          ))}
         </div>
       </section>
 
