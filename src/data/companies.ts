@@ -298,7 +298,7 @@ export const companies: Company[] = [
     ],
   },
   // Lorong AI cohort. Source: Nora AI's KR-SG AI Connect one-pager, as
-  // lightly edited by Tammy (30 Oct). No product photo or logo yet.
+  // lightly edited by Tammy (30 Oct). Photo and logo come from hinora.co.
   {
     slug: "nora-ai",
     name: "Nora AI",

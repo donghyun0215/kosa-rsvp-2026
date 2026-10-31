@@ -12,6 +12,8 @@ import logoHellofriends from "@/assets/startups/logos/hellofriends.png";
 import logoShareplat from "@/assets/startups/logos/shareplat.png";
 import logoMediaiplus from "@/assets/startups/logos/mediaiplus.png";
 import logoClotho from "@/assets/startups/logos/clotho.png";
+// Nora AI: the mascot + wordmark from its own site header (hinora.co).
+import logoNora from "@/assets/startups/logos/nora-ai.png";
 
 export const STARTUP_IMAGES: Record<string, string> = {
   stellarvision: imgStellarvision,
@@ -28,4 +30,5 @@ export const STARTUP_LOGOS: Record<string, string> = {
   shareplat: logoShareplat,
   mediaiplus: logoMediaiplus,
   clotho: logoClotho,
+  "nora-ai": logoNora,
 };
