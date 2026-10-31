@@ -82,6 +82,7 @@ const LEDGER: Record<string, [from: string, to: string]> = {
   shareplat: ["Utility crews", "cable-routing robots"],
   mediaiplus: ["Biotechs", "AI-matched global CROs"],
   "nora-ai": ["Parents", "AI parenting coach"],
+  dactsec: ["Banks & agencies", "on-prem AI data redaction"],
 };
 
 function ContactOrganizer() {

@@ -346,6 +346,55 @@ export const companies: Company[] = [
       "Partnerships.",
     ],
   },
+  // Lorong AI cohort. Source: DactSec's one-pager (31 Oct, on the CMK
+  // template). Photo is the product screen from dactsec.ai; logo from the one-pager.
+  {
+    slug: "dactsec",
+    name: "DactSec.ai",
+    displayName: "DactSec.ai",
+    tagline: "Redacts sensitive data from prompts before they reach the AI provider, on-premises.",
+    sector: "AI data security · Enterprise",
+    stage: "Pre-revenue",
+    track: "track2",
+    website: "https://www.dactsec.ai",
+    email: "preet@enginelitix.ai",
+    phone: "+1 917 497 5931",
+    problem: [
+      "Enterprises using AI have a sensitive data problem: personal, financial and company-specific data leaks out.",
+      "Users paste in client information, and each division has its own sensitive patterns. IB and M&A teams handle company names (acquirer and target), project names and more.",
+    ],
+    solution: [
+      "Redacts sensitive data, including company-specific custom patterns.",
+      "Sits between the company's or division's AI gateway and the AI provider (Claude and others): redacts the request, then puts the sensitive data back into the response.",
+      "Compliance report that logs incidents in line with PDPA requirements.",
+    ],
+    keyFeatures: [
+      "Invisible: the user never sees the redaction, and the AI provider never sees the data.",
+      "On-premises: even DactSec never sees the sensitive data.",
+      "Math-based AI, no LLMs (that would defeat the purpose).",
+      "PDPA-aligned compliance reporting.",
+    ],
+    targetAudience: [],
+    businessModel: [
+      "Aimed at enterprises with LLM gateways or wrappers: bank divisions, government divisions and others.",
+      "Moat is custom patterns: they take one to two weeks or more to build, and extracting institutional knowledge is harder than it looks. The founder is known for doing it mathematically.",
+      "Planned pricing: S$23k a year for generic patterns, unlimited usage, per gateway, up to 100 users. Custom-pattern pricing is being validated.",
+      "On-site custom pattern extraction; installed on-premises with licence, support and maintenance included.",
+    ],
+    businessSnapshot: [
+      "Pre-revenue.",
+      "Demoed at SWITCH 2026 and ContainerDays, with a highly positive response from banks and interest from smaller companies too.",
+    ],
+    team: [
+      {"name": "Preet Singh", "role": "Founder & CEO", "bio": ["Vendor to a Fortune 50 company; ex-Microsoft AI and IBM.", "Founder of two companies, with 20+ years of research and industry experience (University of Rochester, Northwestern, CMU)."]},
+    ],
+    seekingOpportunities: [
+      "Clients: any company or agency with LLM wrappers or AI gateways, such as banks and government agencies.",
+      "Design partners.",
+      "Market access.",
+      "Investors.",
+    ],
+  },
 ];
 
 export function getCompanyBySlug(slug: string): Company | undefined {

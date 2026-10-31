@@ -96,4 +96,18 @@ export const HIGHLIGHTS: Record<string, Highlight> = {
     ],
     problem: "Expert parenting help is costly and slow to reach, and advice is hard to apply day to day.",
   },
+  dactsec: {
+    does: "Strips sensitive data out of AI prompts inside your network, then restores it in the answer.",
+    serves: "Banks, government divisions and other teams running their own LLM gateway.",
+    references: ["SWITCH 2026 (demo)", "ContainerDays (demo)"],
+    referencesLabel: "Demoed at",
+    ask: "Clients and design partners with LLM gateways, plus market access and investors.",
+    askLabel: "Looking for",
+    figures: [
+      ["On-premises", "sensitive data never leaves the network"],
+      ["No LLMs", "math-based detection"],
+      ["PDPA", "incident logs for compliance"],
+    ],
+    problem: "Staff paste client names, deal codenames and personal data into AI tools, and it leaves the company.",
+  },
 };
