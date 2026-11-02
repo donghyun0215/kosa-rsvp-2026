@@ -1,8 +1,8 @@
 // Editorial layer for the startup profiles, written as a public-sector
 // service brief: an "at a glance" summary, three key figures, the
 // references a buyer will look for, and the company's pilot ask. Every
-// figure and reference is taken from the company's one-pager (Clotho: IR
-// deck) as summarised in companies.ts; the full text stays on the page.
+// figure and reference is taken from the company's one-pager as
+// summarised in companies.ts; the full text stays on the page.
 export interface Highlight {
   /** One-line summary of what the service does. */
   does: string;
@@ -34,16 +34,16 @@ export const HIGHLIGHTS: Record<string, Highlight> = {
     ],
   },
   clotho: {
-    does: "Runs government-grant execution, evidence and settlement, and flags the risks early.",
-    serves: "Grant-funded SMEs, and the agencies and programme operators that manage them.",
-    references: ["KOSME", "SEMAS", "Gwangju Metropolitan City"],
-    ask: "A paid pilot in Singapore, leading to an annual contract and API integration.",
+    does: "Automates grant admin and compliance for SMEs, and warns of cash and runway risk early.",
+    serves: "SME owners, and the public agencies that run grant programmes.",
+    references: ["KOSME (risk-prediction PoC)", "NIPA GovTech 2026"],
+    ask: "Pilot PoCs with Singapore public agencies, using SGMS or the Stability API.",
     figures: [
-      ["KRW 1.6B", "cumulative revenue, with no outside investment"],
-      ["<8%", "customer churn"],
-      ["3M+", "operational grant records"],
+      ["KRW 2.5B", "cumulative revenue, 2023 to August 2026"],
+      ["14,840", "sign-ups to date"],
+      ["98%", "three-month renewal rate"],
     ],
-    problem: "A grant runs for 24–36 months after selection, and the risk sits in spreadsheets and inboxes.",
+    problem: "Grant paperwork, shifting rules and late-surfacing cash risk drain SME founders' time.",
   },
   hellofriends: {
     does: "24/7 kiosks that answer migrant workers' labour questions in 28 languages and refer cases safely.",

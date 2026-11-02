@@ -1,9 +1,8 @@
 // K-GovTech Open Innovation Day in Singapore — five Korean GovTech startups.
 // Source: each startup's programme one-pager (12 Oct, via the KOSA master
 // sheet links). Copy follows the companies' own wording (light edits for
-// grammar). Clotho has no one-pager yet: its profile is translated from its
-// Korean IR deck (OK'd for site copy, not for download, 12 Oct) — re-check
-// against the one-pager when it arrives. IR decks are
+// grammar). Clotho's profile follows its one-pager of 2 Nov (it was
+// translated from its Korean IR deck until then). IR decks are
 // NOT published (CMK lesson, 7 Oct). Sector labels are ours.
 // ponytail: one-pager PDFs aren't linked yet — several still carry another
 // programme's footer (CMK / AroundX).
@@ -92,56 +91,49 @@ export const companies: Company[] = [
     slug: "clotho",
     name: "Clotho",
     displayName: "Clotho Inc.",
-    tagline: "AI-driven administrative automation (AX) platform “Hello Unicorn” that manages government-grant execution, compliance and risk prediction for SMEs and public agencies.",
+    tagline: "The AI agent transforming complex grant administration and management-risk prediction for SME owners and public institutions.",
     sector: "Administrative AI · Grant compliance",
-    stage: "Founded 2023 · no outside funding",
+    stage: "Pre-A bridge round",
     track: "track1",
     website: "https://hellounicorn.site",
-    email: "marketer.hellounicorn@gmail.com",
+    email: "lhsgee@gmail.com",
     phone: "+82 10-9326-9904",
     problem: [
-      "A government grant isn't over at selection: agreements, execution, evidence, settlement, reporting and follow-up run for 24–36 months.",
-      "Founders must judge every risk themselves — execution rate, remaining budget, labour costs, missing evidence, settlement risk — with data scattered across Excel, email, messengers, RCMS and IRIS.",
-      "Agencies each hold part of a company's history but no shared data structure connects it, and financial statements show trouble late.",
+      "Administrative overload: grant execution, documentation, settlement reports and audits drain excessive hours from SME founders.",
+      "Rapid regulatory changes: labour, tax and R&D compliance rules shift faster than lean startup teams can track.",
+      "Late-surfacing risk: grant deadlines, loan repayments and fixed overheads collide, exposing cash shortages when it is already too late.",
     ],
     solution: [
-      "Research administration service: Clotho runs grant agreements, execution, evidence, settlement and reporting for client companies, building a structured operations dataset.",
-      "Hello Unicorn: a CEO dashboard showing execution rate, balances, labour costs, missing evidence and settlement risk on one screen, with paid AX features.",
-      "SGMS and the G2B Stability API: an institution-side portfolio system and a stability-evaluation model that public platforms can plug in.",
+      "AI-powered SME decision engine: Hello Unicorn turns structured grant and R&D workflows into automated AI routines for proactive management.",
+      "Predictive risk and compliance checks: continuously evaluates runway, audits payroll allocations across projects and triggers early mitigation warnings.",
     ],
     keyFeatures: [
-      "Settlement risk check: flags missing evidence, ineligible spend and execution errors before they are found.",
-      "Automated labour-cost and allocation calculation, plus a stability report on execution, labour burden, cash flow and settlement risk.",
-      "Evidence auto-review that cross-checks tax invoices, quotes, statements and payment records; CEO risk alerts and a grant calendar.",
-      "Collaboration tracking that turns PoC, investment and partner outcomes into performance data.",
+      "Stability analysis and runway forecaster: real-time visibility into cash runway, stability grades and action-oriented cash-shortfall alerts.",
+      "Automated payroll and compliance checker: pre-submission audits that flag overlapping project participation, over-allocation and changing regulatory traps.",
+      "Institutional SGMS console: a central console for government agencies to oversee programme budgets, track settlements and review risk queues.",
     ],
-    targetAudience: [
-      "Grant-funded startups and SMEs: CEOs, CFOs, COOs and project managers.",
-      "Public agencies and programme operators managing portfolio companies.",
-      "Accelerators, VCs, universities and public institutions running support programmes.",
-    ],
+    targetAudience: [],
     businessModel: [
-      "Monthly management fees for research administration (36-month average engagement).",
-      "Hello Unicorn B2B subscription and paid AX features.",
-      "Institutional SaaS (SGMS, collaboration tracking) and the G2B Stability API for public platforms and procurement.",
+      "B2B managed and SaaS admin: KRW 450K–800K (about US$320–570) a month per SME for managed admin, plus B2B add-on services.",
+      "B2G and institutional licensing: deployment of the SGMS platform, Stability APIs and Growth Navigator tools for enterprises and public agencies.",
     ],
     businessSnapshot: [
-      "Cumulative revenue KRW 1.627B and contracts KRW 1.885B, with no outside investment.",
-      "Revenue KRW 295M (2023) → 601M (2024) → 730M (2025); about KRW 900M expected in 2026.",
-      "Customer churn under 8%, 36-month average engagement, LTV of about KRW 28.8M.",
-      "3M+ operational records across agreements, execution, evidence, settlement and labour costs.",
-      "Registered AI patent (No. 10-2831092); public PoCs with KOSME, SEMAS and Gwangju Metropolitan City.",
+      "Cumulative revenue: KRW 2.5B (about US$1.8M) from 2023 to August 2026, profitable or break-even every year.",
+      "Users and retention: 14,840 sign-ups to date, a 98% three-month renewal rate and 72% re-entrusting Clotho with their next grant cycle.",
+      "Government validation: An active risk-prediction PoC with KOSME (Korea SMEs and Startups Agency) under NIPA GovTech 2026.",
+      "Patents and awards: Patented AI-driven business plan generation (KR 10-2831092); Excellence Awards from KOSME and NIPA.",
     ],
     team: [
-      {"name": "Hyunseok Lee", "role": "CEO & Chief Domain Architect", "bio": ["Turned the company-operations and research-admin problems he faced first-hand into a product.", "Leads domain definition, product direction, data standards and business expansion."]},
-      {"name": "Domain Operations", "role": "2 teams + quality layer", "bio": ["Research administration operations & QA, and data structuring & product intelligence.", "Turns real client work into data and decision rules — 11 people in total."]},
-      {"name": "Product & AI", "role": "Full-stack developers", "bio": ["Build Hello Unicorn, the stability evaluation and institutional SaaS.", "Adding an AI/data engineer and a backend/API engineer in 2026."]},
+      {"name": "Hyun Suk Lee", "role": "Founder & CEO", "bio": ["Research administration and startup operations experience since 2018.", "Expertise in IT service planning, UX/UI design and public–private project management.", "Drives GovTech development, institutional partnerships and cross-border startup collaboration."]},
+      {"name": "Chaegyeom Song", "role": "CTO", "bio": ["Leads service engineering, core data-asset architecture and algorithm design."]},
+      {"name": "Doyoung Kim", "role": "PM, Research Admin & Data", "bio": ["Oversees research-admin operations, data collection, labelling and workflow structuring."]},
     ],
     seekingOpportunities: [
-      "Singapore partners for a paid pilot, leading to an annual contract and API integration.",
-      "Agencies and programme operators that manage grant-funded companies.",
-      "Investors for the Pre-A round.",
+      "Public agency and GovTech partners: co-designing pilot PoCs using SGMS or the Stability API with Singapore public agencies.",
+      "SME-serving ecosystem partners: banks, lenders, accounting and corporate secretarial firms, and SME associations.",
+      "Investors: regional investors for the ongoing Pre-A bridge round (target KRW 450M).",
     ],
+    onepager: "/onepagers/clotho.pdf",
   },
   {
     slug: "hellofriends",
